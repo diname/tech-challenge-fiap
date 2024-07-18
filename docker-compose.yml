@@ -1,0 +1,26 @@
+services:
+  api:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
+      - APP_PORT=3000
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/tech-challenge-db
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12.19
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=tech-challenge-db
+    ports:
+      - 5432:5432
+
+networks:
+  default:
+    name: tech-challenge-network
