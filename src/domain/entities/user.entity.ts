@@ -15,10 +15,10 @@ export class UserEntity {
   @Column({ length: 100, nullable: false })
   name: string;
 
-  @Column({ length: 100, nullable: false })
+  @Column({ length: 100, unique: true, nullable: false })
   email: string;
 
-  @Column({ length: 11, nullable: false })
+  @Column({ length: 11, unique: true, nullable: false })
   cpf: string;
 
   @CreateDateColumn({ name: 'created_at' })
