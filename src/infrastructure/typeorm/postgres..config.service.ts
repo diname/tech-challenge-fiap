@@ -11,8 +11,6 @@ export class PostgresConfigService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
     const postgresEnvs = this.environmentVariableConfigService.postgresConfig;
 
-    console.log({ postgresEnvs });
-
     return {
       type: 'postgres',
       host: '127.0.0.1',
