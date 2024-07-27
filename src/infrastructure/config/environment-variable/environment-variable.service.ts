@@ -12,6 +12,22 @@ export class EnvironmentVariableService {
     return this.configService.get<number>('APP_PORT');
   }
 
+  get isProduction(): boolean {
+    return this.configService.get<string>('NODE_ENV') === 'production';
+  }
+
+  get appDocumentationEndpoint(): string {
+    return this.configService.get<string>('APP_DOCUMENTATION_ENDPOINT');
+  }
+
+  get appName(): string {
+    return this.configService.get<string>('APP_NAME');
+  }
+
+  get appVersion(): string {
+    return this.configService.get<string>('APP_VERSION');
+  }
+
   get postgresConfig(): {
     port: number;
     host: string;
