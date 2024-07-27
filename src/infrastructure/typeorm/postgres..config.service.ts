@@ -13,7 +13,7 @@ export class PostgresConfigService implements TypeOrmOptionsFactory {
 
     return {
       type: 'postgres',
-      host: '127.0.0.1',
+      host: postgresEnvs.host,
       port: postgresEnvs.port,
       username: postgresEnvs.user,
       password: postgresEnvs.password,
