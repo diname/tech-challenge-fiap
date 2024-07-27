@@ -1,15 +1,15 @@
-import { EnvironmentVariableConfigService } from '@Infrastructure/config/environment-variable.config.service';
+import { EnvironmentVariableService } from '@Infrastructure/config/environment-variable/environment-variable.service';
 import { Injectable } from '@nestjs/common';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
 @Injectable()
 export class PostgresConfigService implements TypeOrmOptionsFactory {
   constructor(
-    private readonly environmentVariableConfigService: EnvironmentVariableConfigService,
+    private readonly environmentVariableService: EnvironmentVariableService,
   ) {}
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    const postgresEnvs = this.environmentVariableConfigService.postgresConfig;
+    const postgresEnvs = this.environmentVariableService.postgresConfig;
 
     return {
       type: 'postgres',

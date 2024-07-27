@@ -16,6 +16,8 @@ import { EnvironmentVariableService } from './environment-variable.service';
         ),
         APP_NAME: Joi.string(),
         APP_PORT: Joi.number().default(3000),
+        APP_VERSION: Joi.string(),
+        APP_DOCUMENTATION_ENDPOINT: Joi.string(),
         POSTGRES_PORT: Joi.number().default(5432),
         POSTGRES_HOST: Joi.string(),
         POSTGRES_DB: Joi.string(),
