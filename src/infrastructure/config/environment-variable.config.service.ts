@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class EnvironmentVariableConfig {
+export class EnvironmentVariableConfigService {
   constructor(private readonly configService: ConfigService) {}
 
   get appPort(): number {

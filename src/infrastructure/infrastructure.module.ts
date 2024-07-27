@@ -1,8 +1,9 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigModuleOptions } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
-import { EnvironmentVariableConfig } from './config/environment-variable.config';
-import { PostgresConfigService } from './typeorm/postgres.typeorm';
+import { EnvironmentVariableConfigService } from './config/environment-variable.config.service';
+import { PostgresConfigService } from './typeorm/postgres..config.service';
 
 @Module({
   imports: [
@@ -28,6 +29,10 @@ import { PostgresConfigService } from './typeorm/postgres.typeorm';
         abortEarly: false,
       },
     }),
+    TypeOrmModule.forRootAsync({
+      useClass: PostgresConfigService,
+      inject: [PostgresConfigService],
+    }),
   ],
 })
 export class InfrastructureModule {
@@ -35,8 +40,8 @@ export class InfrastructureModule {
     return {
       global: options.isGlobal,
       module: InfrastructureModule,
-      providers: [EnvironmentVariableConfig, PostgresConfigService],
-      exports: [EnvironmentVariableConfig],
+      providers: [EnvironmentVariableConfigService, PostgresConfigService],
+      exports: [EnvironmentVariableConfigService],
     };
   }
 }

@@ -1,9 +1,9 @@
-import { EnvironmentVariableConfig } from '@Infrastructure/config/environment-variable.config';
+import { EnvironmentVariableConfigService } from '@Infrastructure/config/environment-variable.config.service';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(app.get(EnvironmentVariableConfig).appPort);
+  await app.listen(app.get(EnvironmentVariableConfigService).appPort);
 }
 bootstrap();
