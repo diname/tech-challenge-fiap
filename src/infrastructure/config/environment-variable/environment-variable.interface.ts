@@ -9,4 +9,6 @@ export interface EnvironmentVariableInterface {
   POSTGRES_DB: string;
   POSTGRES_USER: string;
   POSTGRES_PASSWORD: string;
+  USER_TOKEN_SECRET: string;
+  USER_TOKEN_EXPIRES_IN: number;
 }
