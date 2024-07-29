@@ -8,23 +8,16 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { OrderEntity } from './order.entity';
 import { UserRoleEntity } from './user_role.entity';
 
-@Entity({ name: 'user' })
-export class UserEntity {
+@Entity({ name: 'role' })
+export class RoleEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ length: 100, nullable: false })
-  name: string;
-
-  @Column({ length: 100, unique: true, nullable: false })
-  email: string;
-
-  @Column({ length: 11, unique: true, nullable: false })
   @Index()
-  cpf: string;
+  name: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp', nullable: false })
   createdAt: Date;
@@ -35,9 +28,6 @@ export class UserEntity {
   @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
-  @OneToMany(() => UserRoleEntity, (userRole) => userRole.user)
+  @OneToMany(() => UserRoleEntity, (userRole) => userRole.role)
   userRoles: UserRoleEntity[];
-
-  @OneToMany(() => OrderEntity, (order) => order.user)
-  orders: OrderEntity[];
 }
