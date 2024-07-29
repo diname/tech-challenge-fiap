@@ -14,4 +14,8 @@ export class TypeOrmUserRepository implements IUserRepository {
   async save(user: UserEntity): Promise<void> {
     await this.userRepository.save(user);
   }
+
+  async getUserByCpf(cpf: string): Promise<UserEntity> {
+    return this.userRepository.findOneBy({ cpf });
+  }
 }

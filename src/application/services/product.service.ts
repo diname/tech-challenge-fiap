@@ -25,7 +25,7 @@ export class ProductService {
   async getProducts(): Promise<ResponseProductDto[]> {
     let products: ProductEntity[] = await this.findProductUsecase.execute();
     if (products) {
-      return products.map(product => new ResponseProductDto(product.name, product.categoryId, product.price, product.description))
+      return products.map(product => new ResponseProductDto(product.name, product.category.id, product.price, product.description))
     }
   }
 }

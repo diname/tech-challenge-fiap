@@ -28,6 +28,13 @@ export class EnvironmentVariableService {
     return this.configService.get<string>('APP_VERSION');
   }
 
+  get userTokenConfig(): { secret: string; expiresIn: number } {
+    return {
+      secret: this.configService.get<string>('USER_TOKEN_SECRET'),
+      expiresIn: this.configService.get<number>('USER_TOKEN_EXPIRES_IN'),
+    };
+  }
+
   get postgresConfig(): {
     port: number;
     host: string;
