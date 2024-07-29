@@ -29,7 +29,7 @@ export class OrderEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'double', nullable: false })
+  @Column({ type: 'double precision', nullable: false })
   totalPrice: number;
 
   @ManyToOne(() => UserEntity, (user) => user.orders)
