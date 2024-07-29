@@ -7,8 +7,12 @@ import { FindProductUseCase } from '@Application/use-cases/product/find-product.
 import { CreateUserUseCase } from '@Application/use-cases/user/create-user.use-case';
 import { GetOneUserUseCase } from '@Application/use-cases/user/get-one-user.use-case';
 import { CategoryEntity } from '@Domain/entities/category.entity';
+import { OrderEntity } from '@Domain/entities/order.entity';
 import { ProductEntity } from '@Domain/entities/product.entity';
+import { ProductOrderEntity } from '@Domain/entities/product_order.entity';
+import { RoleEntity } from '@Domain/entities/role.entity';
 import { UserEntity } from '@Domain/entities/user.entity';
+import { UserRoleEntity } from '@Domain/entities/user_role.entity';
 import { IProductRepositorySymbol } from '@Domain/repositories/product.repository';
 import { IUserRepositorySymbol } from '@Domain/repositories/user.repository';
 import { IAuthServiceSymbol } from '@Domain/services/auth.service';
@@ -32,8 +36,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     }),
     TypeOrmModule.forFeature([
       UserEntity,
+      UserRoleEntity,
+      RoleEntity,
       ProductEntity,
-      CategoryEntity
+      ProductOrderEntity,
+      OrderEntity,
+      CategoryEntity,
     ]),
     EnvironmentVariableModule.forRoot({ isGlobal: true }),
   ],
