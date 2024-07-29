@@ -16,7 +16,7 @@ export class CreateProductUseCase {
   async execute(command: CreateProductCommand): Promise<void> {
     const product = new ProductEntity();
     product.name = command.name;
-    product.categoryId = command.categoryId;
+    product.category.id = command.categoryId;
     product.description = command.description;
     product.price = command.price;
 
