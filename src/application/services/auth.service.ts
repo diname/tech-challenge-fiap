@@ -10,7 +10,7 @@ export class AuthService {
   constructor(
     private readonly getOneUserUseCase: GetOneUserUseCase,
     private readonly getTokenUserUseCase: GetTokenUserUseCase,
-  ) {}
+  ) { }
 
   async identifyUserByCpf(
     identifyUserDto: IdentifyUserDto,

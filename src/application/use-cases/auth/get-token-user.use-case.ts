@@ -10,7 +10,7 @@ export class GetTokenUserUseCase {
   constructor(
     @Inject(IAuthServiceSymbol)
     private readonly authService: IAuthService,
-  ) {}
+  ) { }
 
   async execute(userId: number): Promise<AccessTokenInterface> {
     const accessToken = await this.authService.generateUserToken(userId);

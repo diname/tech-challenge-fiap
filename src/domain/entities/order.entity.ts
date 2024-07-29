@@ -32,7 +32,11 @@ export class OrderEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'float', nullable: false, comment: 'Preço total do pedido' })
+  @Column({
+    type: 'double precision',
+    nullable: false,
+    comment: 'Preço total do pedido',
+  })
   totalPrice: number;
 
   @ManyToOne(() => UserEntity, (user) => user.orders)

@@ -6,7 +6,7 @@ import { CreateUserDto } from '@Shared/dto/request/create-user.dto';
 @Controller('user')
 @ApiTags('User')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<void> {
