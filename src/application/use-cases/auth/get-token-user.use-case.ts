@@ -12,7 +12,7 @@ export class GetTokenUserUseCase {
     private readonly authService: IAuthService,
   ) {}
 
-  async execute(userId: string): Promise<AccessTokenInterface> {
+  async execute(userId: number): Promise<AccessTokenInterface> {
     const accessToken = await this.authService.generateUserToken(userId);
     return { accessToken };
   }

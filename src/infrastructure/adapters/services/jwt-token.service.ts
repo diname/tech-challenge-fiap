@@ -10,7 +10,7 @@ export class JwtTokenService implements IAuthService {
     private readonly environmentVariableService: EnvironmentVariableService,
   ) {}
 
-  async generateUserToken(userId: string): Promise<string> {
+  async generateUserToken(userId: number): Promise<string> {
     const jwtPayload = { id: userId };
     const userTokenConfig = this.environmentVariableService.userTokenConfig;
 

@@ -1,5 +1,5 @@
 export interface IAuthService {
-  generateUserToken(userId: string): Promise<string>;
+  generateUserToken(userId: number): Promise<string>;
 }
 
 export const IAuthServiceSymbol = Symbol('IAuthService');

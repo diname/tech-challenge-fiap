@@ -3,7 +3,13 @@ import { UserService } from '@Application/services/user.service';
 import { GetTokenUserUseCase } from '@Application/use-cases/auth/get-token-user.use-case';
 import { CreateUserUseCase } from '@Application/use-cases/user/create-user.use-case';
 import { GetOneUserUseCase } from '@Application/use-cases/user/get-one-user.use-case';
+import { CategoryEntity } from '@Domain/entities/category.entity';
+import { OrderEntity } from '@Domain/entities/order.entity';
+import { ProductEntity } from '@Domain/entities/product.entity';
+import { ProductOrderEntity } from '@Domain/entities/product_order.entity';
+import { RoleEntity } from '@Domain/entities/role.entity';
 import { UserEntity } from '@Domain/entities/user.entity';
+import { UserRoleEntity } from '@Domain/entities/user_role.entity';
 import { IUserRepositorySymbol } from '@Domain/repositories/user.repository';
 import { IAuthServiceSymbol } from '@Domain/services/auth.service';
 import { AuthController } from '@Infrastructure/adapters/controllers/auth.controller';
@@ -23,8 +29,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       useClass: PostgresConfigService,
       inject: [PostgresConfigService],
     }),
-    TypeOrmModule.forFeature([UserEntity]),
-    EnvironmentVariableModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forFeature([
+      CategoryEntity,
+      OrderEntity,
+      ProductOrderEntity,
+      ProductEntity,
+      RoleEntity,
+      UserRoleEntity,
+      UserEntity,
+    ]),
+    EnvironmentVariableModule.forRoot({
+      isGlobal: true,
+    }),
   ],
   providers: [
     AuthService,

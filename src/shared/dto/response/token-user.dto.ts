@@ -2,10 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class TokenUserDto {
   @ApiProperty({
-    example: '0dc56514-8deb-4a73-af11-29b13000dda9',
+    example: 1,
     description: `User id`,
   })
-  userId: string;
+  userId: number;
 
   @ApiProperty({
     example:
