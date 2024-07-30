@@ -3,8 +3,8 @@ import { CreateProductUseCase } from '@Application/use-cases/product/create-prod
 import { FindProductUseCase } from '@Application/use-cases/product/find-product.use-case';
 import { ProductEntity } from '@Domain/entities/product.entity';
 import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from '@Shared/dto/request/create-product.dto';
-import { ResponseProductDto } from '@Shared/dto/response/reponse-product.dto';
+import { CreateProductDto } from '@Shared/dto/request/create-product.request.dto';
+import { ProductReponseDto } from '@Shared/dto/response/product.reponse.dto';
 
 @Injectable()
 export class ProductService {
@@ -24,12 +24,12 @@ export class ProductService {
     );
   }
 
-  async getProducts(): Promise<ResponseProductDto[]> {
+  async findProducts(): Promise<ProductReponseDto[]> {
     let products: ProductEntity[] = await this.findProductUsecase.execute();
     if (products) {
       return products.map(
         (product) =>
-          new ResponseProductDto(
+          new ProductReponseDto(
             product.name,
             product.category.id,
             product.price,

@@ -5,11 +5,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class TypeOrmProductRepository implements IProductRepository {
+export class ProductRepositoryImpl implements IProductRepository {
   constructor(
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,
-  ) { }
+  ) {}
 
   async find(): Promise<ProductEntity[]> {
     return await this.productRepository.find();
