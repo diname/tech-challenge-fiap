@@ -4,5 +4,6 @@ export class CreateProductCommand {
     public readonly categoryId: number,
     public readonly price: number,
     public readonly description: string,
-  ) { }
+    public readonly figureUrl: string,
+  ) {}
 }

@@ -24,12 +24,19 @@ export enum OrderStatusType {
   FINISHED = 'finished',
 }
 
-@Entity({ name: 'order' })
+@Entity({
+  name: 'order',
+  comment: 'Entidade que representa um pedido feito por um usuário.',
+})
 export class OrderEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'double precision', nullable: false })
+  @Column({
+    type: 'double precision',
+    nullable: false,
+    comment: 'Preço total do pedido',
+  })
   totalPrice: number;
 
   @ManyToOne(() => UserEntity, (user) => user.orders)
@@ -39,6 +46,7 @@ export class OrderEntity {
     type: 'enum',
     enum: PaymentStatusType,
     default: PaymentStatusType.PENDING,
+    comment: 'Status do pagamento do pedido',
   })
   paymentStatus: PaymentStatusType;
 
@@ -46,13 +54,24 @@ export class OrderEntity {
     type: 'enum',
     enum: OrderStatusType,
     default: OrderStatusType.NONE,
+    comment: 'Status do pedido',
   })
   orderStatus: OrderStatusType;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamp', nullable: false })
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamp',
+    nullable: false,
+    comment: 'Data de criação do pedido',
+  })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp', nullable: true })
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamp',
+    nullable: true,
+    comment: 'Data da última atualização do pedido',
+  })
   updatedAt?: Date;
 
   @OneToMany(() => ProductOrderEntity, (productOrder) => productOrder.order)

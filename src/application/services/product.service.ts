@@ -2,30 +2,41 @@ import { CreateProductCommand } from '@Application/commands/product/create-produ
 import { CreateProductUseCase } from '@Application/use-cases/product/create-product.use-case';
 import { FindProductUseCase } from '@Application/use-cases/product/find-product.use-case';
 import { ProductEntity } from '@Domain/entities/product.entity';
-import { TypeOrmProductRepository } from '@Infrastructure/adapters/persistence/typeorm-product.repository';
 import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from '@Shared/dto/request/create-product.dto';
-import { ResponseProductDto } from '@Shared/dto/response/reponse-product.dto';
+import { CreateProductDto } from '@Shared/dto/request/create-product.request.dto';
+import { ProductReponseDto } from '@Shared/dto/response/product.reponse.dto';
 
 @Injectable()
 export class ProductService {
-
   constructor(
-    private readonly productRepository: TypeOrmProductRepository,
     private readonly createProductUseCase: CreateProductUseCase,
-    private readonly findProductUsecase: FindProductUseCase
-  ) { }
+    private readonly findProductUsecase: FindProductUseCase,
+  ) {}
 
-  async createProduct({ name, categoryId, price, description }: CreateProductDto): Promise<void> {
+  async createProduct({
+    name,
+    categoryId,
+    price,
+    description,
+    figure,
+  }: CreateProductDto): Promise<void> {
     return this.createProductUseCase.execute(
-      new CreateProductCommand(name, categoryId, price, description),
+      new CreateProductCommand(name, categoryId, price, description, figure),
     );
   }
 
-  async getProducts(): Promise<ResponseProductDto[]> {
+  async findProducts(): Promise<ProductReponseDto[]> {
     let products: ProductEntity[] = await this.findProductUsecase.execute();
     if (products) {
-      return products.map(product => new ResponseProductDto(product.name, product.category.id, product.price, product.description))
+      return products.map((product) => {
+        let productResponseDto = {
+          category: product.category.name,
+          description: product.description,
+          name: product.name,
+          price: product.price,
+        } as ProductReponseDto;
+        return productResponseDto;
+      });
     }
   }
 }
