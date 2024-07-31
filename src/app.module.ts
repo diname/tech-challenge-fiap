@@ -35,7 +35,7 @@ import { ProductController } from '@Infrastructure/adapters/controllers/product.
 import { UserController } from '@Infrastructure/adapters/controllers/user.controller';
 import { OrderRepositoryImpl } from '@Infrastructure/adapters/persistence/order.repository.impl';
 import { ProductOrderRepositoryImpl } from '@Infrastructure/adapters/persistence/product-order.repository.impl';
-import { TypeOrmProductRepository } from '@Infrastructure/adapters/persistence/typeorm-product.repository';
+import { ProductRepositoryImpl } from '@Infrastructure/adapters/persistence/product.repository.impl';
 import { TypeOrmUserRepository } from '@Infrastructure/adapters/persistence/typeorm-user.repository';
 import { JwtTokenService } from '@Infrastructure/adapters/services/jwt-token.service';
 import { EnvironmentVariableModule } from '@Infrastructure/config/environment-variable/environment-variable.module';
@@ -89,7 +89,7 @@ import { PostgresConfigService } from '@Infrastructure/typeorm/postgres..config.
     },
     {
       provide: IProductRepositorySymbol,
-      useClass: TypeOrmProductRepository,
+      useClass: ProductRepositoryImpl,
     },
     {
       provide: IOrderRepositorySymbol,
