@@ -18,24 +18,25 @@ export class ProductService {
     categoryId,
     price,
     description,
+    figure,
   }: CreateProductDto): Promise<void> {
     return this.createProductUseCase.execute(
-      new CreateProductCommand(name, categoryId, price, description),
+      new CreateProductCommand(name, categoryId, price, description, figure),
     );
   }
 
   async findProducts(): Promise<ProductReponseDto[]> {
     let products: ProductEntity[] = await this.findProductUsecase.execute();
     if (products) {
-      return products.map(
-        (product) =>
-          new ProductReponseDto(
-            product.name,
-            product.category.id,
-            product.price,
-            product.description,
-          ),
-      );
+      return products.map((product) => {
+        let productResponseDto = {
+          category: product.category.name,
+          description: product.description,
+          name: product.name,
+          price: product.price,
+        } as ProductReponseDto;
+        return productResponseDto;
+      });
     }
   }
 }
