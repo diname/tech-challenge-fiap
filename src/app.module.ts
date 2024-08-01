@@ -40,6 +40,10 @@ import { TypeOrmUserRepository } from '@Infrastructure/adapters/persistence/type
 import { JwtTokenService } from '@Infrastructure/adapters/services/jwt-token.service';
 import { EnvironmentVariableModule } from '@Infrastructure/config/environment-variable/environment-variable.module';
 import { PostgresConfigService } from '@Infrastructure/typeorm/postgres..config.service';
+import { CategorySeeder } from '@Infrastructure/typeorm/seed/category.seeder';
+import { RoleSeeder } from '@Infrastructure/typeorm/seed/role.seeder';
+import { SeederProvider } from '@Infrastructure/typeorm/seed/seeder.provider';
+import { UserSeeder } from '@Infrastructure/typeorm/seed/user.seeder';
 
 @Module({
   imports: [
@@ -60,6 +64,10 @@ import { PostgresConfigService } from '@Infrastructure/typeorm/postgres..config.
     EnvironmentVariableModule.forRoot({ isGlobal: true }),
   ],
   providers: [
+    SeederProvider,
+    CategorySeeder,
+    UserSeeder,
+    RoleSeeder,
     AuthService,
     UserService,
     GetTokenUserUseCase,
