@@ -1,18 +1,25 @@
-import { ProductEntity } from '@Domain/entities/product.entity';
 import {
-    IProductRepository,
-    IProductRepositorySymbol,
-} from '@Domain/repositories/product.repository';
+  IProductService,
+  IProductServiceSymbol,
+} from '@Domain/services/product/product.service';
 import { Inject, Injectable } from '@nestjs/common';
+import { ProductReponseDto } from 'src/api/dto/response/product.reponse.dto';
 
 @Injectable()
 export class FindProductUseCase {
-    constructor(
-        @Inject(IProductRepositorySymbol)
-        private readonly productRepository: IProductRepository,
-    ) { }
+  constructor(
+    @Inject(IProductServiceSymbol)
+    private readonly productService: IProductService,
+  ) {}
 
-    async execute(): Promise<ProductEntity[]> {
-        return await this.productRepository.find();
-    }
+  async execute(): Promise<ProductReponseDto[]> {
+    var products = await this.productService.findProducts();
+    return products.map((product) => {
+      const response = new ProductReponseDto();
+      response.name = product.name;
+      response.description = product.description;
+      response.price = product.price;
+      return response;
+    });
+  }
 }

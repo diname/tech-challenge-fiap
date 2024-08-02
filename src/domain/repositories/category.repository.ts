@@ -1,4 +1,4 @@
-import { CategoryEntity } from '@Domain/entities/category.entity';
+import { CategoryEntity } from '@Infrastructure/entities/category.entity';
 
 export interface ICategoryRepository {
   save(product: CategoryEntity): Promise<void>;

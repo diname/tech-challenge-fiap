@@ -1,4 +1,4 @@
-import { CategoryEntity } from '@Domain/entities/category.entity';
+import { CategoryEntity } from '@Infrastructure/entities/category.entity';
 import { Injectable } from '@nestjs/common';
 import { Connection } from 'typeorm';
 import { SeederBase } from './seed-base.seeder';

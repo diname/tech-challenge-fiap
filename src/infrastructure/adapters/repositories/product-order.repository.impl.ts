@@ -1,5 +1,5 @@
-import { ProductOrderEntity } from '@Domain/entities/product_order.entity';
 import { IProductOrderRepository } from '@Domain/repositories/product-order.repository';
+import { ProductOrderEntity } from '@Infrastructure/entities/product_order.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
