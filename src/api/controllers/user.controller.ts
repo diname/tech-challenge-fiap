@@ -23,7 +23,7 @@ export class UserController {
         name: createCustomerUserDto.username,
         email: createCustomerUserDto.email,
         cpf: createCustomerUserDto.cpf,
-        role: UserRoleEnum.CUSTOMER,
+        roles: [UserRoleEnum.CUSTOMER],
       },
     });
   }
@@ -44,7 +44,7 @@ export class UserController {
         name: createUserDto.username,
         email: createUserDto.email,
         password: createUserDto.password,
-        role: UserRoleEnum.PREP_LINE,
+        roles: [UserRoleEnum.PREP_LINE],
       },
     });
   }

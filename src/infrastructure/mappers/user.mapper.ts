@@ -7,6 +7,7 @@ export class UserMapper {
     userModel.id = userEntity.id;
     userModel.name = userEntity.name;
     userModel.cpf = userEntity.cpf;
+    userModel.password = userEntity.password;
     userModel.createdAt = userEntity.createdAt;
     userModel.updatedAt = userEntity.updatedAt;
     userModel.deletedAt = userEntity.deletedAt;

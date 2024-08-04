@@ -5,7 +5,7 @@ export class CreateUserCommand {
     public readonly user: {
       name: string;
       email: string;
-      role: UserRoleEnum;
+      roles: UserRoleEnum[];
       cpf?: string;
       password?: string;
     },

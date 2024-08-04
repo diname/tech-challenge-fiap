@@ -3,7 +3,6 @@ import {
   IUserRepository,
   IUserRepositorySymbol,
 } from '@Domain/repositories/user.repository';
-import { UserMapper } from '@Infrastructure/mappers/user.mapper';
 import { Inject, Injectable } from '@nestjs/common';
 import { IUserService } from './user.service';
 
@@ -15,7 +14,7 @@ export class UserServiceImpl implements IUserService {
   ) {}
 
   async create(userModel: UserModel): Promise<void> {
-    await this.userRepository.save(UserMapper.toEntity(userModel));
+    await this.userRepository.save(userModel);
   }
 
   async getOne(filter: { cpf?: string; email?: string }): Promise<UserModel> {

@@ -14,13 +14,6 @@ export class CreateUserUseCase {
   ) {}
 
   async execute(command: CreateUserCommand): Promise<void> {
-    // TODO: Adicionar o role no model e cadastrar no repository
-    const user = new UserModel();
-    user.name = command.user.name;
-    user.email = command.user.email;
-    user.cpf = command.user.cpf;
-    user.password = command.user.password;
-
-    await this.userService.create(user);
+    await this.userService.create(new UserModel({ ...command.user }));
   }
 }
