@@ -17,8 +17,12 @@ import { GetOneUserUseCase } from '@Application/use-cases/user/get-one-user.use-
 import { IOrderRepositorySymbol } from '@Domain/repositories/order.repository';
 import { IProductOrderRepositorySymbol } from '@Domain/repositories/product-order.repository';
 import { IProductRepositorySymbol } from '@Domain/repositories/product.repository';
-import { IOrderServiceSymbol } from '@Domain/services/order/order.service';
+import { IUserRepositorySymbol } from '@Domain/repositories/user.repository';
+import { IAuthServiceSymbol } from '@Domain/services/auth/auth.service';
 import { OrderServiceImpl } from '@Domain/services/order/order.service.impl';
+
+import { FindProductByCategoryUseCase } from '@Application/use-cases/product/find-product-by-category.use-case';
+import { IOrderServiceSymbol } from '@Domain/services/order/order.service';
 import { IProductServiceSymbol } from '@Domain/services/product/product.service';
 import { ProductServiceImpl } from '@Domain/services/product/product.serviceImpl';
 import { OrderRepositoryImpl } from '@Infrastructure/adapters/repositories/order.repository.impl';
@@ -26,8 +30,6 @@ import { ProductOrderRepositoryImpl } from '@Infrastructure/adapters/repositorie
 import { ProductRepositoryImpl } from '@Infrastructure/adapters/repositories/product.repository.impl';
 
 import { GetTokenUseCase } from '@Application/use-cases/auth/get-token.use-case';
-import { IUserRepositorySymbol } from '@Domain/repositories/user.repository';
-import { IAuthServiceSymbol } from '@Domain/services/auth/auth.service';
 import { IUserServiceSymbol } from '@Domain/services/user/user.service';
 import { UserServiceImpl } from '@Domain/services/user/user.serviceImp';
 import { UserRepositoryImpl } from '@Infrastructure/adapters/repositories/user.repository.impl';
@@ -84,6 +86,7 @@ import { UserController } from './api/controllers/user.controller';
     CreateProductUseCase,
     UpdateProductUseCase,
     FindProductUseCase,
+    FindProductByCategoryUseCase,
     DeleteProductUseCase,
     GetTokenUseCase,
     {

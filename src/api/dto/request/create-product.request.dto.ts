@@ -18,8 +18,8 @@ export class CreateProductDto {
   categoryId: number;
 
   @ApiProperty({
-    example: '1',
-    description: `Product categories`,
+    example: '10',
+    description: `Product price`,
   })
   @IsNumber()
   price: number;
@@ -34,9 +34,9 @@ export class CreateProductDto {
 
   @ApiProperty({
     example: 'lanche.png',
-    description: `foto do produto`,
+    description: `product photo`,
   })
   @IsString()
   @IsNotEmpty()
-  figure: string;
+  figureUrl: string;
 }

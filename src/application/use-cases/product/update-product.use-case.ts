@@ -21,6 +21,7 @@ export class UpdateProductUseCase {
       command.price,
       command.figureUrl,
       command.enable,
+      command.categoryId,
     );
     return await this.productService.update(product);
   }

@@ -1,4 +1,6 @@
 export class ProductModel {
+  public categoryName: string;
+
   constructor(
     public id: number,
     public name: string,
@@ -6,5 +8,6 @@ export class ProductModel {
     public price: number,
     public figureUrl: string,
     public enabled: boolean,
+    public categoryId: number,
   ) {}
 }

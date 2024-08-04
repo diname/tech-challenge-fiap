@@ -21,6 +21,7 @@ export class CreateProductUseCase {
       command.price,
       command.figureUrl,
       true,
+      command.categoryId,
     );
 
     await this.productService.create(product);

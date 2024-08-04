@@ -1,26 +1,25 @@
-import { ProductReponseDto } from '@Api/dto/response/product.reponse.dto';
 import {
   IProductService,
   IProductServiceSymbol,
 } from '@Domain/services/product/product.service';
 import { Inject, Injectable } from '@nestjs/common';
+import { ProductReponseDto } from 'src/api/dto/response/product.reponse.dto';
 
 @Injectable()
-export class FindProductUseCase {
+export class FindProductByCategoryUseCase {
   constructor(
     @Inject(IProductServiceSymbol)
     private readonly productService: IProductService,
   ) {}
 
-  async execute(): Promise<ProductReponseDto[]> {
-    const products = await this.productService.findProducts();
+  async execute(categoryId: number): Promise<ProductReponseDto[]> {
+    var products = await this.productService.findProductsByCategory(categoryId);
     return products.map((product) => {
       const response = new ProductReponseDto();
-      response.id = product.id;
-      response.name = product.name;
+      (response.id = product.id), (response.name = product.name);
       response.description = product.description;
-      response.price = product.price;
       response.category = product.categoryName;
+      response.price = product.price;
       return response;
     });
   }
