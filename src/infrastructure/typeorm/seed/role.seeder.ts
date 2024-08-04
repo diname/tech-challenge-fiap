@@ -1,4 +1,4 @@
-import { RoleEntity } from '@Domain/entities/role.entity';
+import { RoleEntity } from '@Infrastructure/entities/role.entity';
 import { Injectable } from '@nestjs/common';
 import { Connection } from 'typeorm';
 import { SeederBase } from './seed-base.seeder';

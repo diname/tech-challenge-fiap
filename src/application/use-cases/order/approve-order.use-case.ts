@@ -2,7 +2,7 @@ import { ApproveOrderCommand } from '@Application/commands/order/approve-order.c
 import {
   IOrderService,
   IOrderServiceSymbol,
-} from '@Domain/services/order.service';
+} from '@Domain/services/order/order.service';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { CreateProductCommand } from '@Application/commands/product/create-product.command';
+import { UpdateProductCommand } from '@Application/commands/product/update-product.command';
 import { ProductModel } from '@Domain/models/product.model';
 import {
   IProductService,
@@ -7,23 +7,22 @@ import {
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
-export class CreateProductUseCase {
+export class UpdateProductUseCase {
   constructor(
     @Inject(IProductServiceSymbol)
     private readonly productService: IProductService,
   ) {}
 
-  async execute(command: CreateProductCommand): Promise<void> {
+  async execute(command: UpdateProductCommand): Promise<void> {
     const product = new ProductModel(
-      0, // que fazer com esse parametro? o id é gerado pela base
+      command.id,
       command.name,
       command.description,
       command.price,
       command.figureUrl,
-      true,
+      command.enable,
       command.categoryId,
     );
-
-    await this.productService.create(product);
+    return await this.productService.update(product);
   }
 }

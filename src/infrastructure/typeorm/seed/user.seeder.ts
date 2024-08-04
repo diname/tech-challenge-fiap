@@ -1,4 +1,4 @@
-import { UserEntity } from '@Domain/entities/user.entity';
+import { UserEntity } from '@Infrastructure/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { Connection } from 'typeorm';
 import { SeederBase } from './seed-base.seeder';

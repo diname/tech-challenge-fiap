@@ -2,7 +2,7 @@ import { CancelOrderCommand } from '@Application/commands/order/cancel-order.com
 import {
   IOrderService,
   IOrderServiceSymbol,
-} from '@Domain/services/order.service';
+} from '@Domain/services/order/order.service';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()

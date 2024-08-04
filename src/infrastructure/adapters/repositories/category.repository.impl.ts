@@ -1,5 +1,5 @@
-import { CategoryEntity } from '@Domain/entities/category.entity';
 import { ICategoryRepository } from '@Domain/repositories/category.repository';
+import { CategoryEntity } from '@Infrastructure/entities/category.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
