@@ -1,12 +1,12 @@
 import { ApproveOrderUseCase } from '@Application/use-cases/order/approve-order.use-case';
+import { CancelOrderUseCase } from '@Application/use-cases/order/cancel-order.use-case';
+import { CreateOrderUseCase } from '@Application/use-cases/order/create-order.use-case';
 import { FindAllOrdersUseCase } from '@Application/use-cases/order/find-all-orders.use-case';
+import { FindOrderByIdUseCase } from '@Application/use-cases/order/find-order-by-id.use-case';
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { OrderResponseDto } from '@Shared/dto/response/order.respose.dto';
-import { CancelOrderUseCase } from '../../../application/use-cases/order/cancel-order.use-case';
-import { CreateOrderUseCase } from '../../../application/use-cases/order/create-order.use-case';
-import { FindOrderByIdUseCase } from '../../../application/use-cases/order/find-order-by-id.use-case';
-import { CreateOrderRequestDto } from '../../../shared/dto/request/create-order.request.dto';
+import { OrderResponseDto } from 'src/api/dto/response/order.respose.dto';
+import { CreateOrderRequestDto } from '../dto/request/create-order.request.dto';
 
 @ApiTags('Orders')
 @Controller('orders')

@@ -2,7 +2,7 @@ import { ApproveOrderCommand } from '@Application/commands/order/approve-order.c
 import { CancelOrderCommand } from '@Application/commands/order/cancel-order.command';
 import { CreateOrderCommand } from '@Application/commands/order/create-order.command';
 import { FindOrderByIdCommand } from '@Application/commands/order/find-order-by-id.command';
-import { OrderEntity } from '../entities/order.entity';
+import { OrderEntity } from '../../infrastructure/entities/order.entity';
 
 export interface IOrderRepository {
   createOrder(command: CreateOrderCommand): Promise<OrderEntity>;

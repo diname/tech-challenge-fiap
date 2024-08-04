@@ -2,9 +2,9 @@ import { FindOrderByIdCommand } from '@Application/commands/order/find-order-by-
 import {
   IOrderService,
   IOrderServiceSymbol,
-} from '@Domain/services/order.service';
+} from '@Domain/services/order/order.service';
 import { Inject, Injectable } from '@nestjs/common';
-import { OrderResponseDto } from '@Shared/dto/response/order.respose.dto';
+import { OrderResponseDto } from 'src/api/dto/response/order.respose.dto';
 
 @Injectable()
 export class FindOrderByIdUseCase {

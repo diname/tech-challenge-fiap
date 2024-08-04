@@ -1,4 +1,4 @@
-import { IAuthService } from '@Domain/services/auth.service';
+import { IAuthService } from '@Domain/services/auth/auth.service';
 import { EnvironmentVariableService } from '@Infrastructure/config/environment-variable/environment-variable.service';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -8,7 +8,7 @@ export class JwtTokenService implements IAuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly environmentVariableService: EnvironmentVariableService,
-  ) { }
+  ) {}
 
   async generateUserToken(userId: number): Promise<string> {
     const jwtPayload = { id: userId };

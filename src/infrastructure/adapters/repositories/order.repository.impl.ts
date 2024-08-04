@@ -2,12 +2,12 @@ import { ApproveOrderCommand } from '@Application/commands/order/approve-order.c
 import { CancelOrderCommand } from '@Application/commands/order/cancel-order.command';
 import { CreateOrderCommand } from '@Application/commands/order/create-order.command';
 import { FindOrderByIdCommand } from '@Application/commands/order/find-order-by-id.command';
+import { IOrderRepository } from '@Domain/repositories/order.repository';
 import {
   OrderEntity,
   OrderStatusType,
   PaymentStatusType,
-} from '@Domain/entities/order.entity';
-import { IOrderRepository } from '@Domain/repositories/order.repository';
+} from '@Infrastructure/entities/order.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

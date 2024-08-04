@@ -1,7 +1,7 @@
 import {
   OrderStatusType,
   PaymentStatusType,
-} from '@Domain/entities/order.entity';
+} from '@Infrastructure/entities/order.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 class ProductOrderDto {

@@ -2,10 +2,10 @@ import { CreateOrderCommand } from '@Application/commands/order/create-order.com
 import {
   IOrderService,
   IOrderServiceSymbol,
-} from '@Domain/services/order.service';
+} from '@Domain/services/order/order.service';
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateOrderRequestDto } from '@Shared/dto/request/create-order.request.dto';
-import { OrderResponseDto } from '@Shared/dto/response/order.respose.dto';
+import { CreateOrderRequestDto } from 'src/api/dto/request/create-order.request.dto';
+import { OrderResponseDto } from 'src/api/dto/response/order.respose.dto';
 
 @Injectable()
 export class CreateOrderUseCase {

@@ -2,15 +2,15 @@ import { GetOneUserCommand } from '@Application/commands/user/get-one-user.comma
 import { GetTokenUserUseCase } from '@Application/use-cases/auth/get-token-user.use-case';
 import { GetOneUserUseCase } from '@Application/use-cases/user/get-one-user.use-case';
 import { Injectable } from '@nestjs/common';
-import { IdentifyUserDto } from '@Shared/dto/request/identify-user.dto';
-import { TokenUserDto } from '@Shared/dto/response/token-user.dto';
+import { IdentifyUserDto } from 'src/api/dto/request/identify-user.dto';
+import { TokenUserDto } from 'src/api/dto/response/token-user.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly getOneUserUseCase: GetOneUserUseCase,
     private readonly getTokenUserUseCase: GetTokenUserUseCase,
-  ) { }
+  ) {}
 
   async identifyUserByCpf(
     identifyUserDto: IdentifyUserDto,

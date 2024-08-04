@@ -1,9 +1,9 @@
 import { GetOneUserCommand } from '@Application/commands/user/get-one-user.command';
-import { UserEntity } from '@Domain/entities/user.entity';
 import {
   IUserRepository,
   IUserRepositorySymbol,
 } from '@Domain/repositories/user.repository';
+import { UserEntity } from '@Infrastructure/entities/user.entity';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()

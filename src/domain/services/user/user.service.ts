@@ -1,7 +1,7 @@
 import { CreateUserCommand } from '@Application/commands/user/create-user.command';
 import { CreateUserUseCase } from '@Application/use-cases/user/create-user.use-case';
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from '@Shared/dto/request/create-user.dto';
+import { CreateUserDto } from 'src/api/dto/request/create-user.dto';
 
 @Injectable()
 export class UserService {
