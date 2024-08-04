@@ -6,7 +6,7 @@ import { SeederBase } from './seed-base.seeder';
 @Injectable()
 export class UserSeeder extends SeederBase<UserEntity> {
   constructor(connection: Connection) {
-    let repository = connection.getRepository(UserEntity);
+    const repository = connection.getRepository(UserEntity);
     super(repository);
     this.tableName = 'User';
   }

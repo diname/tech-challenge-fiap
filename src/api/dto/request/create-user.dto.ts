@@ -15,12 +15,14 @@ export class CreateUserDto {
     description: `User's email`,
   })
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
   @ApiProperty({
-    example: '90209432004',
-    description: `User's cpf - identification`,
+    example: 'frederico11@gmail.com',
+    description: `User's email`,
   })
   @IsString()
-  cpf: string;
+  @IsNotEmpty()
+  password: string;
 }

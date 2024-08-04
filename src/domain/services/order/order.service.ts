@@ -1,8 +1,8 @@
+import { OrderResponseDto } from '@Api/dto/response/order.respose.dto';
 import { ApproveOrderCommand } from '@Application/commands/order/approve-order.command';
 import { CancelOrderCommand } from '@Application/commands/order/cancel-order.command';
 import { CreateOrderCommand } from '@Application/commands/order/create-order.command';
 import { FindOrderByIdCommand } from '@Application/commands/order/find-order-by-id.command';
-import { OrderResponseDto } from 'src/api/dto/response/order.respose.dto';
 
 export interface IOrderService {
   createOrder(command: CreateOrderCommand): Promise<OrderResponseDto>;

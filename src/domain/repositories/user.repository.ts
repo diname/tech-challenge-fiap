@@ -1,8 +1,9 @@
-import { UserEntity } from '@Infrastructure/entities/user.entity';
+import { UserModel } from '@Domain/models/user.model';
 
 export interface IUserRepository {
-  save(user: UserEntity): Promise<void>;
-  getUserByCpf(cpf: string): Promise<UserEntity>;
+  save(user: UserModel): Promise<void>;
+  getUserByCpf(cpf: string): Promise<UserModel>;
+  getUserByEmail(email: string): Promise<UserModel>;
 }
 
 export const IUserRepositorySymbol = Symbol('IUserRepository');
