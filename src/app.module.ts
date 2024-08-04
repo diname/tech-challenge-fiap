@@ -22,6 +22,7 @@ import { UserService } from '@Domain/services/user/user.service';
 
 import { CreateProductUseCase } from '@Application/use-cases/product/create-product.use-case';
 import { DeleteProductUseCase } from '@Application/use-cases/product/delete-product.use-case';
+import { FindProductByCategoryUseCase } from '@Application/use-cases/product/find-product-by-category.use-case';
 import { FindProductUseCase } from '@Application/use-cases/product/find-product.use-case';
 import { UpdateProductUseCase } from '@Application/use-cases/product/update-product.use-case';
 import { IOrderServiceSymbol } from '@Domain/services/order/order.service';
@@ -88,6 +89,7 @@ import { UserController } from './api/controllers/user.controller';
     CreateProductUseCase,
     UpdateProductUseCase,
     FindProductUseCase,
+    FindProductByCategoryUseCase,
     DeleteProductUseCase,
 
     {

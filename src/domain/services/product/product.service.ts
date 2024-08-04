@@ -5,6 +5,7 @@ export interface IProductService {
   update(productModel: ProductModel): Promise<void>;
   delete(id: number): Promise<void>;
   findProducts(): Promise<ProductModel[]>;
+  findProductsByCategory(categoryId: number): Promise<ProductModel[]>;
 }
 
 export const IProductServiceSymbol = Symbol('ProductServiceImpl');

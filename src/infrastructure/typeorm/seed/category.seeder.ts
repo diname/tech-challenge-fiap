@@ -14,7 +14,8 @@ export class CategorySeeder extends SeederBase<CategoryEntity> {
   protected dataToSeed(): CategoryEntity[] {
     return [
       { id: 1, name: 'Lanche' },
-      { id: 2, name: 'entidade' },
+      { id: 2, name: 'Bebida' },
+      { id: 3, name: 'Acompanhamento' },
     ] as CategoryEntity[];
   }
 }

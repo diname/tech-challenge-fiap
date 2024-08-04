@@ -3,7 +3,6 @@ import {
   IProductRepository,
   IProductRepositorySymbol,
 } from '@Domain/repositories/product.repository';
-import { ProductMapper } from '@Infrastructure/mappers/product.mapper';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -14,15 +13,19 @@ export class ProductServiceImpl {
   ) {}
 
   create(productModel: ProductModel): Promise<void> {
-    return this.productRepository.save(ProductMapper.toEntity(productModel));
+    return this.productRepository.save(productModel);
   }
   update(productModel: ProductModel): Promise<void> {
-    return this.productRepository.update(ProductMapper.toEntity(productModel));
+    return this.productRepository.update(productModel);
   }
   delete(id: number): Promise<void> {
     return this.productRepository.delete(id);
   }
   findProducts(): Promise<ProductModel[]> {
     return this.productRepository.findAll();
+  }
+
+  findProductsByCategory(categoryId: number): Promise<ProductModel[]> {
+    return this.productRepository.findByCategory(categoryId);
   }
 }

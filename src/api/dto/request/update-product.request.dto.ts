@@ -34,7 +34,7 @@ export class UpdateProductDto {
 
   @IsString()
   @IsNotEmpty()
-  figure: string;
+  figureUrl: string;
 
   @IsBoolean()
   enable: boolean;
