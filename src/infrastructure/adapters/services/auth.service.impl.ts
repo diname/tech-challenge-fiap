@@ -4,13 +4,13 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
-export class JwtTokenService implements IAuthService {
+export class AuthServiceImpl implements IAuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly environmentVariableService: EnvironmentVariableService,
   ) {}
 
-  async generateUserToken(userId: number): Promise<string> {
+  async generateToken(userId: number): Promise<string> {
     const jwtPayload = { id: userId };
     const userTokenConfig = this.environmentVariableService.userTokenConfig;
 

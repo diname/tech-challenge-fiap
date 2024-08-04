@@ -2,36 +2,36 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { GetTokenUserUseCase } from '@Application/use-cases/auth/get-token-user.use-case';
 import { ApproveOrderUseCase } from '@Application/use-cases/order/approve-order.use-case';
 import { CancelOrderUseCase } from '@Application/use-cases/order/cancel-order.use-case';
 import { CreateOrderUseCase } from '@Application/use-cases/order/create-order.use-case';
 import { FindAllOrdersUseCase } from '@Application/use-cases/order/find-all-orders.use-case';
 import { FindOrderByIdUseCase } from '@Application/use-cases/order/find-order-by-id.use-case';
 
+import { CreateProductUseCase } from '@Application/use-cases/product/create-product.use-case';
+import { DeleteProductUseCase } from '@Application/use-cases/product/delete-product.use-case';
+import { FindProductUseCase } from '@Application/use-cases/product/find-product.use-case';
+import { UpdateProductUseCase } from '@Application/use-cases/product/update-product.use-case';
 import { CreateUserUseCase } from '@Application/use-cases/user/create-user.use-case';
 import { GetOneUserUseCase } from '@Application/use-cases/user/get-one-user.use-case';
 import { IOrderRepositorySymbol } from '@Domain/repositories/order.repository';
 import { IProductOrderRepositorySymbol } from '@Domain/repositories/product-order.repository';
 import { IProductRepositorySymbol } from '@Domain/repositories/product.repository';
-import { IUserRepositorySymbol } from '@Domain/repositories/user.repository';
-import { IAuthServiceSymbol } from '@Domain/services/auth/auth.service';
-import { AuthService } from '@Domain/services/auth/auth.serviceImpl';
-import { OrderServiceImpl } from '@Domain/services/order/order.service.impl';
-import { UserService } from '@Domain/services/user/user.service';
-
-import { CreateProductUseCase } from '@Application/use-cases/product/create-product.use-case';
-import { DeleteProductUseCase } from '@Application/use-cases/product/delete-product.use-case';
-import { FindProductUseCase } from '@Application/use-cases/product/find-product.use-case';
-import { UpdateProductUseCase } from '@Application/use-cases/product/update-product.use-case';
 import { IOrderServiceSymbol } from '@Domain/services/order/order.service';
+import { OrderServiceImpl } from '@Domain/services/order/order.service.impl';
 import { IProductServiceSymbol } from '@Domain/services/product/product.service';
 import { ProductServiceImpl } from '@Domain/services/product/product.serviceImpl';
 import { OrderRepositoryImpl } from '@Infrastructure/adapters/repositories/order.repository.impl';
 import { ProductOrderRepositoryImpl } from '@Infrastructure/adapters/repositories/product-order.repository.impl';
 import { ProductRepositoryImpl } from '@Infrastructure/adapters/repositories/product.repository.impl';
-import { TypeOrmUserRepository } from '@Infrastructure/adapters/repositories/user.repository.impl';
-import { JwtTokenService } from '@Infrastructure/adapters/services/jwt-token.service';
+
+import { GetTokenUseCase } from '@Application/use-cases/auth/get-token.use-case';
+import { IUserRepositorySymbol } from '@Domain/repositories/user.repository';
+import { IAuthServiceSymbol } from '@Domain/services/auth/auth.service';
+import { IUserServiceSymbol } from '@Domain/services/user/user.service';
+import { UserServiceImpl } from '@Domain/services/user/user.serviceImp';
+import { UserRepositoryImpl } from '@Infrastructure/adapters/repositories/user.repository.impl';
+import { AuthServiceImpl } from '@Infrastructure/adapters/services/auth.service.impl';
 import { PostgresConfigService } from '@Infrastructure/adapters/services/postgres..config.service';
 import { EnvironmentVariableModule } from '@Infrastructure/config/environment-variable/environment-variable.module';
 import { CategoryEntity } from '@Infrastructure/entities/category.entity';
@@ -69,17 +69,13 @@ import { UserController } from './api/controllers/user.controller';
     EnvironmentVariableModule.forRoot({ isGlobal: true }),
   ],
   providers: [
-    SeederProvider,
-    CategorySeeder,
     UserSeeder,
     RoleSeeder,
-    AuthService,
-    UserService,
+    SeederProvider,
+    CategorySeeder,
     ProductServiceImpl,
-    GetTokenUserUseCase,
     CreateUserUseCase,
     GetOneUserUseCase,
-    JwtTokenService,
     CreateOrderUseCase,
     FindOrderByIdUseCase,
     FindAllOrdersUseCase,
@@ -89,18 +85,22 @@ import { UserController } from './api/controllers/user.controller';
     UpdateProductUseCase,
     FindProductUseCase,
     DeleteProductUseCase,
-
-    {
-      provide: IOrderServiceSymbol,
-      useClass: OrderServiceImpl,
-    },
+    GetTokenUseCase,
     {
       provide: IAuthServiceSymbol,
-      useClass: JwtTokenService,
+      useClass: AuthServiceImpl,
+    },
+    {
+      provide: IUserServiceSymbol,
+      useClass: UserServiceImpl,
     },
     {
       provide: IUserRepositorySymbol,
-      useClass: TypeOrmUserRepository,
+      useClass: UserRepositoryImpl,
+    },
+    {
+      provide: IOrderServiceSymbol,
+      useClass: OrderServiceImpl,
     },
     {
       provide: IProductRepositorySymbol,

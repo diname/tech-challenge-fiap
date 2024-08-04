@@ -1,3 +1,3 @@
 export class GetOneUserCommand {
-  constructor(public readonly fields: { cpf?: string; email?: string }) {}
+  constructor(public readonly filter: { cpf?: string; email?: string }) {}
 }

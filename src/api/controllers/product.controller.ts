@@ -1,3 +1,4 @@
+import { CreateProductDto } from '@Api/dto/request/create-product.request.dto';
 import { CreateProductCommand } from '@Application/commands/product/create-product.command';
 import { UpdateProductCommand } from '@Application/commands/product/update-product.command';
 import { CreateProductUseCase } from '@Application/use-cases/product/create-product.use-case';
@@ -14,7 +15,6 @@ import {
   Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateProductDto } from 'src/api/dto/request/create-product.request.dto';
 import { UpdateProductDto } from '../dto/request/update-product.request.dto';
 import { ProductReponseDto } from '../dto/response/product.reponse.dto';
 

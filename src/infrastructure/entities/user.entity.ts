@@ -29,16 +29,24 @@ export class UserEntity {
     nullable: false,
     comment: 'Email do usuário',
   })
+  @Index()
   email: string;
 
   @Column({
     length: 11,
     unique: true,
-    nullable: false,
+    nullable: true,
     comment: 'CPF do usuário',
   })
   @Index()
   cpf: string;
+
+  @Column({
+    length: 60,
+    nullable: true,
+    comment: 'Senha dos usuários administradores',
+  })
+  password: string;
 
   @CreateDateColumn({
     name: 'created_at',

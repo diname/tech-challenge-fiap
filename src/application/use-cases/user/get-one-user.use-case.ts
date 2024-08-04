@@ -1,23 +1,21 @@
 import { GetOneUserCommand } from '@Application/commands/user/get-one-user.command';
+import { UserModel } from '@Domain/models/user.model';
 import {
-  IUserRepository,
-  IUserRepositorySymbol,
-} from '@Domain/repositories/user.repository';
-import { UserEntity } from '@Infrastructure/entities/user.entity';
+  IUserService,
+  IUserServiceSymbol,
+} from '@Domain/services/user/user.service';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class GetOneUserUseCase {
   constructor(
-    @Inject(IUserRepositorySymbol)
-    private readonly userRepository: IUserRepository,
+    @Inject(IUserServiceSymbol)
+    private readonly userService: IUserService,
   ) {}
 
-  async execute({
-    fields,
-  }: GetOneUserCommand): Promise<UserEntity | null | undefined> {
-    if (fields.cpf) {
-      return this.userRepository.getUserByCpf(fields.cpf);
-    }
+  async execute(
+    command: GetOneUserCommand,
+  ): Promise<UserModel | null | undefined> {
+    return this.userService.getOne({ ...command.filter });
   }
 }
