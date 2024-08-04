@@ -21,7 +21,7 @@ import { UpdateProductDto } from '../dto/request/update-product.request.dto';
 import { ProductReponseDto } from '../dto/response/product.reponse.dto';
 
 @Controller('products')
-@ApiTags('products')
+@ApiTags('Products')
 export class ProductController {
   constructor(
     private readonly createProductUseCase: CreateProductUseCase,
@@ -77,7 +77,6 @@ export class ProductController {
   async findByCategory(
     @Param('id') categoryId: number,
   ): Promise<ProductReponseDto[]> {
-    console.log(`parametro do controller ${categoryId}`);
     return this.findProductByCategoryUseCase.execute(categoryId);
   }
 
