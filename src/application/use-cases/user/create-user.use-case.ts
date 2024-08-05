@@ -1,5 +1,5 @@
 import { CreateUserCommand } from '@Application/commands/user/create-user.command';
-import { UserModel } from '@Domain/models/user.model';
+import { UserEntity } from '@Domain/entities/user.entity';
 import {
   IUserService,
   IUserServiceSymbol,
@@ -14,6 +14,6 @@ export class CreateUserUseCase {
   ) {}
 
   async execute(command: CreateUserCommand): Promise<void> {
-    await this.userService.create(new UserModel({ ...command.user }));
+    await this.userService.create(new UserEntity({ ...command.user }));
   }
 }

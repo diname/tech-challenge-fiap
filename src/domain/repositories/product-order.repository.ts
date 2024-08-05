@@ -1,5 +1,3 @@
-import { ProductOrderEntity } from '../../infrastructure/entities/product_order.entity';
-
 export interface IProductOrderRepository {
   createProductOrders(
     productOrders: ProductOrderEntity[],

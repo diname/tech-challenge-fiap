@@ -1,10 +1,10 @@
-import { ProductModel } from '@Domain/models/product.model';
+import { ProductEntity } from '@Domain/entities/product.entity';
 
 export interface IProductRepository {
-  save(product: ProductModel): Promise<void>;
-  findAll(): Promise<ProductModel[]>;
-  findByCategory(categoryId: number): Promise<ProductModel[]>;
-  update(product: ProductModel);
+  save(product: ProductEntity): Promise<void>;
+  findAll(): Promise<ProductEntity[]>;
+  findByCategory(categoryId: number): Promise<ProductEntity[]>;
+  update(product: ProductEntity);
   delete(id: number);
 }
 

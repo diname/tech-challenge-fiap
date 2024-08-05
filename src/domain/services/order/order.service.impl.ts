@@ -11,7 +11,7 @@ import {
   IProductOrderRepository,
   IProductOrderRepositorySymbol,
 } from '@Domain/repositories/product-order.repository';
-import { ProductOrderEntity } from '@Infrastructure/entities/product_order.entity';
+import { ProductOrderEntity } from '@Infrastructure/models/product_order.entity';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()

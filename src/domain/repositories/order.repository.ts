@@ -2,14 +2,14 @@ import { ApproveOrderCommand } from '@Application/commands/order/approve-order.c
 import { CancelOrderCommand } from '@Application/commands/order/cancel-order.command';
 import { CreateOrderCommand } from '@Application/commands/order/create-order.command';
 import { FindOrderByIdCommand } from '@Application/commands/order/find-order-by-id.command';
-import { OrderEntity } from '../../infrastructure/entities/order.entity';
+import { OrderModel } from '../../infrastructure/typeorm/models/order.model';
 
 export interface IOrderRepository {
-  createOrder(command: CreateOrderCommand): Promise<OrderEntity>;
+  createOrder(command: CreateOrderCommand): Promise<OrderModel>;
   approveOrder(command: ApproveOrderCommand): Promise<void>;
   cancelOrder(command: CancelOrderCommand): Promise<void>;
-  findAllOrders(): Promise<OrderEntity[]>;
-  findOrderById(command: FindOrderByIdCommand): Promise<OrderEntity | null>;
+  findAllOrders(): Promise<OrderModel[]>;
+  findOrderById(command: FindOrderByIdCommand): Promise<OrderModel | null>;
 }
 
 export const IOrderRepositorySymbol = Symbol('OrderRepository');

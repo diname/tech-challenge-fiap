@@ -1,4 +1,4 @@
-import { ProductModel } from '@Domain/models/product.model';
+import { ProductEntity } from '@Domain/entities/product.entity';
 import {
   IProductRepository,
   IProductRepositorySymbol,
@@ -12,20 +12,20 @@ export class ProductServiceImpl {
     private readonly productRepository: IProductRepository,
   ) {}
 
-  create(productModel: ProductModel): Promise<void> {
+  create(productModel: ProductEntity): Promise<void> {
     return this.productRepository.save(productModel);
   }
-  update(productModel: ProductModel): Promise<void> {
+  update(productModel: ProductEntity): Promise<void> {
     return this.productRepository.update(productModel);
   }
   delete(id: number): Promise<void> {
     return this.productRepository.delete(id);
   }
-  findProducts(): Promise<ProductModel[]> {
+  findProducts(): Promise<ProductEntity[]> {
     return this.productRepository.findAll();
   }
 
-  findProductsByCategory(categoryId: number): Promise<ProductModel[]> {
+  findProductsByCategory(categoryId: number): Promise<ProductEntity[]> {
     return this.productRepository.findByCategory(categoryId);
   }
 }

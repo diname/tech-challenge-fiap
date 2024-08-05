@@ -1,5 +1,5 @@
 import { GetOneUserCommand } from '@Application/commands/user/get-one-user.command';
-import { UserModel } from '@Domain/models/user.model';
+import { UserEntity } from '@Domain/entities/user.entity';
 import {
   IUserService,
   IUserServiceSymbol,
@@ -15,7 +15,7 @@ export class GetOneUserUseCase {
 
   async execute(
     command: GetOneUserCommand,
-  ): Promise<UserModel | null | undefined> {
+  ): Promise<UserEntity | null | undefined> {
     return this.userService.getOne({ ...command.filter });
   }
 }

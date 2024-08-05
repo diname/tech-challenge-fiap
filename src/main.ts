@@ -1,5 +1,5 @@
-import { EnvironmentVariableService } from '@Infrastructure/config/environment-variable/environment-variable.service';
 import { NestFactory } from '@nestjs/core';
+import { EnvironmentVariableService } from '@Shared/config/environment-variable/environment-variable.service';
 import { initializeCors } from '@Shared/utils/initializers/cors.initializer';
 import { initializeSwagger } from '@Shared/utils/initializers/swagger.initializer';
 import { AppModule } from './app.module';

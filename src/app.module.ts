@@ -25,28 +25,28 @@ import { FindProductByCategoryUseCase } from '@Application/use-cases/product/fin
 import { IOrderServiceSymbol } from '@Domain/services/order/order.service';
 import { IProductServiceSymbol } from '@Domain/services/product/product.service';
 import { ProductServiceImpl } from '@Domain/services/product/product.serviceImpl';
-import { OrderRepositoryImpl } from '@Infrastructure/adapters/repositories/order.repository.impl';
-import { ProductOrderRepositoryImpl } from '@Infrastructure/adapters/repositories/product-order.repository.impl';
-import { ProductRepositoryImpl } from '@Infrastructure/adapters/repositories/product.repository.impl';
+import { OrderRepositoryImpl } from '@Infrastructure/typeorm/repositories/order.repository.impl';
+import { ProductOrderRepositoryImpl } from '@Infrastructure/typeorm/repositories/product-order.repository.impl';
+import { ProductRepositoryImpl } from '@Infrastructure/typeorm/repositories/product.repository.impl';
 
 import { GetTokenUseCase } from '@Application/use-cases/auth/get-token.use-case';
 import { IUserServiceSymbol } from '@Domain/services/user/user.service';
 import { UserServiceImpl } from '@Domain/services/user/user.serviceImp';
-import { UserRepositoryImpl } from '@Infrastructure/adapters/repositories/user.repository.impl';
-import { AuthServiceImpl } from '@Infrastructure/adapters/services/auth.service.impl';
-import { PostgresConfigService } from '@Infrastructure/adapters/services/postgres..config.service';
-import { EnvironmentVariableModule } from '@Infrastructure/config/environment-variable/environment-variable.module';
-import { CategoryEntity } from '@Infrastructure/entities/category.entity';
-import { OrderEntity } from '@Infrastructure/entities/order.entity';
-import { ProductEntity } from '@Infrastructure/entities/product.entity';
-import { ProductOrderEntity } from '@Infrastructure/entities/product_order.entity';
-import { RoleEntity } from '@Infrastructure/entities/role.entity';
-import { UserRoleEntity } from '@Infrastructure/entities/user-role.entity';
-import { UserEntity } from '@Infrastructure/entities/user.entity';
+import { AuthServiceImpl } from '@Infrastructure/services/auth/auth.service.impl';
+import { PostgresConfigService } from '@Infrastructure/typeorm/config/postgres.config.service';
+import { CategoryModel } from '@Infrastructure/typeorm/models/category.model';
+import { OrderModel } from '@Infrastructure/typeorm/models/order.model';
+import { ProductModel } from '@Infrastructure/typeorm/models/product.model';
+import { ProductOrderModel } from '@Infrastructure/typeorm/models/product_order.model';
+import { RoleModel } from '@Infrastructure/typeorm/models/role.model';
+import { UserRoleModel } from '@Infrastructure/typeorm/models/user-role.model';
+import { UserModel } from '@Infrastructure/typeorm/models/user.model';
+import { UserRepositoryImpl } from '@Infrastructure/typeorm/repositories/user.repository.impl';
 import { CategorySeeder } from '@Infrastructure/typeorm/seed/category.seeder';
 import { RoleSeeder } from '@Infrastructure/typeorm/seed/role.seeder';
 import { SeederProvider } from '@Infrastructure/typeorm/seed/seeder.provider';
 import { UserSeeder } from '@Infrastructure/typeorm/seed/user.seeder';
+import { EnvironmentVariableModule } from '@Shared/config/environment-variable/environment-variable.module';
 import { AuthController } from './api/controllers/auth.controller';
 import { OrderController } from './api/controllers/order.controller';
 import { ProductController } from './api/controllers/product.controller';
@@ -60,13 +60,13 @@ import { UserController } from './api/controllers/user.controller';
       inject: [PostgresConfigService],
     }),
     TypeOrmModule.forFeature([
-      UserEntity,
-      UserRoleEntity,
-      RoleEntity,
-      ProductEntity,
-      ProductOrderEntity,
-      OrderEntity,
-      CategoryEntity,
+      UserModel,
+      UserRoleModel,
+      RoleModel,
+      ProductModel,
+      ProductOrderModel,
+      OrderModel,
+      CategoryModel,
     ]),
     EnvironmentVariableModule.forRoot({ isGlobal: true }),
   ],

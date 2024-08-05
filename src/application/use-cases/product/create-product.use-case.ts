@@ -1,5 +1,5 @@
 import { CreateProductCommand } from '@Application/commands/product/create-product.command';
-import { ProductModel } from '@Domain/models/product.model';
+import { ProductEntity } from '@Domain/entities/product.entity';
 import {
   IProductService,
   IProductServiceSymbol,
@@ -14,7 +14,7 @@ export class CreateProductUseCase {
   ) {}
 
   async execute(command: CreateProductCommand): Promise<void> {
-    const product = new ProductModel(
+    const product = new ProductEntity(
       0, // que fazer com esse parametro? o id é gerado pela base
       command.name,
       command.description,

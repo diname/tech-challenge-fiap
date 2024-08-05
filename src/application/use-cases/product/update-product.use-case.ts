@@ -1,5 +1,5 @@
 import { UpdateProductCommand } from '@Application/commands/product/update-product.command';
-import { ProductModel } from '@Domain/models/product.model';
+import { ProductEntity } from '@Domain/entities/product.entity';
 import {
   IProductService,
   IProductServiceSymbol,
@@ -14,7 +14,7 @@ export class UpdateProductUseCase {
   ) {}
 
   async execute(command: UpdateProductCommand): Promise<void> {
-    const product = new ProductModel(
+    const product = new ProductEntity(
       command.id,
       command.name,
       command.description,

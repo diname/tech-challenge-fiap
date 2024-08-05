@@ -1,4 +1,4 @@
-import { UserModel } from '@Domain/models/user.model';
+import { UserEntity } from '@Domain/entities/user.entity';
 import {
   IUserRepository,
   IUserRepositorySymbol,
@@ -13,11 +13,11 @@ export class UserServiceImpl implements IUserService {
     private readonly userRepository: IUserRepository,
   ) {}
 
-  async create(userModel: UserModel): Promise<void> {
+  async create(userModel: UserEntity): Promise<void> {
     await this.userRepository.save(userModel);
   }
 
-  async getOne(filter: { cpf?: string; email?: string }): Promise<UserModel> {
+  async getOne(filter: { cpf?: string; email?: string }): Promise<UserEntity> {
     if (filter.cpf) {
       return this.userRepository.getUserByCpf(filter.cpf);
     }

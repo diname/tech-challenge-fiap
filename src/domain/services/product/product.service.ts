@@ -1,11 +1,11 @@
-import { ProductModel } from '@Domain/models/product.model';
+import { ProductEntity } from '@Domain/entities/product.entity';
 
 export interface IProductService {
-  create(productModel: ProductModel): Promise<void>;
-  update(productModel: ProductModel): Promise<void>;
+  create(productModel: ProductEntity): Promise<void>;
+  update(productModel: ProductEntity): Promise<void>;
   delete(id: number): Promise<void>;
-  findProducts(): Promise<ProductModel[]>;
-  findProductsByCategory(categoryId: number): Promise<ProductModel[]>;
+  findProducts(): Promise<ProductEntity[]>;
+  findProductsByCategory(categoryId: number): Promise<ProductEntity[]>;
 }
 
 export const IProductServiceSymbol = Symbol('ProductServiceImpl');

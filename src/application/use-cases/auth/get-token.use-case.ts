@@ -1,6 +1,6 @@
 import { TokenUserDto } from '@Api/dto/response/token-user.dto';
 import { GetTokenCommand } from '@Application/commands/auth/get-token.command';
-import { UserModel } from '@Domain/models/user.model';
+import { UserEntity } from '@Domain/entities/user.entity';
 import {
   IAuthService,
   IAuthServiceSymbol,
@@ -22,7 +22,7 @@ export class GetTokenUseCase {
   ) {}
 
   async execute({ identify }: GetTokenCommand): Promise<TokenUserDto> {
-    let user: UserModel;
+    let user: UserEntity;
 
     if (identify.cpf) {
       user = await this.getUserByCpf(identify.cpf);
@@ -37,8 +37,8 @@ export class GetTokenUseCase {
     return { userId: user.id, accessToken };
   }
 
-  private async getUserByCpf(cpf: string): Promise<UserModel> {
-    const user: UserModel = await this.userService.getOne({ cpf });
+  private async getUserByCpf(cpf: string): Promise<UserEntity> {
+    const user: UserEntity = await this.userService.getOne({ cpf });
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -46,8 +46,8 @@ export class GetTokenUseCase {
     return user;
   }
 
-  private async getUserByEmail(email: string): Promise<UserModel> {
-    const user: UserModel = await this.userService.getOne({ email });
+  private async getUserByEmail(email: string): Promise<UserEntity> {
+    const user: UserEntity = await this.userService.getOne({ email });
     if (!user) {
       throw new UnauthorizedException();
     }

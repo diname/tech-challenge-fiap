@@ -1,8 +1,8 @@
-import { UserModel } from '@Domain/models/user.model';
+import { UserEntity } from '@Domain/entities/user.entity';
 
 export interface IUserService {
-  create(userModel: UserModel): Promise<void>;
-  getOne(filter: { cpf?: string; email?: string }): Promise<UserModel>;
+  create(userModel: UserEntity): Promise<void>;
+  getOne(filter: { cpf?: string; email?: string }): Promise<UserEntity>;
 }
 
 export const IUserServiceSymbol = Symbol('UserServiceImpl');
