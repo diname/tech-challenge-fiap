@@ -16,7 +16,7 @@ export class CategoryRepositoryImpl implements ICategoryRepository {
     return categories.map(CategoryMapper.toEntity);
   }
 
-  async save(category: CategoryModel): Promise<void> {
-    this.repository.save(category);
+  async save(category: CategoryEntity): Promise<void> {
+    this.repository.save(CategoryMapper.toModel(category));
   }
 }
