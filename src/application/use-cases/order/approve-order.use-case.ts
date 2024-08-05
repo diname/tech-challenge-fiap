@@ -1,9 +1,15 @@
-import { IOrderService } from '@Domain/services/order/order.service';
-import { Injectable } from '@nestjs/common';
+import {
+  IOrderService,
+  IOrderServiceSymbol,
+} from '@Domain/services/order/order.service';
+import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ApproveOrderUseCase {
-  constructor(private readonly service: IOrderService) {}
+  constructor(
+    @Inject(IOrderServiceSymbol)
+    private readonly service: IOrderService,
+  ) {}
 
   async execute(id: number): Promise<void> {
     await this.service.approveOrder(id);

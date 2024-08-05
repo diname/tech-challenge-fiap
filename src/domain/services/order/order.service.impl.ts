@@ -1,12 +1,18 @@
 import { OrderEntity } from '@Domain/entities/order.entity';
-import { IOrderRepository } from '@Domain/repositories/order.repository';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  IOrderRepository,
+  IOrderRepositorySymbol,
+} from '@Domain/repositories/order.repository';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PaymentStatusType } from '@Shared/enums/payment-status-type.enum';
 import { IOrderService } from './order.service';
 
 @Injectable()
 export class OrderServiceImpl implements IOrderService {
-  constructor(private readonly repository: IOrderRepository) {}
+  constructor(
+    @Inject(IOrderRepositorySymbol)
+    private readonly repository: IOrderRepository,
+  ) {}
 
   async createOrder(order: OrderEntity): Promise<OrderEntity> {
     return this.repository.save(order);
