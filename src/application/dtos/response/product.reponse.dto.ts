@@ -27,4 +27,9 @@ export class ProductReponseDto {
     description: 'Descrição do produto.',
   })
   public description: string;
+
+  @ApiProperty({
+    description: 'Status do produto',
+  })
+  public enabled: boolean;
 }

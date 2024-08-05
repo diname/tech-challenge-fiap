@@ -12,20 +12,16 @@ export class ProductServiceImpl {
     private readonly productRepository: IProductRepository,
   ) {}
 
-  create(productModel: ProductEntity): Promise<void> {
-    return this.productRepository.save(productModel);
+  create(product: ProductEntity): Promise<void> {
+    return this.productRepository.save(product);
   }
-  update(productModel: ProductEntity): Promise<void> {
-    return this.productRepository.update(productModel);
+  update(product: ProductEntity): Promise<void> {
+    return this.productRepository.update(product);
   }
   delete(id: number): Promise<void> {
     return this.productRepository.delete(id);
   }
-  findProducts(): Promise<ProductEntity[]> {
-    return this.productRepository.findAll();
-  }
-
-  findProductsByCategory(categoryId: number): Promise<ProductEntity[]> {
-    return this.productRepository.findByCategory(categoryId);
+  findProducts(name: string, categoryId: number): Promise<ProductEntity[]> {
+    return this.productRepository.find(name, categoryId);
   }
 }

@@ -1,10 +1,10 @@
 import { ProductEntity } from '@Domain/entities/product.entity';
 
 export interface IProductService {
-  create(productModel: ProductEntity): Promise<void>;
-  update(productModel: ProductEntity): Promise<void>;
+  create(product: ProductEntity): Promise<void>;
+  update(product: ProductEntity): Promise<void>;
   delete(id: number): Promise<void>;
-  findProducts(): Promise<ProductEntity[]>;
+  findProducts(name: string, categoryId: number): Promise<ProductEntity[]>;
   findProductsByCategory(categoryId: number): Promise<ProductEntity[]>;
 }
 

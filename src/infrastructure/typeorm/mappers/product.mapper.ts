@@ -3,31 +3,29 @@ import { ProductModel } from '@Infrastructure/typeorm/models/product.model';
 import { CategoryModel } from '../models/category.model';
 
 export class ProductMapper {
-  static toEntity(productEntity: ProductModel): ProductEntity {
+  static toEntity(productModel: ProductModel): ProductEntity {
     const product = new ProductEntity(
-      productEntity.id,
-      productEntity.name,
-      productEntity.description,
-      productEntity.price,
-      productEntity.figureUrl,
-      productEntity.enabled,
-      productEntity.category.id,
+      productModel.name,
+      productModel.description,
+      productModel.price,
+      productModel.figureUrl,
+      productModel.enabled,
+      productModel.category.id,
     );
 
-    product.categoryName = productEntity.category.name;
-
+    product.categoryName = productModel.category.name;
     return product;
   }
 
-  static toModel(productModel: ProductEntity): ProductModel {
+  static toModel(productEntity: ProductEntity): ProductModel {
     const product = new ProductModel();
-    product.id = productModel.id;
-    product.name = productModel.name;
-    product.description = productModel.description;
-    product.price = productModel.price;
-    product.figureUrl = productModel.figureUrl;
-    product.enabled = productModel.enabled;
-    product.category = { id: productModel.categoryId } as CategoryModel;
+    product.id = productEntity.id;
+    product.name = productEntity.name;
+    product.description = productEntity.description;
+    product.price = productEntity.price;
+    product.figureUrl = productEntity.figureUrl;
+    product.enabled = productEntity.enabled;
+    product.category = { id: productEntity.categoryId } as CategoryModel;
 
     return product;
   }

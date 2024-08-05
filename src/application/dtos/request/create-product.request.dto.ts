@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class CreateProductDto {
+export class ProductRequestDto {
   @ApiProperty({
     example: 'hamburger',
     description: `Products's name`,
@@ -39,4 +39,8 @@ export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   figureUrl: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  enabled: boolean;
 }

@@ -45,7 +45,6 @@ import { FindAllOrdersUseCase } from './application/use-cases/order/find-all-ord
 import { FindOrderByIdUseCase } from './application/use-cases/order/find-order-by-id.use-case';
 import { CreateProductUseCase } from './application/use-cases/product/create-product.use-case';
 import { DeleteProductUseCase } from './application/use-cases/product/delete-product.use-case';
-import { FindProductByCategoryUseCase } from './application/use-cases/product/find-product-by-category.use-case';
 import { FindProductUseCase } from './application/use-cases/product/find-product.use-case';
 import { UpdateProductUseCase } from './application/use-cases/product/update-product.use-case';
 import { CreateUserUseCase } from './application/use-cases/user/create-user.use-case';
@@ -85,7 +84,6 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
     CreateProductUseCase,
     UpdateProductUseCase,
     FindProductUseCase,
-    FindProductByCategoryUseCase,
     DeleteProductUseCase,
     GetTokenUseCase,
     {

@@ -7,16 +7,13 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateProductCommand } from '../commands/product/create-product.command';
-import { UpdateProductCommand } from '../commands/product/update-product.command';
-import { CreateProductDto } from '../dtos/request/create-product.request.dto';
-import { UpdateProductDto } from '../dtos/request/update-product.request.dto';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ProductRequestDto } from '../dtos/request/create-product.request.dto';
 import { ProductReponseDto } from '../dtos/response/product.reponse.dto';
 import { CreateProductUseCase } from '../use-cases/product/create-product.use-case';
 import { DeleteProductUseCase } from '../use-cases/product/delete-product.use-case';
-import { FindProductByCategoryUseCase } from '../use-cases/product/find-product-by-category.use-case';
 import { FindProductUseCase } from '../use-cases/product/find-product.use-case';
 import { UpdateProductUseCase } from '../use-cases/product/update-product.use-case';
 
@@ -28,7 +25,6 @@ export class ProductController {
     private readonly updateProductUseCase: UpdateProductUseCase,
     private readonly deleteProductUseCase: DeleteProductUseCase,
     private readonly findProductUseCase: FindProductUseCase,
-    private readonly findProductByCategoryUseCase: FindProductByCategoryUseCase,
   ) {}
 
   @Post()
@@ -36,20 +32,12 @@ export class ProductController {
   @ApiResponse({
     status: 201,
     description: 'Produto criado com sucesso',
-    type: CreateProductDto,
+    type: ProductRequestDto,
   })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
-  async create(@Body() createProductDto: CreateProductDto): Promise<void> {
-    return this.createProductUseCase.execute(
-      new CreateProductCommand(
-        createProductDto.name,
-        createProductDto.categoryId,
-        createProductDto.price,
-        createProductDto.description,
-        createProductDto.figureUrl,
-      ),
-    );
+  async create(@Body() dto: ProductRequestDto): Promise<void> {
+    return this.createProductUseCase.execute(dto);
   }
 
   @Get()
@@ -60,24 +48,13 @@ export class ProductController {
     type: [ProductReponseDto],
   })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
-  async findAll(): Promise<ProductReponseDto[]> {
-    return this.findProductUseCase.execute();
-  }
-
-  @Get('category/:id')
-  @ApiOperation({
-    summary: 'Lista todos os produtos de acordo com a categoria',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Lista de produtos de acordo com a categoria',
-    type: [ProductReponseDto],
-  })
-  @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
-  async findByCategory(
-    @Param('id') categoryId: number,
+  @ApiQuery({ name: 'name', required: false, type: String })
+  @ApiQuery({ name: 'categoryId', required: false, type: Number })
+  async findAll(
+    @Query('name') name: string,
+    @Query('categoryId') categoryId: number,
   ): Promise<ProductReponseDto[]> {
-    return this.findProductByCategoryUseCase.execute(categoryId);
+    return this.findProductUseCase.execute(name, categoryId);
   }
 
   @ApiOperation({ summary: 'Deleta um produto' })
@@ -102,18 +79,8 @@ export class ProductController {
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   async update(
     @Param('id') id: number,
-    @Body() updateProductDto: UpdateProductDto,
+    @Body() dto: ProductRequestDto,
   ): Promise<void> {
-    return this.updateProductUseCase.execute(
-      new UpdateProductCommand(
-        id,
-        updateProductDto.name,
-        updateProductDto.categoryId,
-        updateProductDto.price,
-        updateProductDto.description,
-        updateProductDto.figureUrl,
-        updateProductDto.enable,
-      ),
-    );
+    return this.updateProductUseCase.execute(dto);
   }
 }

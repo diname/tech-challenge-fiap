@@ -1,8 +1,8 @@
 export class ProductEntity {
+  public id: number;
   public categoryName: string;
 
   constructor(
-    public id: number,
     public name: string,
     public description: string,
     public price: number,

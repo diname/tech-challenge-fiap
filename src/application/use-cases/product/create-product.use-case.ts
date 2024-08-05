@@ -1,10 +1,10 @@
-import { ProductEntity } from '@Domain/entities/product.entity';
 import {
   IProductService,
   IProductServiceSymbol,
 } from '@Domain/services/product/product.service';
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateProductCommand } from 'src/application/commands/product/create-product.command';
+import { ProductRequestDto } from 'src/application/dtos/request/create-product.request.dto';
+import { ProductMapper } from 'src/application/mappers/product.mapper';
 
 @Injectable()
 export class CreateProductUseCase {
@@ -13,17 +13,7 @@ export class CreateProductUseCase {
     private readonly productService: IProductService,
   ) {}
 
-  async execute(command: CreateProductCommand): Promise<void> {
-    const product = new ProductEntity(
-      0, // que fazer com esse parametro? o id é gerado pela base
-      command.name,
-      command.description,
-      command.price,
-      command.figureUrl,
-      true,
-      command.categoryId,
-    );
-
-    await this.productService.create(product);
+  async execute(dto: ProductRequestDto): Promise<void> {
+    await this.productService.create(ProductMapper.toEntity(dto));
   }
 }

@@ -2,7 +2,7 @@ import { ProductEntity } from '@Domain/entities/product.entity';
 import { IProductRepository } from '@Domain/repositories/product.repository';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { ProductMapper } from '../mappers/product.mapper';
 import { ProductModel } from '../models/product.model';
 
@@ -13,29 +13,22 @@ export class ProductRepositoryImpl implements IProductRepository {
     private readonly productRepository: Repository<ProductModel>,
   ) {}
 
-  async findAll(): Promise<ProductEntity[]> {
-    const products = await this.productRepository.find({
-      relations: ['category'],
-      loadEagerRelations: true,
-    });
+  async find(name: string, categoryId: number): Promise<ProductEntity[]> {
+    console.log(categoryId);
 
-    return products.map((product) => {
-      return ProductMapper.toEntity(product);
-    });
-  }
-
-  async findByCategory(categoryId: number): Promise<ProductEntity[]> {
     const products = await this.productRepository.find({
       relations: ['category'],
       loadEagerRelations: true,
       where: {
         category: { id: categoryId },
+        name: name ? Like(`%${name.toLowerCase()}%`) : undefined,
+      },
+      order: {
+        price: 'DESC',
       },
     });
 
-    return products.map((product) => {
-      return ProductMapper.toEntity(product);
-    });
+    return products.map(ProductMapper.toEntity);
   }
 
   async save(product: ProductEntity): Promise<void> {

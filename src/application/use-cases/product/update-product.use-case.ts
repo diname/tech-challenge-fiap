@@ -1,10 +1,10 @@
-import { ProductEntity } from '@Domain/entities/product.entity';
 import {
   IProductService,
   IProductServiceSymbol,
 } from '@Domain/services/product/product.service';
 import { Inject, Injectable } from '@nestjs/common';
-import { UpdateProductCommand } from 'src/application/commands/product/update-product.command';
+import { ProductRequestDto } from 'src/application/dtos/request/create-product.request.dto';
+import { ProductMapper } from 'src/application/mappers/product.mapper';
 
 @Injectable()
 export class UpdateProductUseCase {
@@ -13,16 +13,7 @@ export class UpdateProductUseCase {
     private readonly productService: IProductService,
   ) {}
 
-  async execute(command: UpdateProductCommand): Promise<void> {
-    const product = new ProductEntity(
-      command.id,
-      command.name,
-      command.description,
-      command.price,
-      command.figureUrl,
-      command.enable,
-      command.categoryId,
-    );
-    return await this.productService.update(product);
+  async execute(dto: ProductRequestDto): Promise<void> {
+    return await this.productService.update(ProductMapper.toEntity(dto));
   }
 }
