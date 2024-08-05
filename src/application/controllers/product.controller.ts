@@ -1,11 +1,3 @@
-import { CreateProductDto } from '@Api/dto/request/create-product.request.dto';
-import { CreateProductCommand } from '@Application/commands/product/create-product.command';
-import { UpdateProductCommand } from '@Application/commands/product/update-product.command';
-import { CreateProductUseCase } from '@Application/use-cases/product/create-product.use-case';
-import { DeleteProductUseCase } from '@Application/use-cases/product/delete-product.use-case';
-import { FindProductByCategoryUseCase } from '@Application/use-cases/product/find-product-by-category.use-case';
-import { FindProductUseCase } from '@Application/use-cases/product/find-product.use-case';
-import { UpdateProductUseCase } from '@Application/use-cases/product/update-product.use-case';
 import {
   Body,
   Controller,
@@ -17,8 +9,16 @@ import {
   Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UpdateProductDto } from '../dto/request/update-product.request.dto';
-import { ProductReponseDto } from '../dto/response/product.reponse.dto';
+import { CreateProductCommand } from '../commands/product/create-product.command';
+import { UpdateProductCommand } from '../commands/product/update-product.command';
+import { CreateProductDto } from '../dtos/request/create-product.request.dto';
+import { UpdateProductDto } from '../dtos/request/update-product.request.dto';
+import { ProductReponseDto } from '../dtos/response/product.reponse.dto';
+import { CreateProductUseCase } from '../use-cases/product/create-product.use-case';
+import { DeleteProductUseCase } from '../use-cases/product/delete-product.use-case';
+import { FindProductByCategoryUseCase } from '../use-cases/product/find-product-by-category.use-case';
+import { FindProductUseCase } from '../use-cases/product/find-product.use-case';
+import { UpdateProductUseCase } from '../use-cases/product/update-product.use-case';
 
 @Controller('products')
 @ApiTags('Products')

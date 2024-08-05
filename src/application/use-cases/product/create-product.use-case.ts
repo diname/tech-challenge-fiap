@@ -1,10 +1,10 @@
-import { CreateProductCommand } from '@Application/commands/product/create-product.command';
 import { ProductEntity } from '@Domain/entities/product.entity';
 import {
   IProductService,
   IProductServiceSymbol,
 } from '@Domain/services/product/product.service';
 import { Inject, Injectable } from '@nestjs/common';
+import { CreateProductCommand } from 'src/application/commands/product/create-product.command';
 
 @Injectable()
 export class CreateProductUseCase {

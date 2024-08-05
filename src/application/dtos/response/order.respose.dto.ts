@@ -1,22 +1,7 @@
-import {
-  OrderStatusType,
-  PaymentStatusType,
-} from '@Infrastructure/typeorm/models/order.model';
+import { ProductOrderEntity } from '@Domain/entities/product-order.entity';
 import { ApiProperty } from '@nestjs/swagger';
-
-class ProductOrderDto {
-  @ApiProperty({
-    description: 'ID do produto.',
-    example: 1,
-  })
-  productId: number;
-
-  @ApiProperty({
-    description: 'Quantidade do produto.',
-    example: 2,
-  })
-  quantity: number;
-}
+import { OrderStatusType } from '@Shared/enums/order-status-type.enum';
+import { PaymentStatusType } from '@Shared/enums/payment-status-type.enum';
 
 export class OrderResponseDto {
   @ApiProperty({
@@ -64,8 +49,8 @@ export class OrderResponseDto {
 
   @ApiProperty({
     description: 'Lista de produtos e quantidades no pedido.',
-    type: [ProductOrderDto],
+    type: [ProductOrderEntity],
     example: [{ productId: 1, quantity: 2 }],
   })
-  productOrders: ProductOrderDto[];
+  productOrders: ProductOrderEntity[];
 }

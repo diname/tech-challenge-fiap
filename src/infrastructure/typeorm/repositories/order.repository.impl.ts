@@ -1,52 +1,43 @@
-import { ApproveOrderCommand } from '@Application/commands/order/approve-order.command';
-import { CancelOrderCommand } from '@Application/commands/order/cancel-order.command';
-import { CreateOrderCommand } from '@Application/commands/order/create-order.command';
-import { FindOrderByIdCommand } from '@Application/commands/order/find-order-by-id.command';
+import { OrderEntity } from '@Domain/entities/order.entity';
 import { IOrderRepository } from '@Domain/repositories/order.repository';
-import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { OrderStatusType } from '@Shared/enums/order-status-type.enum';
-import { PaymentStatusType } from '@Shared/enums/payment-status-type.enum';
 import { Repository } from 'typeorm';
+import { OrderMapper } from '../mappers/order.mapper';
 import { OrderModel } from '../models/order.model';
 
-@Injectable()
 export class OrderRepositoryImpl implements IOrderRepository {
   constructor(
     @InjectRepository(OrderModel)
     private readonly repository: Repository<OrderModel>,
   ) {}
 
-  async createOrder(command: CreateOrderCommand): Promise<OrderModel> {
-    const order = new OrderModel();
-    order.totalPrice = command.totalPrice;
-    // @TODO Substitua por UserEntity corretamente
-    order.user = { id: command.userId } as any;
-    order.paymentStatus = PaymentStatusType.PENDING;
-    order.orderStatus = OrderStatusType.NONE;
-
-    return this.repository.save(order);
+  async save(order: OrderEntity): Promise<OrderEntity> {
+    const orderModel = OrderMapper.toModel(order);
+    const savedModel = await this.repository.save(orderModel);
+    return OrderMapper.toEntity(savedModel);
   }
 
-  async approveOrder(command: ApproveOrderCommand): Promise<void> {
-    await this.repository.update(command.orderId, {
-      paymentStatus: PaymentStatusType.APPROVED,
+  async update(id: number, order: OrderEntity): Promise<OrderEntity> {
+    const orderModel = await this.repository.preload({
+      id: id,
+      ...OrderMapper.toModel(order),
     });
+    if (!orderModel) return null;
+    const updatedModel = await this.repository.save(orderModel);
+    return OrderMapper.toEntity(updatedModel);
   }
 
-  async cancelOrder(command: CancelOrderCommand): Promise<void> {
-    await this.repository.update(command.orderId, {
-      paymentStatus: PaymentStatusType.CANCELED,
-    });
+  async delete(id: number): Promise<void> {
+    await this.repository.softDelete(id);
   }
 
-  async findAllOrders(): Promise<OrderModel[]> {
-    return this.repository.find();
+  async findAll(): Promise<OrderEntity[]> {
+    const orders = await this.repository.find();
+    return orders.map(OrderMapper.toEntity);
   }
 
-  async findOrderById(
-    command: FindOrderByIdCommand,
-  ): Promise<OrderModel | null> {
-    return this.repository.findOne({ where: { id: command.orderId } });
+  async findById(id: number): Promise<OrderEntity> {
+    const order = await this.repository.findOne({ where: { id } });
+    return OrderMapper.toEntity(order);
   }
 }

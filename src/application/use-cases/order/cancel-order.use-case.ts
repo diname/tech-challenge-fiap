@@ -1,19 +1,11 @@
-import { CancelOrderCommand } from '@Application/commands/order/cancel-order.command';
-import {
-  IOrderService,
-  IOrderServiceSymbol,
-} from '@Domain/services/order/order.service';
-import { Inject, Injectable } from '@nestjs/common';
+import { IOrderService } from '@Domain/services/order/order.service';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CancelOrderUseCase {
-  constructor(
-    @Inject(IOrderServiceSymbol)
-    private readonly orderService: IOrderService,
-  ) {}
+  constructor(private readonly orderService: IOrderService) {}
 
-  async execute(orderId: number): Promise<void> {
-    const command = new CancelOrderCommand(orderId);
-    await this.orderService.cancelOrder(command);
+  async execute(id: number): Promise<void> {
+    await this.orderService.cancelOrder(id);
   }
 }

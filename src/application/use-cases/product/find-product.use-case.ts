@@ -1,9 +1,9 @@
-import { ProductReponseDto } from '@Api/dto/response/product.reponse.dto';
 import {
   IProductService,
   IProductServiceSymbol,
 } from '@Domain/services/product/product.service';
 import { Inject, Injectable } from '@nestjs/common';
+import { ProductReponseDto } from 'src/application/dtos/response/product.reponse.dto';
 
 @Injectable()
 export class FindProductUseCase {

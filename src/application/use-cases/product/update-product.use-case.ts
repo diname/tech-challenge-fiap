@@ -1,10 +1,10 @@
-import { UpdateProductCommand } from '@Application/commands/product/update-product.command';
 import { ProductEntity } from '@Domain/entities/product.entity';
 import {
   IProductService,
   IProductServiceSymbol,
 } from '@Domain/services/product/product.service';
 import { Inject, Injectable } from '@nestjs/common';
+import { UpdateProductCommand } from 'src/application/commands/product/update-product.command';
 
 @Injectable()
 export class UpdateProductUseCase {

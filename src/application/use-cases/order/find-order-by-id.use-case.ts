@@ -1,20 +1,14 @@
-import { OrderResponseDto } from '@Api/dto/response/order.respose.dto';
-import { FindOrderByIdCommand } from '@Application/commands/order/find-order-by-id.command';
-import {
-  IOrderService,
-  IOrderServiceSymbol,
-} from '@Domain/services/order/order.service';
-import { Inject, Injectable } from '@nestjs/common';
+import { IOrderService } from '@Domain/services/order/order.service';
+import { Injectable } from '@nestjs/common';
+import { OrderResponseDto } from 'src/application/dtos/response/order.respose.dto';
+import { OrderMapper } from 'src/application/mappers/order.mapper';
 
 @Injectable()
 export class FindOrderByIdUseCase {
-  constructor(
-    @Inject(IOrderServiceSymbol)
-    private readonly orderService: IOrderService,
-  ) {}
+  constructor(private readonly service: IOrderService) {}
 
-  async execute(orderId: number): Promise<OrderResponseDto | null> {
-    const command = new FindOrderByIdCommand(orderId);
-    return this.orderService.findOrderById(command);
+  async execute(id: number): Promise<OrderResponseDto> {
+    const orderEntity = await this.service.findOrderById(id);
+    return OrderMapper.toResponseDto(orderEntity);
   }
 }

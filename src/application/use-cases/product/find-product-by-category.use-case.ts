@@ -3,7 +3,7 @@ import {
   IProductServiceSymbol,
 } from '@Domain/services/product/product.service';
 import { Inject, Injectable } from '@nestjs/common';
-import { ProductReponseDto } from 'src/api/dto/response/product.reponse.dto';
+import { ProductReponseDto } from 'src/application/dtos/response/product.reponse.dto';
 
 @Injectable()
 export class FindProductByCategoryUseCase {
@@ -13,7 +13,8 @@ export class FindProductByCategoryUseCase {
   ) {}
 
   async execute(categoryId: number): Promise<ProductReponseDto[]> {
-    var products = await this.productService.findProductsByCategory(categoryId);
+    const products =
+      await this.productService.findProductsByCategory(categoryId);
     return products.map((product) => {
       const response = new ProductReponseDto();
       (response.id = product.id), (response.name = product.name);

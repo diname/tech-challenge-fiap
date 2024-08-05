@@ -1,10 +1,10 @@
-import { CreateUserCommand } from '@Application/commands/user/create-user.command';
 import { UserEntity } from '@Domain/entities/user.entity';
 import {
   IUserService,
   IUserServiceSymbol,
 } from '@Domain/services/user/user.service';
 import { Inject, Injectable } from '@nestjs/common';
+import { CreateUserCommand } from 'src/application/commands/user/create-user.command';
 
 @Injectable()
 export class CreateUserUseCase {

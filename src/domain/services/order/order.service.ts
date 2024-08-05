@@ -1,17 +1,11 @@
-import { OrderResponseDto } from '@Api/dto/response/order.respose.dto';
-import { ApproveOrderCommand } from '@Application/commands/order/approve-order.command';
-import { CancelOrderCommand } from '@Application/commands/order/cancel-order.command';
-import { CreateOrderCommand } from '@Application/commands/order/create-order.command';
-import { FindOrderByIdCommand } from '@Application/commands/order/find-order-by-id.command';
+import { OrderEntity } from '@Domain/entities/order.entity';
 
 export interface IOrderService {
-  createOrder(command: CreateOrderCommand): Promise<OrderResponseDto>;
-  approveOrder(command: ApproveOrderCommand): Promise<void>;
-  cancelOrder(command: CancelOrderCommand): Promise<void>;
-  findAllOrders(): Promise<OrderResponseDto[]>;
-  findOrderById(
-    command: FindOrderByIdCommand,
-  ): Promise<OrderResponseDto | null>;
+  createOrder(order: OrderEntity): Promise<OrderEntity>;
+  approveOrder(id: number): Promise<void>;
+  cancelOrder(id: number): Promise<void>;
+  findOrderById(id: number): Promise<OrderEntity>;
+  findAllOrders(): Promise<OrderEntity[]>;
 }
 
-export const IOrderServiceSymbol = Symbol('OrderService');
+export const IOrderServiceSymbol = Symbol('IOrderService');

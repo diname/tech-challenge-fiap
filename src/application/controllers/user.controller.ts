@@ -1,9 +1,9 @@
-import { CreateUserDto } from '@Api/dto/request/create-user.dto';
-import { CreateUserUseCase } from '@Application/use-cases/user/create-user.use-case';
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
-import { CreateCustomerUserDto } from '../dto/request/create-customer-user.dto';
+import { CreateCustomerUserDto } from '../dtos/request/create-customer-user.dto';
+import { CreateUserDto } from '../dtos/request/create-user.dto';
+import { CreateUserUseCase } from '../use-cases/user/create-user.use-case';
 
 @Controller('users')
 @ApiTags('User')

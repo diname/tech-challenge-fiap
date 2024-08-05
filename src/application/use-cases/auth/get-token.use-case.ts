@@ -1,5 +1,3 @@
-import { TokenUserDto } from '@Api/dto/response/token-user.dto';
-import { GetTokenCommand } from '@Application/commands/auth/get-token.command';
 import { UserEntity } from '@Domain/entities/user.entity';
 import {
   IAuthService,
@@ -11,6 +9,8 @@ import {
 } from '@Domain/services/user/user.service';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { verifyUserCredentials } from '@Shared/utils/auth.util';
+import { GetTokenCommand } from 'src/application/commands/auth/get-token.command';
+import { TokenUserDto } from 'src/application/dtos/response/token-user.dto';
 
 @Injectable()
 export class GetTokenUseCase {

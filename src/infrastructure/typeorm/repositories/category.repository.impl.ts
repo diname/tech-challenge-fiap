@@ -1,21 +1,45 @@
 import { ICategoryRepository } from '@Domain/repositories/category.repository';
-import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { OrderMapper } from '../mappers/order.mapper';
 import { CategoryModel } from '../models/category.model';
 
-@Injectable()
 export class CategoryRepositoryImpl implements ICategoryRepository {
   constructor(
     @InjectRepository(CategoryModel)
-    private readonly categoryRepository: Repository<CategoryModel>,
+    private readonly repository: Repository<CategoryModel>,
   ) {}
-
-  async find(): Promise<CategoryEntity[]> {
-    return await this.categoryRepository.find();
+  find(): Promise<CategoryEntity[]> {
+    throw new Error('Method not implemented.');
   }
 
-  async save(product: CategoryEntity): Promise<void> {
-    await this.categoryRepository.save(product);
+  async save(order: CategoryEntity): Promise<CategoryEntity> {
+    const model = OrderMapper.toModel(order);
+    const savedModel = await this.repository.save(model);
+    return OrderMapper.toEntity(savedModel);
+  }
+
+  async update(id: number, order: CategoryEntity): Promise<CategoryEntity> {
+    const model = await this.repository.preload({
+      id: id,
+      ...OrderMapper.toModel(order),
+    });
+    if (!model) return null;
+    const updatedModel = await this.repository.save(model);
+    return OrderMapper.toEntity(updatedModel);
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.repository.softDelete(id);
+  }
+
+  async findAll(): Promise<CategoryEntity[]> {
+    const models = await this.repository.find();
+    return models.map(OrderMapper.toEntity);
+  }
+
+  async findById(id: number): Promise<CategoryEntity> {
+    const model = await this.repository.findOne({ where: { id } });
+    return OrderMapper.toEntity(model);
   }
 }
