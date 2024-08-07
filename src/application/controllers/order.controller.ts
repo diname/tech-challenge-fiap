@@ -1,5 +1,16 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserRoleEnum } from '@Shared/enums/user-role.enum';
+import { RoleGuard } from '@Shared/guards/auth-guard';
+import { Roles } from '@Shared/guards/roles.decorator';
 import { CreateOrderRequestDto } from '../dtos/request/create-order.request.dto';
 import { OrderResponseDto } from '../dtos/response/order.respose.dto';
 import { ApproveOrderUseCase } from '../use-cases/order/approve-order.use-case';
@@ -26,6 +37,10 @@ export class OrderController {
     description: 'Pedido criado com sucesso',
     type: OrderResponseDto,
   })
+  @Roles(UserRoleEnum.CUSTOMER, UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   async createOrder(
@@ -36,6 +51,10 @@ export class OrderController {
 
   @Put(':id/payment/approve')
   @ApiOperation({ summary: 'Aprova um pedido' })
+  @Roles(UserRoleEnum.CUSTOMER, UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
     status: 200,
     description: 'Pedido aprovado com sucesso',
@@ -50,6 +69,10 @@ export class OrderController {
 
   @Put(':id/payment/cancel')
   @ApiOperation({ summary: 'Cancela um pedido' })
+  @Roles(UserRoleEnum.CUSTOMER, UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
     status: 200,
     description: 'Pedido cancelado com sucesso',
@@ -64,6 +87,11 @@ export class OrderController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Obtém um pedido por ID' })
+  @ApiOperation({ summary: 'Cancela um pedido' })
+  @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
+  @UseGuards(RoleGuard)
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
     status: 200,
     description: 'Pedido encontrado',
@@ -78,6 +106,10 @@ export class OrderController {
 
   @Get()
   @ApiOperation({ summary: 'Lista todos os pedidos' })
+  @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
+  @UseGuards(RoleGuard)
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
     status: 200,
     description: 'Lista de pedidos',

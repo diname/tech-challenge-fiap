@@ -86,6 +86,7 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
     FindProductUseCase,
     DeleteProductUseCase,
     GetTokenUseCase,
+    AuthServiceImpl,
     {
       provide: IAuthServiceSymbol,
       useClass: AuthServiceImpl,

@@ -8,8 +8,12 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserRoleEnum } from '@Shared/enums/user-role.enum';
+import { RoleGuard } from '@Shared/guards/auth-guard';
+import { Roles } from '@Shared/guards/roles.decorator';
 import { ProductRequestDto } from '../dtos/request/create-product.request.dto';
 import { ProductReponseDto } from '../dtos/response/product.reponse.dto';
 import { CreateProductUseCase } from '../use-cases/product/create-product.use-case';
@@ -34,6 +38,10 @@ export class ProductController {
     description: 'Produto criado com sucesso',
     type: ProductRequestDto,
   })
+  @Roles(UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   async create(@Body() dto: ProductRequestDto): Promise<void> {
@@ -47,6 +55,10 @@ export class ProductController {
     description: 'Lista de produtos',
     type: [ProductReponseDto],
   })
+  @Roles(UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   @ApiQuery({ name: 'name', required: false, type: String })
   @ApiQuery({ name: 'categoryId', required: false, type: Number })
@@ -57,13 +69,17 @@ export class ProductController {
     return this.findProductUseCase.execute(name, categoryId);
   }
 
-  @ApiOperation({ summary: 'Deleta um produto' })
+  @Delete(':id')
   @HttpCode(204)
+  @ApiOperation({ summary: 'Deleta um produto' })
+  @Roles(UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
     status: 204,
     description: 'Deleta um produto',
   })
-  @Delete(':id')
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   delete(@Param('id') id: number) {
     this.deleteProductUseCase.execute(id);
@@ -72,6 +88,10 @@ export class ProductController {
   @Put(':id')
   @HttpCode(204)
   @ApiOperation({ summary: 'Atualiza um produto' })
+  @Roles(UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
     status: 204,
     description: 'Atualiza um produto',

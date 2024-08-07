@@ -4,7 +4,7 @@ import {
   IUserServiceSymbol,
 } from '@Domain/services/user/user.service';
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateUserCommand } from 'src/application/commands/user/create-user.command';
+import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -13,7 +13,13 @@ export class CreateUserUseCase {
     private readonly userService: IUserService,
   ) {}
 
-  async execute(command: CreateUserCommand): Promise<void> {
-    await this.userService.create(new UserEntity({ ...command.user }));
+  async execute(user: {
+    name: string;
+    email: string;
+    cpf?: string;
+    password?: string;
+    roles: UserRoleEnum[];
+  }): Promise<void> {
+    await this.userService.create(new UserEntity({ ...user }));
   }
 }

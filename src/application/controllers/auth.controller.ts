@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { IdentifyCustomerUserDto } from '../dtos/request/identify-customer-user.dto';
-import { IdentifyUserDto } from '../dtos/request/identify-user.dto';
+import { LoginUserDto } from '../dtos/request/login-user.dto';
 import { TokenUserDto } from '../dtos/response/token-user.dto';
 import { GetTokenUseCase } from '../use-cases/auth/get-token.use-case';
 
@@ -10,24 +10,17 @@ import { GetTokenUseCase } from '../use-cases/auth/get-token.use-case';
 export class AuthController {
   constructor(private readonly getTokenUseCase: GetTokenUseCase) {}
 
-  @Post('/customer')
+  @Post('/identify/customer')
   async identifyCustomerUser(
-    @Body() identifyCustomerUserDto: IdentifyCustomerUserDto,
+    @Body() { cpf }: IdentifyCustomerUserDto,
   ): Promise<TokenUserDto> {
-    return this.getTokenUseCase.execute({
-      identify: { cpf: identifyCustomerUserDto.cpf },
-    });
+    return this.getTokenUseCase.execute({ cpf });
   }
 
-  @Post()
-  async identifyUser(
-    @Body() identifyUserDto: IdentifyUserDto,
+  @Post('/login')
+  async loginUser(
+    @Body() { email, password }: LoginUserDto,
   ): Promise<TokenUserDto> {
-    return this.getTokenUseCase.execute({
-      identify: {
-        email: identifyUserDto.email,
-        password: identifyUserDto.password,
-      },
-    });
+    return this.getTokenUseCase.execute({ email, password });
   }
 }
