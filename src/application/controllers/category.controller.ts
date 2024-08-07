@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -16,6 +17,9 @@ import {
 } from '../dtos/request/category.request.dto';
 import { CategoryResponseDto } from '../dtos/response/category.response.dto';
 
+import { Roles } from '@Shared/decorators/roles.decorator';
+import { UserRoleEnum } from '@Shared/enums/user-role.enum';
+import { RoleGuard } from '@Shared/guards/role-guard';
 import { CreateCategoryUseCase } from '../use-cases/category/create-category.use-case';
 import { DeleteCategoryUseCase } from '../use-cases/category/delete-category.use-case';
 import { FindCategoryUseCase } from '../use-cases/category/find-category.use-case';
@@ -38,6 +42,10 @@ export class CategoryController {
     description: 'Categoria criada com sucesso',
     type: CategoryRequestDto,
   })
+  @Roles(UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   async createCategory(@Body() dto: CategoryRequestDto): Promise<void> {
@@ -59,7 +67,11 @@ export class CategoryController {
 
   @Put(':id')
   @HttpCode(204)
+  @Roles(UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
   @ApiOperation({ summary: 'Atualiza uma categoria' })
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
     status: 204,
     description: 'Categoria atualizada com sucesso!',
@@ -75,7 +87,11 @@ export class CategoryController {
 
   @Delete(':id')
   @HttpCode(204)
+  @Roles(UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
   @ApiOperation({ summary: 'Deleta uma categoria' })
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
     status: 204,
     description: 'Categoria deletada com sucesso!',
