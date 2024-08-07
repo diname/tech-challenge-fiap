@@ -14,8 +14,6 @@ export class ProductRepositoryImpl implements IProductRepository {
   ) {}
 
   async find(name: string, categoryId: number): Promise<ProductEntity[]> {
-    console.log(categoryId);
-
     const products = await this.productRepository.find({
       relations: ['category'],
       loadEagerRelations: true,

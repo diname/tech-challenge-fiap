@@ -13,7 +13,6 @@ export class CategoryRepositoryImpl implements ICategoryRepository {
 
   async find(): Promise<CategoryEntity[]> {
     const categories = await this.repository.find({ order: { name: 'ASC' } });
-    console.log(categories);
     return categories.map(CategoryMapper.toEntity);
   }
   async save(category: CategoryEntity): Promise<void> {
