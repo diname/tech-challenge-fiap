@@ -61,7 +61,6 @@ export class CategoryController {
   })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   async findCategories(): Promise<CategoryResponseDto[]> {
-    console.log(await this.findCategoryUseCase.execute());
     return this.findCategoryUseCase.execute();
   }
 

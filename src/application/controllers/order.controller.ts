@@ -50,9 +50,8 @@ export class OrderController {
 
   @Put(':id/payment/approve')
   @ApiOperation({ summary: 'Aprova um pedido' })
+  @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
   @UseGuards(RoleGuard)
-  @ApiResponse({ status: 401, description: 'Não autorizado' })
-  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
     status: 200,
     description: 'Pedido aprovado com sucesso',
@@ -61,15 +60,16 @@ export class OrderController {
   @ApiResponse({ status: 400, description: 'ID inválido' })
   @ApiResponse({ status: 404, description: 'Pedido não encontrado' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   async approveOrder(@Param('id') id: number): Promise<void> {
     return this.approveOrderUseCase.execute(id);
   }
 
   @Put(':id/payment/cancel')
   @ApiOperation({ summary: 'Cancela um pedido' })
+  @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
   @UseGuards(RoleGuard)
-  @ApiResponse({ status: 401, description: 'Não autorizado' })
-  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
     status: 200,
     description: 'Pedido cancelado com sucesso',
@@ -78,6 +78,8 @@ export class OrderController {
   @ApiResponse({ status: 400, description: 'ID inválido' })
   @ApiResponse({ status: 404, description: 'Pedido não encontrado' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   async cancelOrder(@Param('id') id: number): Promise<void> {
     return this.cancelOrderUseCase.execute(id);
   }

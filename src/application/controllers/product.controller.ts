@@ -10,12 +10,10 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
-import { ProductRequestDto } from '../dtos/request/product.request.dto';
 import {
   ProductRequestDto,
   ProductUpdateRequestDto,
@@ -60,10 +58,6 @@ export class ProductController {
     description: 'Lista de produtos',
     type: [ProductReponseDto],
   })
-  @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
-  @UseGuards(RoleGuard)
-  @ApiResponse({ status: 401, description: 'Não autorizado' })
-  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   @ApiQuery({ name: 'name', required: false, type: String })
   @ApiQuery({ name: 'categoryId', required: false, type: Number })
