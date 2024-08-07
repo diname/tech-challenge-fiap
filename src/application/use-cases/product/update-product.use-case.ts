@@ -3,7 +3,7 @@ import {
   IProductServiceSymbol,
 } from '@Domain/services/product/product.service';
 import { Inject, Injectable } from '@nestjs/common';
-import { ProductRequestDto } from 'src/application/dtos/request/product.request.dto';
+import { ProductUpdateRequestDto } from 'src/application/dtos/request/product.request.dto';
 import { ProductMapper } from 'src/application/mappers/product.mapper';
 
 @Injectable()
@@ -13,7 +13,10 @@ export class UpdateProductUseCase {
     private readonly productService: IProductService,
   ) {}
 
-  async execute(dto: ProductRequestDto): Promise<void> {
-    return await this.productService.update(ProductMapper.toEntity(dto));
+  async execute(id: number, dto: ProductUpdateRequestDto): Promise<void> {
+    return await this.productService.update(
+      id,
+      ProductMapper.toEntityUpdate(dto),
+    );
   }
 }

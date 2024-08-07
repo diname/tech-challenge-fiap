@@ -12,11 +12,11 @@ export class ProductServiceImpl {
     private readonly productRepository: IProductRepository,
   ) {}
 
-  create(product: ProductEntity): Promise<void> {
+  create(product: ProductEntity): Promise<ProductEntity> {
     return this.productRepository.save(product);
   }
-  update(product: ProductEntity): Promise<void> {
-    return this.productRepository.update(product);
+  update(id: number, product: ProductEntity): Promise<void> {
+    return this.productRepository.update(id, product);
   }
   delete(id: number): Promise<void> {
     return this.productRepository.delete(id);
