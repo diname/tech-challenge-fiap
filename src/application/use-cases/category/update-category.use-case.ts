@@ -14,7 +14,6 @@ export class UpdateCategoryUseCase {
   ) {}
 
   async execute(dto: UpdateCategoryRequestDto): Promise<void> {
-    console.log(dto);
     return await this.categoryService.updateCategory(
       CategoryMapper.toEntityUpdate(dto),
     );

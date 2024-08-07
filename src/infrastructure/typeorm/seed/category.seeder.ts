@@ -14,8 +14,9 @@ export class CategorySeeder extends SeederBase<CategoryModel> {
   protected dataToSeed(): CategoryModel[] {
     return [
       { id: 1, name: 'Lanche' },
-      { id: 2, name: 'Bebida' },
-      { id: 3, name: 'Acompanhamento' },
+      { id: 2, name: 'Acompanhamento' },
+      { id: 3, name: 'Bebida' },
+      { id: 4, name: 'Sobremesa' },
     ] as CategoryModel[];
   }
 }
