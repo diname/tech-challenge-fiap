@@ -1,6 +1,8 @@
 import { ProductEntity } from '@Domain/entities/product.entity';
 import { ProductModel } from '@Infrastructure/typeorm/models/product.model';
+
 import { CategoryModel } from '../models/category.model';
+import { CategoryMapper } from './category.mapper';
 
 export class ProductMapper {
   static toEntity(productModel: ProductModel): ProductEntity {
@@ -10,10 +12,10 @@ export class ProductMapper {
       productModel.price,
       productModel.figureUrl,
       productModel.enabled,
-      productModel.category.id,
+      CategoryMapper.toEntity(productModel.category),
     );
 
-    product.categoryName = productModel.category.name;
+    product.id = productModel.id;
     return product;
   }
 
@@ -25,7 +27,7 @@ export class ProductMapper {
     product.price = productEntity.price;
     product.figureUrl = productEntity.figureUrl;
     product.enabled = productEntity.enabled;
-    product.category = { id: productEntity.categoryId } as CategoryModel;
+    product.category = { id: productEntity.category.id } as CategoryModel;
 
     return product;
   }
