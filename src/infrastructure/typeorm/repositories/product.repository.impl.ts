@@ -14,8 +14,6 @@ export class ProductRepositoryImpl implements IProductRepository {
   ) {}
 
   async find(name: string, categoryId: number): Promise<ProductEntity[]> {
-    console.log(categoryId);
-
     const products = await this.productRepository.find({
       relations: ['category'],
       loadEagerRelations: true,
@@ -31,15 +29,17 @@ export class ProductRepositoryImpl implements IProductRepository {
     return products.map(ProductMapper.toEntity);
   }
 
-  async save(product: ProductEntity): Promise<void> {
-    await this.productRepository.save(ProductMapper.toModel(product));
+  async save(product: ProductEntity): Promise<ProductEntity> {
+    let productModel = await this.productRepository.save(
+      ProductMapper.toModel(product),
+    );
+
+    return ProductMapper.toEntity(productModel);
   }
 
-  async update(product: ProductEntity): Promise<void> {
-    const productEntity = ProductMapper.toModel(product);
-
-    await this.productRepository.update(productEntity.id, {
-      ...productEntity,
+  async update(id: number, product: ProductEntity): Promise<void> {
+    await this.productRepository.update(id, {
+      ...ProductMapper.toModel(product),
     });
   }
 
