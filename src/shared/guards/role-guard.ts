@@ -1,7 +1,11 @@
-import { AuthServiceImpl } from '@Infrastructure/services/auth/auth.service.impl';
+import {
+  IAuthService,
+  IAuthServiceSymbol,
+} from '@Domain/services/auth/auth.service';
 import {
   CanActivate,
   ExecutionContext,
+  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -11,7 +15,8 @@ import { Reflector } from '@nestjs/core';
 export class RoleGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
-    private readonly authService: AuthServiceImpl,
+    @Inject(IAuthServiceSymbol)
+    private readonly authService: IAuthService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {

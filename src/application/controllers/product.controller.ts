@@ -13,7 +13,7 @@ import {
 
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
-import { RoleGuard } from '@Shared/guards/auth-guard';
+import { RoleGuard } from '@Shared/guards/role-guard';
 import { Roles } from '@Shared/guards/roles.decorator';
 import { ProductRequestDto } from '../dtos/request/product.request.dto';
 import { ProductReponseDto } from '../dtos/response/product.reponse.dto';
