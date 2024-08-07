@@ -1,6 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
+import { RoleGuard } from '@Shared/guards/role-guard';
 import { CreateCustomerUserDto } from '../dtos/request/create-customer-user.dto';
 
 import { CreateUserDto } from '../dtos/request/create-user.dto';
@@ -20,20 +22,21 @@ export class UserController {
     @Body() createCustomerUserDto: CreateCustomerUserDto,
   ): Promise<void> {
     return this.createUserUseCase.execute({
-      user: {
-        name: createCustomerUserDto.username,
-        email: createCustomerUserDto.email,
-        cpf: createCustomerUserDto.cpf,
-        roles: [UserRoleEnum.CUSTOMER],
-      },
+      name: createCustomerUserDto.name,
+      email: createCustomerUserDto.email,
+      cpf: createCustomerUserDto.cpf,
+      roles: [UserRoleEnum.CUSTOMER],
     });
   }
 
-  // TODO: Auth admin
   @Post('/prep-line')
   @ApiOperation({
     summary: 'Cadastra um novo usuário para a linha de produção',
   })
+  @Roles(UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({ status: 201 })
   @ApiResponse({ status: 400 })
   @ApiResponse({ status: 500 })
@@ -41,12 +44,10 @@ export class UserController {
     @Body() createUserDto: CreateUserDto,
   ): Promise<void> {
     return this.createUserUseCase.execute({
-      user: {
-        name: createUserDto.username,
-        email: createUserDto.email,
-        password: createUserDto.password,
-        roles: [UserRoleEnum.PREP_LINE],
-      },
+      name: createUserDto.name,
+      email: createUserDto.email,
+      password: createUserDto.password,
+      roles: [UserRoleEnum.PREP_LINE],
     });
   }
 }

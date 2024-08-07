@@ -1,16 +1,22 @@
 import { UserEntity } from '@Domain/entities/user.entity';
 import { UserModel } from '@Infrastructure/typeorm/models/user.model';
+import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 
 export class UserMapper {
-  static toEntity(userEntity: UserModel): UserEntity {
+  static toEntity(userModel: UserModel): UserEntity {
+    console.log({ role: userModel.userRoles });
+
     const user = new UserEntity();
-    user.id = userEntity.id;
-    user.name = userEntity.name;
-    user.cpf = userEntity.cpf;
-    user.password = userEntity.password;
-    user.createdAt = userEntity.createdAt;
-    user.updatedAt = userEntity.updatedAt;
-    user.deletedAt = userEntity.deletedAt;
+    user.id = userModel.id;
+    user.name = userModel.name;
+    user.cpf = userModel.cpf;
+    user.password = userModel.password;
+    user.roles = userModel.userRoles.map(
+      (userRole) => userRole.role.name as UserRoleEnum,
+    );
+    user.createdAt = userModel.createdAt;
+    user.updatedAt = userModel.updatedAt;
+    user.deletedAt = userModel.deletedAt;
 
     return user;
   }

@@ -49,14 +49,20 @@ export class UserRepositoryImpl implements IUserRepository {
   }
 
   async getUserByCpf(cpf: string): Promise<UserEntity> {
-    const userModel = await this.userRepository.findOneBy({ cpf });
+    const userModel = await this.userRepository.findOne({
+      where: { cpf },
+      relations: ['userRoles', 'userRoles.role'],
+    });
     if (userModel) {
       return UserMapper.toEntity(userModel);
     }
   }
 
   async getUserByEmail(email: string): Promise<UserEntity> {
-    const userEntity = await this.userRepository.findOneBy({ email });
+    const userEntity = await this.userRepository.findOne({
+      where: { email },
+      relations: ['userRoles', 'userRoles.role'],
+    });
     if (userEntity) {
       return UserMapper.toEntity(userEntity);
     }

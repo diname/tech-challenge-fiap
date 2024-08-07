@@ -4,7 +4,6 @@ import {
   IUserServiceSymbol,
 } from '@Domain/services/user/user.service';
 import { Inject, Injectable } from '@nestjs/common';
-import { GetOneUserCommand } from 'src/application/commands/user/get-one-user.command';
 
 @Injectable()
 export class GetOneUserUseCase {
@@ -13,9 +12,11 @@ export class GetOneUserUseCase {
     private readonly userService: IUserService,
   ) {}
 
-  async execute(
-    command: GetOneUserCommand,
-  ): Promise<UserEntity | null | undefined> {
-    return this.userService.getOne({ ...command.filter });
+  async execute(filters: {
+    cpf?: string;
+    email?: string;
+    password?: string;
+  }): Promise<UserEntity | null | undefined> {
+    return this.userService.getOne({ ...filters });
   }
 }
