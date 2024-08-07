@@ -12,11 +12,20 @@ export class CategoryRepositoryImpl implements ICategoryRepository {
   ) {}
 
   async find(): Promise<CategoryEntity[]> {
-    const categories = await this.repository.find();
+    const categories = await this.repository.find({ order: { name: 'ASC' } });
+    console.log(categories);
     return categories.map(CategoryMapper.toEntity);
   }
-
   async save(category: CategoryEntity): Promise<void> {
-    this.repository.save(CategoryMapper.toModel(category));
+    await this.repository.save(CategoryMapper.toModel(category));
+  }
+
+  async update(category: CategoryEntity): Promise<void> {
+    const categoryEntity = CategoryMapper.toModel(category);
+    await this.repository.update(categoryEntity.id, { ...categoryEntity });
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.repository.delete(id);
   }
 }

@@ -3,8 +3,9 @@ import { CategoryModel } from '../models/category.model';
 
 export class CategoryMapper {
   static toEntity(categoryModel: CategoryModel): CategoryEntity {
-    const product = new CategoryEntity(categoryModel.id, categoryModel.name);
-    return product;
+    const category = new CategoryEntity(categoryModel.name);
+    category.id = categoryModel.id;
+    return category;
   }
 
   static toModel(categoryEntity: CategoryEntity): CategoryModel {
