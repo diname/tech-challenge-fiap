@@ -14,6 +14,9 @@ import { ProductServiceImpl } from '@Domain/services/product/product.serviceImpl
 import { OrderRepositoryImpl } from '@Infrastructure/typeorm/repositories/order.repository.impl';
 import { ProductRepositoryImpl } from '@Infrastructure/typeorm/repositories/product.repository.impl';
 
+import { ICategoryRepositorySymbol } from '@Domain/repositories/category.repository';
+import { ICategoryServiceSymbol } from '@Domain/services/category/category.service';
+import { CategoryServiceImpl } from '@Domain/services/category/category.serviceImpl';
 import { OrderServiceImpl } from '@Domain/services/order/order.service.impl';
 import { IUserServiceSymbol } from '@Domain/services/user/user.service';
 import { UserServiceImpl } from '@Domain/services/user/user.serviceImp';
@@ -26,6 +29,7 @@ import { ProductOrderModel } from '@Infrastructure/typeorm/models/product_order.
 import { RoleModel } from '@Infrastructure/typeorm/models/role.model';
 import { UserRoleModel } from '@Infrastructure/typeorm/models/user-role.model';
 import { UserModel } from '@Infrastructure/typeorm/models/user.model';
+import { CategoryRepositoryImpl } from '@Infrastructure/typeorm/repositories/category.repository.impl';
 import { ProductOrderRepositoryImpl } from '@Infrastructure/typeorm/repositories/product-order.repository.impl';
 import { UserRepositoryImpl } from '@Infrastructure/typeorm/repositories/user.repository.impl';
 import { CategorySeeder } from '@Infrastructure/typeorm/seed/category.seeder';
@@ -34,10 +38,15 @@ import { SeederProvider } from '@Infrastructure/typeorm/seed/seeder.provider';
 import { UserSeeder } from '@Infrastructure/typeorm/seed/user.seeder';
 import { EnvironmentVariableModule } from '@Shared/config/environment-variable/environment-variable.module';
 import { AuthController } from './application/controllers/auth.controller';
+import { CategoryController } from './application/controllers/category.controller';
 import { OrderController } from './application/controllers/order.controller';
 import { ProductController } from './application/controllers/product.controller';
 import { UserController } from './application/controllers/user.controller';
 import { GetTokenUseCase } from './application/use-cases/auth/get-token.use-case';
+import { CreateCategoryUseCase } from './application/use-cases/category/create-category.use-case';
+import { DeleteCategoryUseCase } from './application/use-cases/category/delete-category.use-case';
+import { FindCategoryUseCase } from './application/use-cases/category/find-category.use-case';
+import { UpdateCategoryUseCase } from './application/use-cases/category/update-category.use-case';
 import { ApproveOrderUseCase } from './application/use-cases/order/approve-order.use-case';
 import { CancelOrderUseCase } from './application/use-cases/order/cancel-order.use-case';
 import { CreateOrderUseCase } from './application/use-cases/order/create-order.use-case';
@@ -86,6 +95,10 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
     FindProductUseCase,
     DeleteProductUseCase,
     GetTokenUseCase,
+    FindCategoryUseCase,
+    CreateCategoryUseCase,
+    UpdateCategoryUseCase,
+    DeleteCategoryUseCase,
     {
       provide: IAuthServiceSymbol,
       useClass: AuthServiceImpl,
@@ -118,12 +131,21 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
       provide: IProductServiceSymbol,
       useClass: ProductServiceImpl,
     },
+    {
+      provide: ICategoryServiceSymbol,
+      useClass: CategoryServiceImpl,
+    },
+    {
+      provide: ICategoryRepositorySymbol,
+      useClass: CategoryRepositoryImpl,
+    },
   ],
   controllers: [
     UserController,
     ProductController,
     AuthController,
     OrderController,
+    CategoryController,
   ],
 })
 export class AppModule {}
