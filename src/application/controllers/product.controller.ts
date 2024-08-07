@@ -12,11 +12,10 @@ import {
 } from '@nestjs/common';
 
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
-import { Roles } from '@Shared/guards/roles.decorator';
 import { ProductRequestDto } from '../dtos/request/product.request.dto';
-
 import {
   ProductRequestDto,
   ProductUpdateRequestDto,
@@ -61,7 +60,7 @@ export class ProductController {
     description: 'Lista de produtos',
     type: [ProductReponseDto],
   })
-  @Roles(UserRoleEnum.ADMIN)
+  @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
   @UseGuards(RoleGuard)
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
@@ -94,7 +93,7 @@ export class ProductController {
   @Put(':id')
   @HttpCode(204)
   @ApiOperation({ summary: 'Atualiza um produto' })
-  @Roles(UserRoleEnum.ADMIN)
+  @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
   @UseGuards(RoleGuard)
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })

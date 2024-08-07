@@ -20,6 +20,11 @@ export class RoleGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    if (!roles) {
+      return true;
+    }
+
     const request = context.switchToHttp().getRequest();
     const authorizationHeader = request.headers.authorization;
     if (!authorizationHeader) {
@@ -27,14 +32,10 @@ export class RoleGuard implements CanActivate {
     }
 
     const token: string = authorizationHeader.replace('Bearer ', '');
-
     const tokenPayload =
       await this.authService.getTokenPayloadFromAccessToken(token);
+    request['user'] = tokenPayload;
 
-    const roles = this.reflector.get<string[]>('roles', context.getHandler());
-    if (!roles) {
-      return false;
-    }
     return tokenPayload.roles.some((r) => roles.includes(r));
   }
 }

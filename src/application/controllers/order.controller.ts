@@ -8,9 +8,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { GetCurrentUserId } from '@Shared/decorators/get-user-id.decorator';
+import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
-import { Roles } from '@Shared/guards/roles.decorator';
 import { CreateOrderRequestDto } from '../dtos/request/create-order.request.dto';
 import { OrderResponseDto } from '../dtos/response/order.respose.dto';
 import { ApproveOrderUseCase } from '../use-cases/order/approve-order.use-case';
@@ -37,13 +38,11 @@ export class OrderController {
     description: 'Pedido criado com sucesso',
     type: OrderResponseDto,
   })
-  @Roles(UserRoleEnum.CUSTOMER, UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
-  @ApiResponse({ status: 401, description: 'Não autorizado' })
-  @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   async createOrder(
+    @GetCurrentUserId() userId: number,
     @Body() dto: CreateOrderRequestDto,
   ): Promise<OrderResponseDto> {
     return this.createOrderUseCase.execute(dto);
@@ -51,7 +50,6 @@ export class OrderController {
 
   @Put(':id/payment/approve')
   @ApiOperation({ summary: 'Aprova um pedido' })
-  @Roles(UserRoleEnum.CUSTOMER, UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
@@ -69,7 +67,6 @@ export class OrderController {
 
   @Put(':id/payment/cancel')
   @ApiOperation({ summary: 'Cancela um pedido' })
-  @Roles(UserRoleEnum.CUSTOMER, UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })

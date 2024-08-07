@@ -1,8 +1,8 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
-import { Roles } from '@Shared/guards/roles.decorator';
 import { CreateCustomerUserDto } from '../dtos/request/create-customer-user.dto';
 
 import { CreateUserDto } from '../dtos/request/create-user.dto';
