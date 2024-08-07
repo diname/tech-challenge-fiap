@@ -1,5 +1,5 @@
 import { ProductEntity } from '@Domain/entities/product.entity';
-import { ProductRequestDto } from '../dtos/request/create-product.request.dto';
+import { ProductRequestDto } from '../dtos/request/product.request.dto';
 import { ProductReponseDto } from '../dtos/response/product.reponse.dto';
 
 export class ProductMapper {

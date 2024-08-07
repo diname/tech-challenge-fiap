@@ -1,8 +1,10 @@
 import { CategoryEntity } from '@Domain/entities/category.entity';
 
 export interface ICategoryRepository {
-  save(product: CategoryEntity): Promise<void>;
+  save(category: CategoryEntity): Promise<void>;
+  update(category: CategoryEntity): Promise<void>;
+  delete(id: number): Promise<void>;
   find(): Promise<CategoryEntity[]>;
 }
 
-export const ICategoryRepository = Symbol('ICategoryRepository');
+export const ICategoryRepositorySymbol = Symbol('ICategoryRepository');

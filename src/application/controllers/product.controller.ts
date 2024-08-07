@@ -9,8 +9,9 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ProductRequestDto } from '../dtos/request/create-product.request.dto';
+import { ProductRequestDto } from '../dtos/request/product.request.dto';
 import { ProductReponseDto } from '../dtos/response/product.reponse.dto';
 import { CreateProductUseCase } from '../use-cases/product/create-product.use-case';
 import { DeleteProductUseCase } from '../use-cases/product/delete-product.use-case';

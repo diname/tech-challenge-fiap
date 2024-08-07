@@ -2,6 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { CreateCustomerUserDto } from '../dtos/request/create-customer-user.dto';
+
 import { CreateUserDto } from '../dtos/request/create-user.dto';
 import { CreateUserUseCase } from '../use-cases/user/create-user.use-case';
 
