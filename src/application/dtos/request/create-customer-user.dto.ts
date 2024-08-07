@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsCPF } from '@Shared/decorators/is-cpf.decorator';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateCustomerUserDto {
@@ -21,6 +22,6 @@ export class CreateCustomerUserDto {
     example: '90209432004',
     description: `User's cpf - identification`,
   })
-  @IsString()
+  @IsCPF()
   cpf: string;
 }
