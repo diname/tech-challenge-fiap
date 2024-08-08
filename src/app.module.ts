@@ -39,6 +39,7 @@ import { UserSeeder } from '@Infrastructure/typeorm/seed/user.seeder';
 import { EnvironmentVariableModule } from '@Shared/config/environment-variable/environment-variable.module';
 import { AuthController } from './application/controllers/auth.controller';
 import { CategoryController } from './application/controllers/category.controller';
+import { CheckoutController } from './application/controllers/checkout.controller';
 import { OrderController } from './application/controllers/order.controller';
 import { ProductController } from './application/controllers/product.controller';
 import { UserController } from './application/controllers/user.controller';
@@ -47,6 +48,7 @@ import { CreateCategoryUseCase } from './application/use-cases/category/create-c
 import { DeleteCategoryUseCase } from './application/use-cases/category/delete-category.use-case';
 import { FindCategoryUseCase } from './application/use-cases/category/find-category.use-case';
 import { UpdateCategoryUseCase } from './application/use-cases/category/update-category.use-case';
+import { CreateCheckoutUseCase } from './application/use-cases/checkout/create-checkout.use-case';
 import { ApproveOrderUseCase } from './application/use-cases/order/approve-order.use-case';
 import { CancelOrderUseCase } from './application/use-cases/order/cancel-order.use-case';
 import { CreateOrderUseCase } from './application/use-cases/order/create-order.use-case';
@@ -83,6 +85,7 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
     SeederProvider,
     CategorySeeder,
     ProductServiceImpl,
+    CreateCheckoutUseCase,
     CreateUserUseCase,
     GetOneUserUseCase,
     CreateOrderUseCase,
@@ -142,6 +145,7 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
   ],
   controllers: [
     UserController,
+    CheckoutController,
     ProductController,
     AuthController,
     OrderController,
