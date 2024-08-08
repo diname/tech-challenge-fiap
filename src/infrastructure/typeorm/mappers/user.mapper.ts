@@ -4,8 +4,6 @@ import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 
 export class UserMapper {
   static toEntity(userModel: UserModel): UserEntity {
-    console.log({ role: userModel.userRoles });
-
     const user = new UserEntity();
     user.id = userModel.id;
     user.name = userModel.name;

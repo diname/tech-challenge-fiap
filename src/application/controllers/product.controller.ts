@@ -10,7 +10,13 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
@@ -43,6 +49,7 @@ export class ProductController {
   })
   @Roles(UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
@@ -73,6 +80,7 @@ export class ProductController {
   @ApiOperation({ summary: 'Deleta um produto' })
   @Roles(UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
@@ -89,6 +97,7 @@ export class ProductController {
   @ApiOperation({ summary: 'Atualiza um produto' })
   @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
