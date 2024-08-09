@@ -16,7 +16,13 @@ export class CreateCheckoutUseCase {
   async execute(dto: CreateCheckoutRequestDto): Promise<CheckoutResponseDto> {
     const randomQRCode = new CheckoutResponseDto();
     randomQRCode.emv = 'testEMV';
-    await this.service.approveOrder(dto.orderId);
+
+    if (dto.orderOwnerCPF == '532.543.888-22') {
+      await this.service.approveOrder(dto.orderId);
+    } else if (dto.orderOwnerCPF == '532.543.888-23') {
+      await this.service.cancelOrder(dto.orderId);
+    } else await this.service.approveOrder(dto.orderId);
+
     return randomQRCode;
   }
 }
