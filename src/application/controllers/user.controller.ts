@@ -1,5 +1,10 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
@@ -35,6 +40,7 @@ export class UserController {
   })
   @Roles(UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({ status: 201 })

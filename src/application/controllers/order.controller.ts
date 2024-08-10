@@ -7,7 +7,12 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { GetCurrentUserId } from '@Shared/decorators/get-user-id.decorator';
 import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
@@ -39,6 +44,7 @@ export class OrderController {
     type: OrderResponseDto,
   })
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   async createOrder(
@@ -52,6 +58,7 @@ export class OrderController {
   @ApiOperation({ summary: 'Aprova um pedido' })
   @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiResponse({
     status: 200,
     description: 'Pedido aprovado com sucesso',
@@ -70,6 +77,7 @@ export class OrderController {
   @ApiOperation({ summary: 'Cancela um pedido' })
   @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiResponse({
     status: 200,
     description: 'Pedido cancelado com sucesso',
@@ -89,6 +97,7 @@ export class OrderController {
   @ApiOperation({ summary: 'Cancela um pedido' })
   @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({
@@ -107,6 +116,7 @@ export class OrderController {
   @ApiOperation({ summary: 'Lista todos os pedidos' })
   @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({

@@ -16,7 +16,20 @@ export class CreateCheckoutUseCase {
   async execute(dto: CreateCheckoutRequestDto): Promise<CheckoutResponseDto> {
     const randomQRCode = new CheckoutResponseDto();
     randomQRCode.emv = 'testEMV';
-    await this.service.approveOrder(dto.orderId);
+
+    try {
+      if (dto.orderOwnerCPF === '532.543.888-22') {
+        await this.service.approveOrder(dto.orderId);
+      } else if (dto.orderOwnerCPF === '532.543.888-23') {
+        await this.service.cancelOrder(dto.orderId);
+      } else {
+        await this.service.approveOrder(dto.orderId);
+      }
+    } catch (error) {
+      // Handle the exception here
+      console.error('An error occurred while processing the order:', error);
+    }
+
     return randomQRCode;
   }
 }

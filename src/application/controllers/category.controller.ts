@@ -9,7 +9,12 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import {
   CategoryRequestDto,
@@ -44,6 +49,7 @@ export class CategoryController {
   })
   @Roles(UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
@@ -68,6 +74,7 @@ export class CategoryController {
   @HttpCode(204)
   @Roles(UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Atualiza uma categoria' })
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
@@ -88,6 +95,7 @@ export class CategoryController {
   @HttpCode(204)
   @Roles(UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Deleta uma categoria' })
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })

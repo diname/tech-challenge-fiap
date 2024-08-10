@@ -1,5 +1,5 @@
 import { ForbiddenException } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 export async function verifyUserCredentials(
   incomingPassword: string,
