@@ -301,7 +301,7 @@ Para executar o projeto, siga estes passos:
 
 Para dúvidas ou suporte, entre em contato com:
 
-- Jhoni Faria ()
+- Jhoni Farias (jhonifarias.developer@gmail.com)
 - Josef ()
 - Lucas Rodrigues Medina Costa (lucasmedinarmc@gmail.com)
 - Kleber de Oliveira Andrade (pdjkleber@gmail.com)
