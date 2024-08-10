@@ -4,6 +4,9 @@
 
 Este projeto utiliza NestJS e TypeORM, seguindo a arquitetura limpa. A estrutura do projeto é organizada para promover uma separação clara de responsabilidades e facilitar a manutenção e escalabilidade.
 
+## Event Storm
+<img src="https://img.shields.io/badge/Miro-05192D?style=for-the-badge&logo=miro&logoColor=FFD02F" href="https://img.shields.io/badge/Miro-05192D?style=for-the-badge&logo=miro&logoColor=FFD02F"/>
+
 ## Estrutura de Pastas
 
 Abaixo está a estrutura de pastas do projeto:
