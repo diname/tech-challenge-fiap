@@ -33,8 +33,10 @@ import { CategoryRepositoryImpl } from '@Infrastructure/typeorm/repositories/cat
 import { ProductOrderRepositoryImpl } from '@Infrastructure/typeorm/repositories/product-order.repository.impl';
 import { UserRepositoryImpl } from '@Infrastructure/typeorm/repositories/user.repository.impl';
 import { CategorySeeder } from '@Infrastructure/typeorm/seed/category.seeder';
+import { ProductSeeder } from '@Infrastructure/typeorm/seed/product.seeder';
 import { RoleSeeder } from '@Infrastructure/typeorm/seed/role.seeder';
 import { SeederProvider } from '@Infrastructure/typeorm/seed/seeder.provider';
+import { UserRoleSeeder } from '@Infrastructure/typeorm/seed/user-role.seeder';
 import { UserSeeder } from '@Infrastructure/typeorm/seed/user.seeder';
 import { EnvironmentVariableModule } from '@Shared/config/environment-variable/environment-variable.module';
 import { AuthController } from './application/controllers/auth.controller';
@@ -82,8 +84,10 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
   providers: [
     UserSeeder,
     RoleSeeder,
+    UserRoleSeeder,
     SeederProvider,
     CategorySeeder,
+    ProductSeeder,
     ProductServiceImpl,
     CreateCheckoutUseCase,
     CreateUserUseCase,

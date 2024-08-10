@@ -31,7 +31,7 @@ export class UserRepositoryImpl implements IUserRepository {
 
     try {
       const userModel = await queryRunner.manager.save(
-        UserEntity,
+        UserModel,
         UserMapper.toModel(user),
       );
 
