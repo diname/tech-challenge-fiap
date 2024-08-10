@@ -300,6 +300,6 @@ Para dúvidas ou suporte, entre em contato com:
 
 - Jhoni Faria ()
 - Josef ()
-- Lucas ()
+- Lucas Rodrigues Medina Costa (lucasmedinarmc@gmail.com)
 - Kleber de Oliveira Andrade (pdjkleber@gmail.com)
 - Victória ()
