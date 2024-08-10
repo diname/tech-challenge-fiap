@@ -20,13 +20,13 @@ export class CreateCheckoutUseCase {
     const fakeResponse = new CheckoutResponseDto();
     const fakePixData: PixDataDto = {
       merchantAccount:
-        '00020126360014BR.GOV.BCB.PIX0114+55819999999970206ABCD5802BR5925Merchant Name6009City Name62070503***6304ABCD',
+        '00020126360014BR.GOV.BCB.PIX0114+55819999999970206ABCD5802BR5925FIAP6009SAOPAULO62070503***6304ABCD',
       userCPF: dto.orderOwnerCPF,
       transactionAmount: dto.orderPrice,
       currency: 'BRL',
       transactionId: '1234567890',
       qrCode:
-        '00020126360014BR.GOV.BCB.PIX0114+55819999999970206ABCD5802BR5925Merchant Name6009City Name62070503***6304ABCD',
+        '00020126360014BR.GOV.BCB.PIX0114+55819999999970206ABCD5802BR5925FIAP6009SAOPAULO62070503***6304ABCD',
       expirationDate: '2024-12-31T23:59:59Z',
     };
 

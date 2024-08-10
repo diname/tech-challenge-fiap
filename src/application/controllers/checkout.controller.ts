@@ -10,7 +10,7 @@ export class CheckoutController {
   constructor(private readonly createCheckoutUseCase: CreateCheckoutUseCase) {}
 
   @Post()
-  @ApiOperation({ summary: 'Retorna um fake EMV' })
+  @ApiOperation({ summary: 'Inicia um checkout e retorna um fake EMVCo' })
   @ApiResponse({
     status: 201,
     description: 'Checkout feito com sucesso',
@@ -22,14 +22,11 @@ export class CheckoutController {
     description: `
     Checkout Data:
   
-    - Order ID: ID do pedido, será aprovado ou não baseado no CPF.
-    - Order Price: Preço do pedido.
-    - Order Owner CPF: CPF do usuário que está pagando.
-    - CPF: 532.543.888-22 Aprova o pedido.
-    - CPF: 532.543.888-23 Nega o pedido.
-    - CPF: Qualquer outro CPF aprova o pedido.
-  
-    Ensure all required fields are filled correctly before submitting the request.
+    - O pedido será aprovado ou não baseado no CPF.
+    - Caso o pedido não exista, um fake EMVCo será retornado independentemente.
+    - CPF: 52998224725 Aprova o pedido.
+    - CPF: 11144477735 Nega o pedido.
+    - CPF: Qualquer outro CPF (válido) aprova o pedido.
     `,
     type: CreateCheckoutRequestDto,
   })
