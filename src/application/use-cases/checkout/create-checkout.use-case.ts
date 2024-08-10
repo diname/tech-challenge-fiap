@@ -4,7 +4,10 @@ import {
 } from '@Domain/services/order/order.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateCheckoutRequestDto } from 'src/application/dtos/request/create-checkout.dto';
-import { CheckoutResponseDto } from 'src/application/dtos/response/create-checkout.response.dto';
+import {
+  CheckoutResponseDto,
+  PixDataDto,
+} from 'src/application/dtos/response/create-checkout.response.dto';
 
 @Injectable()
 export class CreateCheckoutUseCase {
@@ -14,8 +17,20 @@ export class CreateCheckoutUseCase {
   ) {}
 
   async execute(dto: CreateCheckoutRequestDto): Promise<CheckoutResponseDto> {
-    const randomQRCode = new CheckoutResponseDto();
-    randomQRCode.emv = 'testEMV';
+    const fakeResponse = new CheckoutResponseDto();
+    const fakePixData: PixDataDto = {
+      merchantAccount:
+        '00020126360014BR.GOV.BCB.PIX0114+55819999999970206ABCD5802BR5925Merchant Name6009City Name62070503***6304ABCD',
+      userCPF: dto.orderOwnerCPF,
+      transactionAmount: dto.orderPrice,
+      currency: 'BRL',
+      transactionId: '1234567890',
+      qrCode:
+        '00020126360014BR.GOV.BCB.PIX0114+55819999999970206ABCD5802BR5925Merchant Name6009City Name62070503***6304ABCD',
+      expirationDate: '2024-12-31T23:59:59Z',
+    };
+
+    fakeResponse.pixData = fakePixData;
 
     try {
       if (dto.orderOwnerCPF === '532.543.888-22') {
@@ -30,6 +45,6 @@ export class CreateCheckoutUseCase {
       console.error('An error occurred while processing the order:', error);
     }
 
-    return randomQRCode;
+    return fakeResponse;
   }
 }
