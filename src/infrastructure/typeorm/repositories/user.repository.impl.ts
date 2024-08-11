@@ -68,6 +68,15 @@ export class UserRepositoryImpl implements IUserRepository {
     }
   }
 
+  async getUsersByRole(role: UserRoleEnum): Promise<UserEntity[]> {
+    const users = await this.userRepository.find({
+      where: { userRoles: { role: { name: role } } },
+      relations: ['userRoles', 'userRoles.role'],
+    });
+
+    return users.map((user) => UserMapper.toEntity(user));
+  }
+
   private async getManyRoleByUserRoleEnum(
     enumRoles: UserRoleEnum[],
   ): Promise<RoleModel[]> {

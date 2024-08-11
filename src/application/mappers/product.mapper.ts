@@ -35,7 +35,7 @@ export class ProductMapper {
   static toEntityUpdate(dto: ProductUpdateRequestDto): ProductEntity {
     const category = { id: dto.categoryId } as CategoryEntity;
 
-    let product = new ProductEntity(
+    const product = new ProductEntity(
       dto.name,
       dto.description,
       dto.price,
