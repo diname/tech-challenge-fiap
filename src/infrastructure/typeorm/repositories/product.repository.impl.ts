@@ -2,7 +2,7 @@ import { ProductEntity } from '@Domain/entities/product.entity';
 import { IProductRepository } from '@Domain/repositories/product.repository';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { ProductMapper } from '../mappers/product.mapper';
 import { ProductModel } from '../models/product.model';
 
@@ -19,7 +19,7 @@ export class ProductRepositoryImpl implements IProductRepository {
       loadEagerRelations: true,
       where: {
         category: { id: categoryId },
-        name: name ? Like(`%${name.toLowerCase()}%`) : undefined,
+        name: name ? ILike(`%${name}%`) : undefined,
       },
       order: {
         price: 'DESC',

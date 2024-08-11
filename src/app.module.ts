@@ -148,10 +148,10 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
     },
   ],
   controllers: [
+    AuthController,
     UserController,
     CheckoutController,
     ProductController,
-    AuthController,
     OrderController,
     CategoryController,
   ],
