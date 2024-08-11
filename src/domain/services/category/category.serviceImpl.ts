@@ -15,8 +15,8 @@ export class CategoryServiceImpl {
   createCategory(categoryEntity: CategoryEntity): Promise<void> {
     return this.categoryRepository.save(categoryEntity);
   }
-  updateCategory(categoryEntity: CategoryEntity): Promise<void> {
-    return this.categoryRepository.update(categoryEntity);
+  updateCategory(id: number, categoryEntity: CategoryEntity): Promise<void> {
+    return this.categoryRepository.update(id, categoryEntity);
   }
   deleteCategory(id: number): Promise<void> {
     return this.categoryRepository.delete(id);

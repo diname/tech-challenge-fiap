@@ -32,4 +32,9 @@ export class ProductReponseDto {
     description: 'Status do produto',
   })
   public enabled: boolean;
+
+  @ApiProperty({
+    description: 'Imagem do produto',
+  })
+  public figureUrl: string;
 }

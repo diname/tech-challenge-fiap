@@ -13,8 +13,9 @@ export class UpdateCategoryUseCase {
     private readonly categoryService: ICategoryService,
   ) {}
 
-  async execute(dto: UpdateCategoryRequestDto): Promise<void> {
+  async execute(id: number, dto: UpdateCategoryRequestDto): Promise<void> {
     return await this.categoryService.updateCategory(
+      id,
       CategoryMapper.toEntityUpdate(dto),
     );
   }

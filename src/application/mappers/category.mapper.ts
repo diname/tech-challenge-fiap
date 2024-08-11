@@ -12,7 +12,6 @@ export class CategoryMapper {
 
   static toEntityUpdate(dto: UpdateCategoryRequestDto): CategoryEntity {
     const entity = new CategoryEntity(dto.name);
-    entity.id = dto.id;
     return entity;
   }
 

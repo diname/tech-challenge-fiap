@@ -87,8 +87,7 @@ export class CategoryController {
     @Param('id') id: number,
     @Body() dto: UpdateCategoryRequestDto,
   ): Promise<void> {
-    dto.id = id;
-    return this.updateCategoryUseCase.execute(dto);
+    return this.updateCategoryUseCase.execute(id, dto);
   }
 
   @Delete(':id')

@@ -28,6 +28,7 @@ export class ProductMapper {
     productResponseDto.description = entity.description;
     productResponseDto.price = entity.price;
     productResponseDto.enabled = entity.enabled;
+    productResponseDto.figureUrl = entity.figureUrl;
 
     return productResponseDto;
   }
