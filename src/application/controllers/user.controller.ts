@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -9,14 +9,17 @@ import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
 import { CreateCustomerUserDto } from '../dtos/request/create-customer-user.dto';
-
 import { CreateUserDto } from '../dtos/request/create-user.dto';
 import { CreateUserUseCase } from '../use-cases/user/create-user.use-case';
+import { GetUserByRoleUseCase } from '../use-cases/user/get-user-by-role.use-case';
 
 @Controller('users')
 @ApiTags('User')
 export class UserController {
-  constructor(private readonly createUserUseCase: CreateUserUseCase) {}
+  constructor(
+    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly getUserByRoleUseCase: GetUserByRoleUseCase,
+  ) {}
 
   @Post('/customer')
   @ApiOperation({ summary: 'Cadastra um novo usuário cliente' })
@@ -55,5 +58,18 @@ export class UserController {
       password: createUserDto.password,
       roles: [UserRoleEnum.PREP_LINE],
     });
+  }
+
+  @Get()
+  @Roles(UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
+  @ApiBearerAuth()
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
+  @ApiResponse({ status: 200 })
+  @ApiResponse({ status: 400 })
+  @ApiResponse({ status: 500 })
+  async getCustomers() {
+    return this.getUserByRoleUseCase.execute(UserRoleEnum.CUSTOMER);
   }
 }

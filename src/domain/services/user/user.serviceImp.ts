@@ -4,6 +4,7 @@ import {
   IUserRepositorySymbol,
 } from '@Domain/repositories/user.repository';
 import { Inject, Injectable } from '@nestjs/common';
+import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { IUserService } from './user.service';
 
 @Injectable()
@@ -25,5 +26,9 @@ export class UserServiceImpl implements IUserService {
     if (filter.email) {
       return this.userRepository.getUserByEmail(filter.email);
     }
+  }
+
+  async getUsersByRole(): Promise<UserEntity[]> {
+    return this.userRepository.getUsersByRole(UserRoleEnum.CUSTOMER);
   }
 }

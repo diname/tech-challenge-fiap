@@ -21,8 +21,7 @@
       "@Application/*": ["src/application/*"],
       "@Domain/*": ["src/domain/*"],
       "@Infrastructure/*": ["src/infrastructure/*"],
-      "@Shared/*": ["src/shared/*"],
-      "@Application/*": ["src/api/*"]
+      "@Shared/*": ["src/shared/*"]
     }
   }
 }

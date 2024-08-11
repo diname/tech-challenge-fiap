@@ -14,6 +14,8 @@ import { ProductServiceImpl } from '@Domain/services/product/product.serviceImpl
 import { OrderRepositoryImpl } from '@Infrastructure/typeorm/repositories/order.repository.impl';
 import { ProductRepositoryImpl } from '@Infrastructure/typeorm/repositories/product.repository.impl';
 
+import { CheckoutController } from '@Application/controllers/checkout.controller';
+import { ProductController } from '@Application/controllers/product.controller';
 import { ICategoryRepositorySymbol } from '@Domain/repositories/category.repository';
 import { ICategoryServiceSymbol } from '@Domain/services/category/category.service';
 import { CategoryServiceImpl } from '@Domain/services/category/category.serviceImpl';
@@ -41,9 +43,7 @@ import { UserSeeder } from '@Infrastructure/typeorm/seed/user.seeder';
 import { EnvironmentVariableModule } from '@Shared/config/environment-variable/environment-variable.module';
 import { AuthController } from './application/controllers/auth.controller';
 import { CategoryController } from './application/controllers/category.controller';
-import { CheckoutController } from './application/controllers/checkout.controller';
 import { OrderController } from './application/controllers/order.controller';
-import { ProductController } from './application/controllers/product.controller';
 import { UserController } from './application/controllers/user.controller';
 import { GetTokenUseCase } from './application/use-cases/auth/get-token.use-case';
 import { CreateCategoryUseCase } from './application/use-cases/category/create-category.use-case';
@@ -62,6 +62,7 @@ import { FindProductUseCase } from './application/use-cases/product/find-product
 import { UpdateProductUseCase } from './application/use-cases/product/update-product.use-case';
 import { CreateUserUseCase } from './application/use-cases/user/create-user.use-case';
 import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use-case';
+import { GetUserByRoleUseCase } from './application/use-cases/user/get-user-by-role.use-case';
 
 @Module({
   imports: [
@@ -72,12 +73,12 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
     }),
     TypeOrmModule.forFeature([
       UserModel,
-      UserRoleModel,
       RoleModel,
-      ProductModel,
-      ProductOrderModel,
       OrderModel,
+      ProductModel,
       CategoryModel,
+      UserRoleModel,
+      ProductOrderModel,
     ]),
     EnvironmentVariableModule.forRoot({ isGlobal: true }),
   ],
@@ -90,22 +91,25 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
     ProductSeeder,
     ProductServiceImpl,
     CreateCheckoutUseCase,
+    GetTokenUseCase,
     CreateUserUseCase,
     GetOneUserUseCase,
     CreateOrderUseCase,
+    CancelOrderUseCase,
+    FindProductUseCase,
+    ProductServiceImpl,
+    ApproveOrderUseCase,
+    FindCategoryUseCase,
     FindOrderByIdUseCase,
     FindAllOrdersUseCase,
-    ApproveOrderUseCase,
-    CancelOrderUseCase,
     CreateProductUseCase,
     UpdateProductUseCase,
-    GetTokenUseCase,
-    FindProductUseCase,
     DeleteProductUseCase,
-    FindCategoryUseCase,
+    GetUserByRoleUseCase,
     CreateCategoryUseCase,
     UpdateCategoryUseCase,
     DeleteCategoryUseCase,
+    CreateCheckoutUseCase,
     {
       provide: IAuthServiceSymbol,
       useClass: AuthServiceImpl,
@@ -123,16 +127,8 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
       useClass: OrderServiceImpl,
     },
     {
-      provide: IProductRepositorySymbol,
-      useClass: ProductRepositoryImpl,
-    },
-    {
       provide: IOrderRepositorySymbol,
       useClass: OrderRepositoryImpl,
-    },
-    {
-      provide: IProductOrderRepositorySymbol,
-      useClass: ProductOrderRepositoryImpl,
     },
     {
       provide: IProductServiceSymbol,
@@ -143,8 +139,16 @@ import { GetOneUserUseCase } from './application/use-cases/user/get-one-user.use
       useClass: CategoryServiceImpl,
     },
     {
+      provide: IProductRepositorySymbol,
+      useClass: ProductRepositoryImpl,
+    },
+    {
       provide: ICategoryRepositorySymbol,
       useClass: CategoryRepositoryImpl,
+    },
+    {
+      provide: IProductOrderRepositorySymbol,
+      useClass: ProductOrderRepositoryImpl,
     },
   ],
   controllers: [
