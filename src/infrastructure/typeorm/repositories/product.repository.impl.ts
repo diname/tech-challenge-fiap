@@ -13,6 +13,15 @@ export class ProductRepositoryImpl implements IProductRepository {
     private readonly productRepository: Repository<ProductModel>,
   ) {}
 
+  async findById(id: number) {
+    let product = await this.productRepository.findOne({
+      where: { id: id },
+      relations: ['category'],
+    });
+
+    return ProductMapper.toEntity(product);
+  }
+
   async find(name: string, categoryId: number): Promise<ProductEntity[]> {
     const products = await this.productRepository.find({
       relations: ['category'],
