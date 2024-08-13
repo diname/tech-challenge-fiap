@@ -2,6 +2,8 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "wix.vscode-import-cost"
+    "wix.vscode-import-cost",
+    "shd101wyy.markdown-preview-enhanced",
+    "bierner.markdown-mermaid"
   ]
 }

@@ -360,7 +360,7 @@ Para executar o projeto utilizando Docker, siga os passos abaixo:
 Utilize o docker-compose.yml para iniciar a aplicação e os serviços dependentes (como o banco de dados):
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 Isso iniciará todos os serviços definidos no **docker-compose.yml**. Você verá os logs da aplicação no terminal.
