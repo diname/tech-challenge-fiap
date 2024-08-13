@@ -23,6 +23,11 @@ export class UserRoleSeeder extends SeederBase<UserRoleModel> {
         role: { id: 3 },
         user: { id: 2 },
       },
+      {
+        id: 3,
+        role: { id: 2 },
+        user: { id: 3 },
+      },
     ] as UserRoleModel[];
   }
 }

@@ -19,14 +19,21 @@ export class UserSeeder extends SeederBase<UserModel> {
         name: 'administrador',
         email: 'admin@gmail.com',
         cpf: '49499582891',
-        password: hashUserPassword('admin'),
+        password: hashUserPassword('admin@123'),
       },
       {
         id: 2,
         name: 'cozinha',
         email: 'cozinha@gmail.com',
         cpf: '49499582893',
-        password: hashUserPassword('cozinha'),
+        password: hashUserPassword('cozinha@123'),
+      },
+      {
+        id: 3,
+        name: 'cliente',
+        email: 'cliente@gmail.com',
+        cpf: '35281866079',
+        password: hashUserPassword('cliente@123'),
       },
     ] as UserModel[];
   }
