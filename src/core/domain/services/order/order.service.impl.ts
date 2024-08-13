@@ -13,6 +13,7 @@ import {
   IProductOrderRepository,
   IProductOrderRepositorySymbol,
 } from '../../repositories/product-order.repository';
+import { TotalPriceValueObject } from '../../value-objects/total-price.value-objects';
 import {
   IProductService,
   IProductServiceSymbol,
@@ -67,7 +68,7 @@ export class OrderServiceImpl implements IOrderService {
     }
 
     const orderEntity = new OrderEntity(
-      totalPrice,
+      new TotalPriceValueObject(totalPrice),
       PaymentStatusType.PENDING,
       OrderStatusType.NONE,
       new Date(),

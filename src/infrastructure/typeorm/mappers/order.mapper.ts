@@ -1,4 +1,5 @@
 import { OrderEntity } from 'src/core/domain/entities/order.entity';
+import { TotalPriceValueObject } from 'src/core/domain/value-objects/total-price.value-objects';
 import { OrderModel } from '../models/order.model';
 import { ProductOrderMapper } from './product-order.mapper';
 import { UserMapper } from './user.mapper';
@@ -8,7 +9,7 @@ export class OrderMapper {
     if (!orderModel) return null;
 
     return new OrderEntity(
-      orderModel.totalPrice,
+      new TotalPriceValueObject(orderModel.totalPrice),
       orderModel.paymentStatus,
       orderModel.orderStatus,
       orderModel.createdAt,
@@ -24,7 +25,7 @@ export class OrderMapper {
 
     const model = new OrderModel();
     model.id = orderEntity.id;
-    model.totalPrice = orderEntity.totalPrice;
+    model.totalPrice = orderEntity.totalPrice.getValue();
     model.paymentStatus = orderEntity.paymentStatus;
     model.orderStatus = orderEntity.orderStatus;
     model.createdAt = orderEntity.createdAt;
