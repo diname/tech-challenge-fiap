@@ -16,7 +16,7 @@ export class OrderMapper {
       );
     });
 
-    return new CreateOrderEntity(productOrders, dto.cpf);
+    return new CreateOrderEntity(productOrders);
   }
 
   static toResponseDto(orderEntity: OrderEntity): OrderResponseDto {
