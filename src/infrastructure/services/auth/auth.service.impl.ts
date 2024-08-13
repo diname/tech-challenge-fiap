@@ -1,9 +1,9 @@
-import { UserEntity } from '@Domain/entities/user.entity';
-import { IAuthService } from '@Domain/services/auth/auth.service';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { EnvironmentVariableService } from '@Shared/config/environment-variable/environment-variable.service';
 import { ITokenPayload } from '@Shared/interfaces/token-payload.interface';
+import { UserEntity } from 'src/core/domain/entities/user.entity';
+import { IAuthService } from 'src/core/domain/services/auth/auth.service';
 
 @Injectable()
 export class AuthServiceImpl implements IAuthService {

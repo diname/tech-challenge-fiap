@@ -1,7 +1,7 @@
-import { ProductEntity } from '@Domain/entities/product.entity';
-import { IProductRepository } from '@Domain/repositories/product.repository';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ProductEntity } from 'src/core/domain/entities/product.entity';
+import { IProductRepository } from 'src/core/domain/repositories/product.repository';
 import { ILike, Repository } from 'typeorm';
 import { ProductMapper } from '../mappers/product.mapper';
 import { ProductModel } from '../models/product.model';

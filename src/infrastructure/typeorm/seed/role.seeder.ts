@@ -1,13 +1,13 @@
-import { RoleModel } from '@Infrastructure/typeorm/models/role.model';
 import { Injectable } from '@nestjs/common';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
+import { RoleModel } from '../models/role.model';
 import { SeederBase } from './seed-base.seeder';
 
 @Injectable()
 export class RoleSeeder extends SeederBase<RoleModel> {
-  constructor(connection: Connection) {
-    const repository = connection.getRepository(RoleModel);
+  constructor(dataSource: DataSource) {
+    const repository = dataSource.getRepository(RoleModel);
     super(repository);
     this.tableName = 'Role';
   }

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { ProductModel } from '../models/product.model';
 import { SeederBase } from './seed-base.seeder';
 
 @Injectable()
 export class ProductSeeder extends SeederBase<ProductModel> {
-  constructor(connection: Connection) {
-    const repository = connection.getRepository(ProductModel);
+  constructor(dataSource: DataSource) {
+    const repository = dataSource.getRepository(ProductModel);
     super(repository);
     this.tableName = 'Product';
   }

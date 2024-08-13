@@ -1,6 +1,6 @@
-import { UserEntity } from '@Domain/entities/user.entity';
 import { UserModel } from '@Infrastructure/typeorm/models/user.model';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
+import { UserEntity } from 'src/core/domain/entities/user.entity';
 
 export class UserMapper {
   static toEntity(userModel: UserModel): UserEntity {

@@ -1,6 +1,6 @@
-import { ProductEntity } from '@Domain/entities/product.entity';
 import { ProductModel } from '@Infrastructure/typeorm/models/product.model';
 
+import { ProductEntity } from 'src/core/domain/entities/product.entity';
 import { CategoryModel } from '../models/category.model';
 import { CategoryMapper } from './category.mapper';
 

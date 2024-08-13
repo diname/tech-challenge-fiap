@@ -1,8 +1,8 @@
-import { UserEntity } from '@Domain/entities/user.entity';
-import { IUserRepository } from '@Domain/repositories/user.repository';
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
+import { UserEntity } from 'src/core/domain/entities/user.entity';
+import { IUserRepository } from 'src/core/domain/repositories/user.repository';
 import { DataSource, In, Repository } from 'typeorm';
 import { UserMapper } from '../mappers/user.mapper';
 import { RoleModel } from '../models/role.model';

@@ -1,13 +1,13 @@
-import { UserModel } from '@Infrastructure/typeorm/models/user.model';
 import { Injectable } from '@nestjs/common';
 import { hashUserPassword } from '@Shared/utils/auth.util';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
+import { UserModel } from '../models/user.model';
 import { SeederBase } from './seed-base.seeder';
 
 @Injectable()
 export class UserSeeder extends SeederBase<UserModel> {
-  constructor(connection: Connection) {
-    const repository = connection.getRepository(UserModel);
+  constructor(dataSource: DataSource) {
+    const repository = dataSource.getRepository(UserModel);
     super(repository);
     this.tableName = 'User';
   }

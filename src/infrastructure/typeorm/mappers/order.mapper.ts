@@ -1,4 +1,4 @@
-import { OrderEntity } from '@Domain/entities/order.entity';
+import { OrderEntity } from 'src/core/domain/entities/order.entity';
 import { OrderModel } from '../models/order.model';
 import { ProductOrderMapper } from './product-order.mapper';
 import { UserMapper } from './user.mapper';

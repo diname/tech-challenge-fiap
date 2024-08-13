@@ -1,6 +1,6 @@
-import { OrderEntity } from '@Domain/entities/order.entity';
-import { IOrderRepository } from '@Domain/repositories/order.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { OrderEntity } from 'src/core/domain/entities/order.entity';
+import { IOrderRepository } from 'src/core/domain/repositories/order.repository';
 import { Repository } from 'typeorm';
 import { OrderMapper } from '../mappers/order.mapper';
 import { OrderModel } from '../models/order.model';

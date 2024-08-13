@@ -11,7 +11,6 @@ import {
 } from 'typeorm';
 import { ProductOrderModel } from './product-order.model';
 import { UserModel } from './user.model';
-
 @Entity({
   name: 'order',
   comment: 'Entidade que representa um pedido feito por um usuário.',

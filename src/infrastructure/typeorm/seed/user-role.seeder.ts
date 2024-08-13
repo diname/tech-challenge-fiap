@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { UserRoleModel } from '../models/user-role.model';
 import { SeederBase } from './seed-base.seeder';
 
 @Injectable()
 export class UserRoleSeeder extends SeederBase<UserRoleModel> {
-  constructor(connection: Connection) {
-    const repository = connection.getRepository(UserRoleModel);
+  constructor(dataSource: DataSource) {
+    const repository = dataSource.getRepository(UserRoleModel);
     super(repository);
     this.tableName = 'UserRole';
   }

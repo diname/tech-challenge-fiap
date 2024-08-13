@@ -1,6 +1,6 @@
-import { CategoryEntity } from '@Domain/entities/category.entity';
-import { ICategoryRepository } from '@Domain/repositories/category.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CategoryEntity } from 'src/core/domain/entities/category.entity';
+import { ICategoryRepository } from 'src/core/domain/repositories/category.repository';
 import { Repository } from 'typeorm';
 import { CategoryMapper } from '../mappers/category.mapper';
 import { CategoryModel } from '../models/category.model';
