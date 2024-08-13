@@ -3,31 +3,20 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
   IsInt,
-  IsNumber,
+  IsOptional,
   IsPositive,
+  IsString,
   ValidateNested,
 } from 'class-validator';
 
 export class CreateOrderRequestDto {
-  constructor(partial: Partial<CreateOrderRequestDto>) {
-    Object.assign(this, partial);
-  }
-
   @ApiProperty({
-    description: 'Preço total do pedido.',
-    example: 100.0,
-  })
-  @IsNumber({}, { message: 'O preço total deve ser um número.' })
-  @IsPositive({ message: 'O preço total deve ser positivo.' })
-  readonly totalPrice: number;
-
-  @ApiProperty({
-    description: 'ID do usuário que fez o pedido.',
+    description: 'CPF do usuário que fez o pedido (opcional).',
     example: 1,
   })
-  @IsInt({ message: 'O ID do usuário deve ser um número inteiro.' })
-  @IsPositive({ message: 'O ID do usuário deve ser positivo.' })
-  readonly userId: number;
+  @IsString({ message: 'O CPF do usuário deve ser uma string.' })
+  @IsOptional()
+  readonly cpf?: string;
 
   @ApiProperty({
     description: 'Lista de produtos e quantidades no pedido.',

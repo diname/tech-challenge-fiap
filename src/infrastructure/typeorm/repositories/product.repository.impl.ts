@@ -14,7 +14,7 @@ export class ProductRepositoryImpl implements IProductRepository {
   ) {}
 
   async findById(id: number) {
-    let product = await this.productRepository.findOne({
+    const product = await this.productRepository.findOne({
       where: { id: id },
       relations: ['category'],
     });
@@ -39,7 +39,7 @@ export class ProductRepositoryImpl implements IProductRepository {
   }
 
   async save(product: ProductEntity): Promise<ProductEntity> {
-    let productModel = await this.productRepository.save(
+    const productModel = await this.productRepository.save(
       ProductMapper.toModel(product),
     );
 

@@ -5,6 +5,10 @@ import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 export class UserMapper {
   static toEntity(userModel: UserModel): UserEntity {
     const user = new UserEntity();
+    if (!userModel) {
+      return user;
+    }
+
     user.id = userModel.id;
     user.name = userModel.name;
     user.cpf = userModel.cpf;

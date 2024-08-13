@@ -1,34 +1,41 @@
 import { OrderEntity } from '@Domain/entities/order.entity';
 import { OrderModel } from '../models/order.model';
 import { ProductOrderMapper } from './product-order.mapper';
+import { UserMapper } from './user.mapper';
 
 export class OrderMapper {
-  static toEntity(model: OrderModel): OrderEntity {
-    if (!model) return null;
+  static toEntity(orderModel: OrderModel): OrderEntity {
+    if (!orderModel) return null;
 
     return new OrderEntity(
-      model.id,
-      model.totalPrice,
-      model.paymentStatus,
-      model.orderStatus,
-      model.createdAt,
-      model.updatedAt,
-      model.productOrders.map(ProductOrderMapper.toEntity),
+      orderModel.totalPrice,
+      orderModel.paymentStatus,
+      orderModel.orderStatus,
+      orderModel.createdAt,
+      orderModel.productOrders.map(ProductOrderMapper.toEntity),
+      UserMapper.toEntity(orderModel.user),
+      orderModel.id,
+      orderModel.updatedAt,
     );
   }
 
-  static toModel(domain: OrderEntity): OrderModel {
-    if (!domain) return null;
+  static toModel(orderEntity: OrderEntity): OrderModel {
+    if (!orderEntity) return null;
 
     const model = new OrderModel();
-    model.id = domain.id;
-    model.totalPrice = domain.totalPrice;
-    model.paymentStatus = domain.paymentStatus;
-    model.orderStatus = domain.orderStatus;
-    model.createdAt = domain.createdAt;
-    model.updatedAt = domain.updatedAt;
-    model.productOrders = domain.productOrders.map(ProductOrderMapper.toModel);
+    model.id = orderEntity.id;
+    model.totalPrice = orderEntity.totalPrice;
+    model.paymentStatus = orderEntity.paymentStatus;
+    model.orderStatus = orderEntity.orderStatus;
+    model.createdAt = orderEntity.createdAt;
+    model.updatedAt = orderEntity.updatedAt;
+    model.productOrders = orderEntity.productsOrder.map(
+      ProductOrderMapper.toModel,
+    );
 
+    if (orderEntity.user) {
+      model.user = UserMapper.toModel(orderEntity.user);
+    }
     return model;
   }
 }

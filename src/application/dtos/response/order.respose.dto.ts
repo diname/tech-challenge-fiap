@@ -1,4 +1,5 @@
 import { ProductOrderEntity } from '@Domain/entities/product-order.entity';
+import { UserEntity } from '@Domain/entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { OrderStatusType } from '@Shared/enums/order-status-type.enum';
 import { PaymentStatusType } from '@Shared/enums/payment-status-type.enum';
@@ -17,10 +18,10 @@ export class OrderResponseDto {
   totalPrice: number;
 
   @ApiProperty({
-    description: 'ID do usuário que fez o pedido.',
-    example: 1,
+    description: 'Usuário que fez o pedido.',
+    type: [UserEntity],
   })
-  userId: number;
+  user?: UserEntity;
 
   @ApiProperty({
     description: 'Status do pagamento do pedido.',

@@ -1,7 +1,8 @@
+import { CreateOrderEntity } from '@Domain/entities/create-order.entity';
 import { OrderEntity } from '@Domain/entities/order.entity';
 
 export interface IOrderService {
-  createOrder(order: OrderEntity): Promise<OrderEntity>;
+  createOrder(order: CreateOrderEntity): Promise<OrderEntity>;
   approveOrder(id: number): Promise<void>;
   cancelOrder(id: number): Promise<void>;
   findOrderById(id: number): Promise<OrderEntity>;

@@ -3,7 +3,7 @@ import { IProductOrderRepository } from '@Domain/repositories/product-order.repo
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductOrderMapper } from '../mappers/product-order.mapper';
-import { ProductOrderModel } from '../models/product_order.model';
+import { ProductOrderModel } from '../models/product-order.model';
 
 export class ProductOrderRepositoryImpl implements IProductOrderRepository {
   constructor(

@@ -1,34 +1,38 @@
-import { OrderStatusType } from '@Shared/enums/order-status-type.enum';
-import { PaymentStatusType } from '@Shared/enums/payment-status-type.enum';
-import { OrderEntity } from '../../domain/entities/order.entity';
+import { OrderResponseDto } from '@Application/dtos/response/order.respose.dto';
+import {
+  CreateOrderEntity,
+  CreateProductOrderEntity,
+} from '@Domain/entities/create-order.entity';
+import { OrderEntity } from '@Domain/entities/order.entity';
+import { ProductOrderMapper } from '@Infrastructure/typeorm/mappers/product-order.mapper';
 import { CreateOrderRequestDto } from '../dtos/request/create-order.request.dto';
-import { OrderResponseDto } from '../dtos/response/order.respose.dto';
 
 export class OrderMapper {
-  static toEntity(dto: CreateOrderRequestDto): OrderEntity {
-    //const productOrders = dto.productOrders.map(ProductOrderMapper.toEntity);
+  static toCreateOrderEntity(dto: CreateOrderRequestDto): CreateOrderEntity {
+    const productOrders = dto.productOrders.map((productOrderDto) => {
+      return new CreateProductOrderEntity(
+        productOrderDto.productId,
+        productOrderDto.quantity,
+      );
+    });
 
-    return new OrderEntity(
-      0,
-      dto.totalPrice,
-      PaymentStatusType.PENDING,
-      OrderStatusType.NONE,
-      new Date(),
-      new Date(),
-      [],
-      //productOrders,
-    );
+    return new CreateOrderEntity(productOrders, dto.cpf);
   }
 
-  static toResponseDto(entity: OrderEntity): OrderResponseDto {
-    const orderResponseDto = new OrderResponseDto();
-    orderResponseDto.id = entity.id;
-    orderResponseDto.totalPrice = entity.totalPrice;
-    orderResponseDto.paymentStatus = entity.paymentStatus;
-    orderResponseDto.orderStatus = entity.orderStatus;
-    orderResponseDto.createdAt = entity.createdAt;
-    orderResponseDto.updatedAt = entity.updatedAt;
-    orderResponseDto.productOrders = entity.productOrders;
-    return orderResponseDto;
+  static toResponseDto(orderEntity: OrderEntity): OrderResponseDto {
+    const productOrders = orderEntity.productsOrder.map(
+      ProductOrderMapper.toEntity,
+    );
+
+    return {
+      id: orderEntity.id,
+      totalPrice: orderEntity.totalPrice,
+      user: orderEntity.user,
+      paymentStatus: orderEntity.paymentStatus,
+      orderStatus: orderEntity.orderStatus,
+      createdAt: orderEntity.createdAt,
+      updatedAt: orderEntity.updatedAt,
+      productOrders: productOrders,
+    };
   }
 }

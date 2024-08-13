@@ -26,8 +26,8 @@ import { AuthServiceImpl } from '@Infrastructure/services/auth/auth.service.impl
 import { PostgresConfigService } from '@Infrastructure/typeorm/config/postgres.config.service';
 import { CategoryModel } from '@Infrastructure/typeorm/models/category.model';
 import { OrderModel } from '@Infrastructure/typeorm/models/order.model';
+import { ProductOrderModel } from '@Infrastructure/typeorm/models/product-order.model';
 import { ProductModel } from '@Infrastructure/typeorm/models/product.model';
-import { ProductOrderModel } from '@Infrastructure/typeorm/models/product_order.model';
 import { RoleModel } from '@Infrastructure/typeorm/models/role.model';
 import { UserRoleModel } from '@Infrastructure/typeorm/models/user-role.model';
 import { UserModel } from '@Infrastructure/typeorm/models/user.model';
@@ -66,7 +66,7 @@ import { GetUserByRoleUseCase } from './application/use-cases/user/get-user-by-r
 
 @Module({
   imports: [
-    JwtModule,
+    JwtModule.register({}),
     TypeOrmModule.forRootAsync({
       useClass: PostgresConfigService,
       inject: [PostgresConfigService],
@@ -94,6 +94,7 @@ import { GetUserByRoleUseCase } from './application/use-cases/user/get-user-by-r
     GetTokenUseCase,
     CreateUserUseCase,
     GetOneUserUseCase,
+    OrderServiceImpl,
     CreateOrderUseCase,
     CancelOrderUseCase,
     FindProductUseCase,
@@ -123,12 +124,12 @@ import { GetUserByRoleUseCase } from './application/use-cases/user/get-user-by-r
       useClass: UserRepositoryImpl,
     },
     {
-      provide: IOrderServiceSymbol,
-      useClass: OrderServiceImpl,
-    },
-    {
       provide: IOrderRepositorySymbol,
       useClass: OrderRepositoryImpl,
+    },
+    {
+      provide: IOrderServiceSymbol,
+      useClass: OrderServiceImpl,
     },
     {
       provide: IProductServiceSymbol,

@@ -15,7 +15,8 @@ export class CreateOrderUseCase {
   ) {}
 
   async execute(dto: CreateOrderRequestDto): Promise<OrderResponseDto> {
-    const orderEntityRequest = OrderMapper.toEntity(dto);
+    const orderEntityRequest = OrderMapper.toCreateOrderEntity(dto);
+    console.log({ orderEntityRequest });
     const orderEntity = await this.service.createOrder(orderEntityRequest);
     return OrderMapper.toResponseDto(orderEntity);
   }
