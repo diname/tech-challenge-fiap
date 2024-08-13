@@ -332,7 +332,7 @@ Após iniciar os contêineres, o Swagger estará acessível em [http://localhost
 Para dúvidas ou suporte, entre em contato com:
 
 - Jhoni Farias (jhonifarias.developer@gmail.com)
-- Josef ()
+- Josef Henrique Zambreti (josefhenrique@uol.com.br)
 - Lucas Rodrigues Medina Costa (lucasmedinarmc@gmail.com)
 - Kleber de Oliveira Andrade (pdjkleber@gmail.com)
 - Victória ()
