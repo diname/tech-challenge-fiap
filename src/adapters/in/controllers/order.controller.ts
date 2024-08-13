@@ -51,7 +51,7 @@ export class OrderController {
     @GetCurrentUserId() userId: number,
     @Body() dto: CreateOrderRequestDto,
   ): Promise<OrderResponseDto> {
-    return this.createOrderUseCase.execute(dto);
+    return this.createOrderUseCase.execute(userId, dto);
   }
 
   @Put(':id/payment/approve')
