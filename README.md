@@ -1,6 +1,52 @@
-# Documentação do Projeto
+# Tech Challenge (Software Architecture)
 
-Bem-vindo à documentação da API. Esta API foi desenvolvida utilizando NestJS e TypeORM, seguindo a arquitetura hexagonal. Abaixo está a descrição detalhada da estrutura do projeto e suas responsabilidades.
+Tech Challenge é o projeto do MBA em Software Architecture que engloba os conhecimentos obtidos nas disciplinas.
+
+## O Problema
+
+Há uma lanchonete de bairro que está expandindo devido seu grande sucesso. Porém, com a expansão e sem um sistema de controle de pedidos, o atendimento aos clientes pode ser caótico e confuso. Por exemplo, imagine que um cliente faça um pedido complexo, como um hambúrguer personalizado com ingredientes específicos, acompanhado de batatas fritas e uma bebida. O atendente pode anotar o pedido em um papel e entregá-lo à cozinha, mas não há garantia de que o pedido será preparado corretamente.
+
+Sem um sistema de controle de pedidos, pode haver confusão entre os atendentes e a cozinha, resultando em atrasos na preparação e entrega dos pedidos. Os pedidos podem ser perdidos, mal interpretados ou esquecidos, levando à insatisfação dos clientes e a perda de negócios.
+
+Em resumo, um sistema de controle de pedidos é essencial para garantir que a lanchonete possa atender os clientes de maneira eficiente, gerenciando seus pedidos e estoques de forma adequada. Sem ele, expandir a lanchonete pode acabar não dando certo, resultando em clientes insatisfeitos e impactando os negócios de forma negativa.
+
+### Fase 1
+
+Para solucionar o problema, a lanchonete irá investir em um sistema de autoatendimento de fast food, que é composto por uma série de dispositivos e interfaces que permitem aos clientes selecionar e fazer pedidos sem precisar interagir com um atendente, com as seguintes funcionalidades:
+
+**Pedido**: Os clientes são apresentados a uma interface de seleção na qual  podem optar por se identificarem via CPF, se cadastrarem com nome, e-mail ou não se identificar, podendo montar o combo na seguinte sequência, sendo todas elas opcionais:
+
+1. Lanche
+2. Acompanhamento
+3. Bebida
+   
+Em cada etapa é exibido o nome, descrição e preço de cada produto..
+
+**Pagamento**: O sistema deverá possuir uma opção de pagamento integrada para MVP. A forma de pagamento oferecida será via QRCode do Mercado Pago.
+
+Acompanhamento: Uma vez que o pedido é confirmado e pago, ele é enviado para a cozinha para ser preparado. Simultaneamente deve aparecer em um monitor para o cliente acompanhar o progresso do seu pedido com as seguintes etapas:
+
+- Recebido
+- Em preparação
+- Pronto
+- Finalizado
+
+**Entrega**: Quando o pedido estiver pronto, o sistema deverá notificar o cliente que ele está pronto para retirada. Ao ser retirado, o pedido deve ser atualizado para o status finalizado.
+
+Além das etapas do cliente, o estabelecimento precisa de um acesso administrativo:
+
+**Gerenciar clientes**: Com a identificação dos clientes o estabelecimento pode trabalhar em campanhas promocionais.
+
+**Gerenciar produtos e categorias**: Os produtos dispostos para escolha do cliente serão gerenciados pelo estabelecimento, definindo nome, categoria, preço, descrição e imagens. Para esse sistema teremos categorias fixas:
+
+- Lanche
+- Acompanhamento
+- Bebida
+- Sobremesa
+
+**Acompanhamento de pedidos**: Deve ser possível acompanhar os pedidos em andamento e tempo de espera de cada pedido.
+
+As informações dispostas no sistema de pedidos precisarão ser gerenciadas pelo estabelecimento através de um painel administrativo.
 
 ## Event Storm
 
@@ -27,10 +73,9 @@ src/
 │ │ ├── services/ 
 │ │ ├── repositories/ 
 │ └── application/
-│ ├── use-cases/
-│ ├── ports/ 
-│ ├── dtos/
-│ └── mappers/ 
+│   ├── use-cases/
+│   ├── dtos/
+│   └── mappers/ 
 ├── adapters/
 │ ├── in/ 
 │ └── out/ 
@@ -54,7 +99,6 @@ src/
 ### `src/core/application/`
 
 - **`use-cases/`**: Contém casos de uso da aplicação, que definem as operações específicas que a aplicação pode realizar e coordenam as interações entre entidades e serviços.
-- **`ports/`**: Contém interfaces de entrada e saída (ports) para os casos de uso da aplicação. Define como a aplicação interage com o mundo exterior e como os casos de uso são chamados.
 - **`dtos/`**: Contém Data Transfer Objects, que são utilizados para transferir dados entre diferentes camadas da aplicação.
 - **`mappers/`**: Contém mapeamentos entre entidades e DTOs para facilitar a conversão de dados entre o formato de persistência e o formato de apresentação.
 
@@ -84,18 +128,22 @@ O diagrama abaixo ilustra a interação entre as diferentes camadas e componente
 
 ```mermaid
 graph TD
-    subgraph Adapters
+    subgraph Adapters_In
         A[Controllers] -->|Calls| B[Use Cases]
         B -->|Interacts with| C[Application Services]
         B -->|Maps to/from| D[DTOs]
         C -->|Maps to/from| D
-        E[External APIs] -->|Uses| F[Application Services]
+        E[External APIs] -->|Uses| C
+    end
+
+    subgraph Adapters_Out
+        F[Repositories] -->|Implements| I[Repositories Interface]
     end
 
     subgraph Core
         C -->|Uses| G[Entities]
         C -->|Uses| H[Domain Services]
-        G -->|Persisted by| I[Repositories]
+        G -->|Persisted by| I[Repositories Interface]
     end
 
     subgraph Infrastructure
@@ -107,14 +155,15 @@ graph TD
     end
 
     %%% Optional styling to make the diagram clearer
-    classDef adapters fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef adapters_in fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef adapters_out fill:#f99,stroke:#333,stroke-width:2px;
     classDef core fill:#ccf,stroke:#333,stroke-width:2px;
     classDef infra fill:#cfc,stroke:#333,stroke-width:2px;
 
-    class Adapters adapters;
+    class Adapters_In adapters_in;
+    class Adapters_Out adapters_out;
     class Core core;
     class Infrastructure infra;
-
 ```
 
 ## Documentação do Banco de Dados
@@ -327,12 +376,12 @@ Isso iniciará todos os serviços definidos no **docker-compose.yml**. Você ver
 
 Após iniciar os contêineres, o Swagger estará acessível em [http://localhost:3000/docs](http://localhost:3000/docs) (ou a porta definida no docker-compose.yml).
 
-## Contato
+## Contato (Grupo)
 
 Para dúvidas ou suporte, entre em contato com:
 
-- Jhoni Farias (jhonifarias.developer@gmail.com)
-- Josef Henrique Zambreti (josefhenrique@uol.com.br)
-- Lucas Rodrigues Medina Costa (lucasmedinarmc@gmail.com)
-- Kleber de Oliveira Andrade (pdjkleber@gmail.com)
-- Victória ()
+- **RM357358** Jhoni Farias (jhonifarias.developer@gmail.com)
+- **RM357836** Josef Henrique Zambreti (josefhenrique@uol.com.br)
+- **RM357360** Lucas Rodrigues Medina Costa (lucasmedinarmc@gmail.com)
+- **RM358012** Kleber de Oliveira Andrade (pdjkleber@gmail.com)
+- **RM357235** Vitória Camila Xavier Sobrinho (vcamilaxs@gmail.com)
