@@ -19,10 +19,7 @@ export class CreateOrderUseCase {
     dto: CreateOrderRequestDto,
   ): Promise<OrderResponseDto> {
     const orderEntityRequest = OrderMapper.toCreateOrderEntity(dto);
-    const orderEntity = await this.service.createOrder(
-      userId,
-      orderEntityRequest,
-    );
+    const orderEntity = await this.service.createOrder(orderEntityRequest);
     return OrderMapper.toResponseDto(orderEntity);
   }
 }

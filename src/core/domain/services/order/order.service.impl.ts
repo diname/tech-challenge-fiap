@@ -34,10 +34,16 @@ export class OrderServiceImpl implements IOrderService {
     private readonly userService: IUserService,
   ) {}
 
-  async createOrder(
-    userId: number,
-    order: CreateOrderEntity,
-  ): Promise<OrderEntity> {
+  async createOrder(order: CreateOrderEntity): Promise<OrderEntity> {
+    let user: UserEntity;
+
+    console.log(order.cpf);
+
+    if (order.cpf) {
+      const cpf = order.cpf;
+      user = await this.userService.getOne({ cpf });
+    }
+
     const productsOrder: ProductOrderEntity[] = [];
     let totalPrice = 0;
 
@@ -67,7 +73,7 @@ export class OrderServiceImpl implements IOrderService {
       OrderStatusType.NONE,
       new Date(),
       productsOrder,
-      { id: userId } as UserEntity,
+      user,
     );
 
     console.log({ orderEntity });
