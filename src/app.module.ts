@@ -1,99 +1,148 @@
+import { AuthServiceImpl } from '@Infrastructure/services/auth/auth.service.impl';
+import { PostgresConfigService } from '@Infrastructure/typeorm/config/postgres.config.service';
+import { CategoryModel } from '@Infrastructure/typeorm/models/category.model';
+import { OrderModel } from '@Infrastructure/typeorm/models/order.model';
+import { ProductOrderModel } from '@Infrastructure/typeorm/models/product-order.model';
+import { ProductModel } from '@Infrastructure/typeorm/models/product.model';
+import { RoleModel } from '@Infrastructure/typeorm/models/role.model';
+import { UserRoleModel } from '@Infrastructure/typeorm/models/user-role.model';
+import { UserModel } from '@Infrastructure/typeorm/models/user.model';
+import { CategorySeeder } from '@Infrastructure/typeorm/seed/category.seeder';
+import { ProductSeeder } from '@Infrastructure/typeorm/seed/product.seeder';
+import { RoleSeeder } from '@Infrastructure/typeorm/seed/role.seeder';
+import { SeederProvider } from '@Infrastructure/typeorm/seed/seeder.provider';
+import { UserRoleSeeder } from '@Infrastructure/typeorm/seed/user-role.seeder';
+import { UserSeeder } from '@Infrastructure/typeorm/seed/user.seeder';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
-import { AuthService } from '@Application/services/auth.service';
-import { OrderServiceImpl } from '@Application/services/order.service.impl';
-import { ProductService } from '@Application/services/product.service';
-import { UserService } from '@Application/services/user.service';
-import { GetTokenUserUseCase } from '@Application/use-cases/auth/get-token-user.use-case';
-import { ApproveOrderUseCase } from '@Application/use-cases/order/approve-order.use-case';
-import { CancelOrderUseCase } from '@Application/use-cases/order/cancel-order.use-case';
-import { CreateOrderUseCase } from '@Application/use-cases/order/create-order.use-case';
-import { FindAllOrdersUseCase } from '@Application/use-cases/order/find-all-orders.use-case';
-import { FindOrderByIdUseCase } from '@Application/use-cases/order/find-order-by-id.use-case';
-import { CreateProductUseCase } from '@Application/use-cases/product/create-product.use-case';
-import { FindProductUseCase } from '@Application/use-cases/product/find-product.use-case';
-import { CreateUserUseCase } from '@Application/use-cases/user/create-user.use-case';
-import { GetOneUserUseCase } from '@Application/use-cases/user/get-one-user.use-case';
-import { CategoryEntity } from '@Domain/entities/category.entity';
-import { OrderEntity } from '@Domain/entities/order.entity';
-import { ProductEntity } from '@Domain/entities/product.entity';
-import { ProductOrderEntity } from '@Domain/entities/product_order.entity';
-import { RoleEntity } from '@Domain/entities/role.entity';
-import { UserRoleEntity } from '@Domain/entities/user-role.entity';
-import { UserEntity } from '@Domain/entities/user.entity';
-import { IOrderRepositorySymbol } from '@Domain/repositories/order.repository';
-import { IProductOrderRepositorySymbol } from '@Domain/repositories/product-order.repository';
-import { IProductRepositorySymbol } from '@Domain/repositories/product.repository';
-import { IUserRepositorySymbol } from '@Domain/repositories/user.repository';
-import { IAuthServiceSymbol } from '@Domain/services/auth.service';
-import { IOrderServiceSymbol } from '@Domain/services/order.service';
-import { AuthController } from '@Infrastructure/adapters/controllers/auth.controller';
-import { OrderController } from '@Infrastructure/adapters/controllers/order.controller';
-import { ProductController } from '@Infrastructure/adapters/controllers/product.controller';
-import { UserController } from '@Infrastructure/adapters/controllers/user.controller';
-import { OrderRepositoryImpl } from '@Infrastructure/adapters/persistence/order.repository.impl';
-import { ProductOrderRepositoryImpl } from '@Infrastructure/adapters/persistence/product-order.repository.impl';
-import { ProductRepositoryImpl } from '@Infrastructure/adapters/persistence/product.repository.impl';
-import { TypeOrmUserRepository } from '@Infrastructure/adapters/persistence/typeorm-user.repository';
-import { JwtTokenService } from '@Infrastructure/adapters/services/jwt-token.service';
-import { EnvironmentVariableModule } from '@Infrastructure/config/environment-variable/environment-variable.module';
-import { PostgresConfigService } from '@Infrastructure/typeorm/postgres..config.service';
+import { EnvironmentVariableModule } from '@Shared/config/environment-variable/environment-variable.module';
+import { AuthController } from './adapters/in/controllers/auth.controller';
+import { CategoryController } from './adapters/in/controllers/category.controller';
+import { CheckoutController } from './adapters/in/controllers/checkout.controller';
+import { OrderController } from './adapters/in/controllers/order.controller';
+import { ProductController } from './adapters/in/controllers/product.controller';
+import { UserController } from './adapters/in/controllers/user.controller';
+import { CategoryRepositoryImpl } from './adapters/out/repositories/category.repository.impl';
+import { OrderRepositoryImpl } from './adapters/out/repositories/order.repository.impl';
+import { ProductOrderRepositoryImpl } from './adapters/out/repositories/product-order.repository.impl';
+import { ProductRepositoryImpl } from './adapters/out/repositories/product.repository.impl';
+import { UserRepositoryImpl } from './adapters/out/repositories/user.repository.impl';
+import { GetTokenUseCase } from './core/application/use-cases/auth/get-token.use-case';
+import { CreateCategoryUseCase } from './core/application/use-cases/category/create-category.use-case';
+import { DeleteCategoryUseCase } from './core/application/use-cases/category/delete-category.use-case';
+import { FindCategoryUseCase } from './core/application/use-cases/category/find-category.use-case';
+import { UpdateCategoryUseCase } from './core/application/use-cases/category/update-category.use-case';
+import { CreateCheckoutUseCase } from './core/application/use-cases/checkout/create-checkout.use-case';
+import { ApproveOrderUseCase } from './core/application/use-cases/order/approve-order.use-case';
+import { CancelOrderUseCase } from './core/application/use-cases/order/cancel-order.use-case';
+import { CreateOrderUseCase } from './core/application/use-cases/order/create-order.use-case';
+import { FindAllOrdersUseCase } from './core/application/use-cases/order/find-all-orders.use-case';
+import { FindOrderByIdUseCase } from './core/application/use-cases/order/find-order-by-id.use-case';
+import { CreateProductUseCase } from './core/application/use-cases/product/create-product.use-case';
+import { DeleteProductUseCase } from './core/application/use-cases/product/delete-product.use-case';
+import { FindProductUseCase } from './core/application/use-cases/product/find-product.use-case';
+import { UpdateProductUseCase } from './core/application/use-cases/product/update-product.use-case';
+import { CreateUserUseCase } from './core/application/use-cases/user/create-user.use-case';
+import { GetOneUserUseCase } from './core/application/use-cases/user/get-one-user.use-case';
+import { GetUserByRoleUseCase } from './core/application/use-cases/user/get-user-by-role.use-case';
+import { ICategoryRepositorySymbol } from './core/domain/repositories/category.repository';
+import { IOrderRepositorySymbol } from './core/domain/repositories/order.repository';
+import { IProductOrderRepositorySymbol } from './core/domain/repositories/product-order.repository';
+import { IProductRepositorySymbol } from './core/domain/repositories/product.repository';
+import { IUserRepositorySymbol } from './core/domain/repositories/user.repository';
+import { IAuthServiceSymbol } from './core/domain/services/auth/auth.service';
+import { ICategoryServiceSymbol } from './core/domain/services/category/category.service';
+import { CategoryServiceImpl } from './core/domain/services/category/category.serviceImpl';
+import { IOrderServiceSymbol } from './core/domain/services/order/order.service';
+import { OrderServiceImpl } from './core/domain/services/order/order.service.impl';
+import { IProductServiceSymbol } from './core/domain/services/product/product.service';
+import { ProductServiceImpl } from './core/domain/services/product/product.serviceImpl';
+import { IUserServiceSymbol } from './core/domain/services/user/user.service';
+import { UserServiceImpl } from './core/domain/services/user/user.serviceImp';
 
 @Module({
   imports: [
-    JwtModule,
+    JwtModule.register({}),
     TypeOrmModule.forRootAsync({
       useClass: PostgresConfigService,
       inject: [PostgresConfigService],
     }),
     TypeOrmModule.forFeature([
-      UserEntity,
-      UserRoleEntity,
-      RoleEntity,
-      ProductEntity,
-      ProductOrderEntity,
-      OrderEntity,
-      CategoryEntity,
+      UserModel,
+      RoleModel,
+      OrderModel,
+      ProductModel,
+      CategoryModel,
+      UserRoleModel,
+      ProductOrderModel,
     ]),
     EnvironmentVariableModule.forRoot({ isGlobal: true }),
   ],
   providers: [
-    AuthService,
-    UserService,
-    GetTokenUserUseCase,
+    UserSeeder,
+    RoleSeeder,
+    UserRoleSeeder,
+    SeederProvider,
+    CategorySeeder,
+    ProductSeeder,
+    ProductServiceImpl,
+    CreateCheckoutUseCase,
+    GetTokenUseCase,
     CreateUserUseCase,
     GetOneUserUseCase,
-    JwtTokenService,
-    ProductService,
-    CreateProductUseCase,
-    FindProductUseCase,
+    OrderServiceImpl,
     CreateOrderUseCase,
+    CancelOrderUseCase,
+    FindProductUseCase,
+    ProductServiceImpl,
+    ApproveOrderUseCase,
+    FindCategoryUseCase,
     FindOrderByIdUseCase,
     FindAllOrdersUseCase,
-    ApproveOrderUseCase,
-    CancelOrderUseCase,
-
+    CreateProductUseCase,
+    UpdateProductUseCase,
+    DeleteProductUseCase,
+    GetUserByRoleUseCase,
+    CreateCategoryUseCase,
+    UpdateCategoryUseCase,
+    DeleteCategoryUseCase,
+    CreateCheckoutUseCase,
+    {
+      provide: IAuthServiceSymbol,
+      useClass: AuthServiceImpl,
+    },
+    {
+      provide: IUserServiceSymbol,
+      useClass: UserServiceImpl,
+    },
+    {
+      provide: IUserRepositorySymbol,
+      useClass: UserRepositoryImpl,
+    },
+    {
+      provide: IOrderRepositorySymbol,
+      useClass: OrderRepositoryImpl,
+    },
     {
       provide: IOrderServiceSymbol,
       useClass: OrderServiceImpl,
     },
     {
-      provide: IAuthServiceSymbol,
-      useClass: JwtTokenService,
+      provide: IProductServiceSymbol,
+      useClass: ProductServiceImpl,
     },
     {
-      provide: IUserRepositorySymbol,
-      useClass: TypeOrmUserRepository,
+      provide: ICategoryServiceSymbol,
+      useClass: CategoryServiceImpl,
     },
     {
       provide: IProductRepositorySymbol,
       useClass: ProductRepositoryImpl,
     },
     {
-      provide: IOrderRepositorySymbol,
-      useClass: OrderRepositoryImpl,
+      provide: ICategoryRepositorySymbol,
+      useClass: CategoryRepositoryImpl,
     },
     {
       provide: IProductOrderRepositorySymbol,
@@ -101,10 +150,12 @@ import { PostgresConfigService } from '@Infrastructure/typeorm/postgres..config.
     },
   ],
   controllers: [
-    UserController,
-    ProductController,
     AuthController,
+    UserController,
+    CheckoutController,
+    ProductController,
     OrderController,
+    CategoryController,
   ],
 })
 export class AppModule {}
