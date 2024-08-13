@@ -33,9 +33,9 @@ export class CreateCheckoutUseCase {
     fakeResponse.pixData = fakePixData;
 
     try {
-      if (dto.orderOwnerCPF === '532.543.888-22') {
+      if (dto.orderOwnerCPF === '52998224725') {
         await this.service.approveOrder(dto.orderId);
-      } else if (dto.orderOwnerCPF === '532.543.888-23') {
+      } else if (dto.orderOwnerCPF === '11144477735') {
         await this.service.cancelOrder(dto.orderId);
       } else {
         await this.service.approveOrder(dto.orderId);
