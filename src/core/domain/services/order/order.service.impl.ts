@@ -34,10 +34,15 @@ export class OrderServiceImpl implements IOrderService {
     private readonly userService: IUserService,
   ) {}
 
+  async update(id: number, orderStatus: OrderStatusType): Promise<void> {
+    const order = await this.repository.findById(id);
+    if (!order) throw new NotFoundException('Order not found');
+    order.orderStatus = orderStatus;
+    this.repository.save(order);
+  }
+
   async createOrder(order: CreateOrderEntity): Promise<OrderEntity> {
     let user: UserEntity;
-
-    console.log(order.cpf);
 
     if (order.cpf) {
       const cpf = order.cpf;
@@ -76,8 +81,6 @@ export class OrderServiceImpl implements IOrderService {
       user,
     );
 
-    console.log({ orderEntity });
-
     return this.repository.save(orderEntity);
   }
 
@@ -85,6 +88,7 @@ export class OrderServiceImpl implements IOrderService {
     const order = await this.repository.findById(id);
     if (!order) throw new NotFoundException('Order not found');
     order.paymentStatus = PaymentStatusType.APPROVED;
+    order.orderStatus = OrderStatusType.RECEIVED;
     this.repository.save(order);
   }
 

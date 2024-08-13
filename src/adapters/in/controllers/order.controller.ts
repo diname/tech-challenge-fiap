@@ -17,12 +17,14 @@ import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
 import { CreateOrderRequestDto } from 'src/core/application/dtos/request/create-order.request.dto';
+import { UpdateOrderRequestDto } from 'src/core/application/dtos/request/update-order.request.dto';
 import { OrderResponseDto } from 'src/core/application/dtos/response/order.respose.dto';
 import { ApproveOrderUseCase } from 'src/core/application/use-cases/order/approve-order.use-case';
 import { CancelOrderUseCase } from 'src/core/application/use-cases/order/cancel-order.use-case';
 import { CreateOrderUseCase } from 'src/core/application/use-cases/order/create-order.use-case';
 import { FindAllOrdersUseCase } from 'src/core/application/use-cases/order/find-all-orders.use-case';
 import { FindOrderByIdUseCase } from 'src/core/application/use-cases/order/find-order-by-id.use-case';
+import { UpdateOrderUseCase } from 'src/core/application/use-cases/order/update-order.use-case';
 
 @ApiTags('Orders')
 @Controller('orders')
@@ -33,6 +35,7 @@ export class OrderController {
     private readonly cancelOrderUseCase: CancelOrderUseCase,
     private readonly findOrderByIdUseCase: FindOrderByIdUseCase,
     private readonly findAllOrdersUseCase: FindAllOrdersUseCase,
+    private readonly updateOrderUseCase: UpdateOrderUseCase,
   ) {}
 
   @Post()
@@ -117,5 +120,17 @@ export class OrderController {
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   async findAllOrders(): Promise<OrderResponseDto[]> {
     return this.findAllOrdersUseCase.execute();
+  }
+
+  @Put()
+  @ApiOperation({ summary: 'Atualiza o status do pedido' })
+  @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
+  @UseGuards(RoleGuard)
+  @ApiBearerAuth()
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiResponse({ status: 403, description: 'Acesso proibido' })
+  @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
+  async update(@Body() dto: UpdateOrderRequestDto): Promise<void> {
+    return this.updateOrderUseCase.execute(dto);
   }
 }

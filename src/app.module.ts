@@ -39,6 +39,7 @@ import { CancelOrderUseCase } from './core/application/use-cases/order/cancel-or
 import { CreateOrderUseCase } from './core/application/use-cases/order/create-order.use-case';
 import { FindAllOrdersUseCase } from './core/application/use-cases/order/find-all-orders.use-case';
 import { FindOrderByIdUseCase } from './core/application/use-cases/order/find-order-by-id.use-case';
+import { UpdateOrderUseCase } from './core/application/use-cases/order/update-order.use-case';
 import { CreateProductUseCase } from './core/application/use-cases/product/create-product.use-case';
 import { DeleteProductUseCase } from './core/application/use-cases/product/delete-product.use-case';
 import { FindProductUseCase } from './core/application/use-cases/product/find-product.use-case';
@@ -95,6 +96,7 @@ import { UserServiceImpl } from './core/domain/services/user/user.serviceImp';
     CreateOrderUseCase,
     CancelOrderUseCase,
     FindProductUseCase,
+    UpdateOrderUseCase,
     ProductServiceImpl,
     ApproveOrderUseCase,
     FindCategoryUseCase,

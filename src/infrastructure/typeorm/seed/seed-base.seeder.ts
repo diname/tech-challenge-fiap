@@ -11,9 +11,7 @@ export abstract class SeederBase<T> {
   async seed() {
     const isEmpty = await this.isTableEmpty();
     if (isEmpty) {
-      console.log(`start seed ${this.tableName}....`);
       await this.insertRecords();
-      console.log(`seed ${this.tableName} finished`);
     }
   }
 
