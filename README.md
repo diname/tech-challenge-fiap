@@ -1,10 +1,14 @@
 # Documentação do Projeto
 
-## Visão Geral
-
-Este projeto utiliza NestJS e TypeORM, seguindo a arquitetura limpa. A estrutura do projeto é organizada para promover uma separação clara de responsabilidades e facilitar a manutenção e escalabilidade.
+Bem-vindo à documentação da API. Esta API foi desenvolvida utilizando NestJS e TypeORM, seguindo a arquitetura hexagonal. Abaixo está a descrição detalhada da estrutura do projeto e suas responsabilidades.
 
 ## Event Storm
+
+
+O **Event Storm** é uma técnica valiosa utilizada para explorar e mapear o domínio do problema antes de começar o desenvolvimento. Ele ajuda a entender melhor os processos e eventos que ocorrem no sistema, facilitando a modelagem e a estruturação da arquitetura do software.
+
+Para obter uma visão detalhada do Event Storm aplicado a este projeto, incluindo o diagrama visual que foi utilizado para guiar o desenvolvimento, você pode acessar o link abaixo:
+
 
 <a href="https://miro.com/app/board/uXjVKztqeIc=/?share_link_id=808693294741">
     <img src="https://img.shields.io/badge/Miro-05192D?style=for-the-badge&logo=miro&logoColor=FFD02F"/>
@@ -12,105 +16,105 @@ Este projeto utiliza NestJS e TypeORM, seguindo a arquitetura limpa. A estrutura
 
 ## Estrutura de Pastas
 
-Abaixo está a estrutura de pastas do projeto:
+Esta API foi desenvolvida utilizando NestJS e TypeORM, seguindo a arquitetura hexagonal. Abaixo está a descrição detalhada da estrutura do projeto e suas responsabilidades.
 
 ```
-.
-├── application/
-│   ├── controllers/
-│   ├── dtos/
-│   ├── mappers/
-│   └── use-cases/
-├── domain/
-│   ├── entities/
-│   ├── repositories/
-│   └── services/
+src/
+├── core/
+│ ├── domain/
+│ │ ├── entities/ 
+│ │ ├── value-objects/ 
+│ │ ├── services/ 
+│ │ ├── repositories/ 
+│ └── application/
+│ ├── use-cases/
+│ ├── ports/ 
+│ ├── dtos/
+│ └── mappers/ 
+├── adapters/
+│ ├── in/ 
+│ └── out/ 
 ├── infrastructure/
-│   ├── services/
-│   ├── typeorm/
-│   │   ├── config/
-│   │   ├── mappers/
-│   │   ├── models/
-│   │   ├── repositories/
-│   │   └── seed/
-└── shared/
-    ├── config/
-    ├── enums/
-    └── utils/
+│ ├── orm/ 
+│ ├── services/ 
+│ └── config/
+├── shared/ 
+└── main.ts 
 ```
 
-### application
+## Descrição das Pastas e Arquivos
 
-A camada de `application` contém a lógica específica do aplicativo, incluindo a comunicação entre as entidades do domínio e a infraestrutura.
+### `src/core/domain/`
 
-- **controllers**: Contém os controladores responsáveis por lidar com as requisições HTTP e invocar os casos de uso apropriados.
-- **dtos**: Contém os Data Transfer Objects (DTOs) usados para transferir dados entre a aplicação e a camada de apresentação.
-- **mappers**: Contém as classes responsáveis por mapear entidades para DTOs e vice-versa.
-- **use-cases**: Contém os casos de uso que definem a lógica de negócio e orquestram as operações entre o domínio e a infraestrutura.
+- **`entities/`**: Contém as entidades do domínio, que representam os modelos principais do sistema e estão mapeados para o banco de dados.
+- **`value-objects/`**: Contém os Objetos de Valor do domínio, que são objetos imutáveis que possuem um valor específico e são utilizados em conjunto com as entidades.
+- **`services/`**: Contém serviços que implementam as regras de negócio puras do domínio, sem depender de detalhes de infraestrutura ou aplicação.
+- **`repositories/`**: Contém interfaces para repositórios, que são portas de saída para a persistência de dados.
 
-### domain
+### `src/core/application/`
 
-A camada de `domain` é onde reside a lógica de negócio e as regras de domínio.
+- **`use-cases/`**: Contém casos de uso da aplicação, que definem as operações específicas que a aplicação pode realizar e coordenam as interações entre entidades e serviços.
+- **`ports/`**: Contém interfaces de entrada e saída (ports) para os casos de uso da aplicação. Define como a aplicação interage com o mundo exterior e como os casos de uso são chamados.
+- **`dtos/`**: Contém Data Transfer Objects, que são utilizados para transferir dados entre diferentes camadas da aplicação.
+- **`mappers/`**: Contém mapeamentos entre entidades e DTOs para facilitar a conversão de dados entre o formato de persistência e o formato de apresentação.
 
-- **entities**: Contém as entidades que representam os modelos de dados do domínio.
-- **repositories**: Define as interfaces dos repositórios para manipulação das entidades.
-- **services**: Contém os serviços de domínio que encapsulam a lógica de negócio.
+### `src/adapters/`
 
-### infrastructure
+- **`in/`**: Contém adaptadores de entrada, como controladores HTTP, que recebem as requisições dos clientes e invocam os casos de uso apropriados.
+- **`out/`**: Contém adaptadores de saída, como repositórios e integrações com APIs externas, que implementam a persistência de dados e outras interações externas.
 
-A camada de `infrastructure` fornece as implementações necessárias para suportar a camada de domínio e a aplicação.
+### `src/infrastructure/`
 
-- **services**: Contém serviços de infraestrutura que podem ser utilizados pela aplicação.
-- **typeorm**: Contém a configuração e implementação relacionada ao TypeORM.
-  - **config**: Contém arquivos de configuração do TypeORM.
-  - **mappers**: Contém mapeamentos específicos para entidades e DTOs.
-  - **models**: Contém os modelos de dados específicos da implementação do TypeORM.
-  - **repositories**: Implementações dos repositórios definidos na camada de domínio.
-  - **seed**: Scripts e dados para inicializar o banco de dados.
+- **`orm/`**: Contém configurações e implementações específicas do ORM (TypeORM), como conexões com o banco de dados e definições de entidades.
+- **`services/`**: Contém serviços de infraestrutura que oferecem funcionalidades auxiliares para a aplicação, como serviços de cache ou de mensageria.
+- **`config/`**: Contém configurações da aplicação, como variáveis de ambiente e configurações específicas do sistema.
 
-### shared
+### `src/shared/`
 
-A camada `shared` contém utilitários e recursos comuns usados em várias partes do projeto.
+- **`shared/`**: Contém código e configurações compartilhadas que são usadas em várias partes da aplicação, como utilitários comuns e configurações globais.
 
-- **config**: Contém arquivos de configuração compartilhados.
-- **enums**: Contém enums utilizados em diferentes partes do projeto.
-- **utils**: Contém funções utilitárias e helpers.
+### `src/main.ts`
 
-## Diagrama de Arquitetura
+- **`main.ts`**: Ponto de entrada da aplicação. Configura e inicializa o módulo principal do NestJS e inicia o servidor.
 
-O diagrama abaixo ilustra a interação entre as camadas e componentes do projeto:
+
+## Diagrama de Arquitetura Hexagonal
+
+O diagrama abaixo ilustra a interação entre as diferentes camadas e componentes da arquitetura hexagonal do projeto. Esta arquitetura é projetada para promover uma separação clara entre as diferentes responsabilidades do sistema, facilitando a manutenção e evolução da aplicação.
 
 ```mermaid
 graph TD
-    subgraph Application
+    subgraph Adapters
         A[Controllers] -->|Calls| B[Use Cases]
         B -->|Interacts with| C[Application Services]
         B -->|Maps to/from| D[DTOs]
         C -->|Maps to/from| D
+        E[External APIs] -->|Uses| F[Application Services]
     end
 
-    subgraph Domain
-        C -->|Uses| E[Entities]
-        C -->|Uses| F[Domain Services]
-        E -->|Persisted by| G[Repositories]
+    subgraph Core
+        C -->|Uses| G[Entities]
+        C -->|Uses| H[Domain Services]
+        G -->|Persisted by| I[Repositories]
     end
 
     subgraph Infrastructure
-        G -->|Implements| H[Infrastructure Repositories]
-        H -->|Configured in| I[TypeORM Config]
-        I -->|Uses| J[TypeORM Models]
-        I -->|Provides| K[TypeORM Repositories]
-        H -->|Seeded by| L[Seed Scripts]
+        I -->|Implements| J[Infrastructure Repositories]
+        J -->|Configured in| K[ORM Config]
+        K -->|Uses| L[ORM Models]
+        K -->|Provides| M[ORM Repositories]
+        J -->|Seeded by| N[Seed Scripts]
     end
 
     %%% Optional styling to make the diagram clearer
-    classDef app fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef domain fill:#ccf,stroke:#333,stroke-width:2px;
+    classDef adapters fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef core fill:#ccf,stroke:#333,stroke-width:2px;
     classDef infra fill:#cfc,stroke:#333,stroke-width:2px;
 
-    class Application app;
-    class Domain domain;
+    class Adapters adapters;
+    class Core core;
     class Infrastructure infra;
+
 ```
 
 ## Documentação do Banco de Dados
@@ -280,25 +284,48 @@ erDiagram
 - **Chave Estrangeira (FK)**: Referência a registros em outras tabelas.
 - **Soft Delete**: Colunas `deleted_at` usadas para implementar exclusão lógica.
 
-## Como Contribuir
-
-Para contribuir com o projeto, por favor, siga estas diretrizes:
-
-1. **Clone o repositório**: `git clone <URL do repositório>`
-2. **Crie uma branch para suas alterações**: `git checkout -b minha-nova-feature`
-3. **Faça suas alterações e adicione testes**.
-4. **Envie suas alterações**: `git commit -am 'Adiciona nova feature'`
-5. **Faça um push para a branch**: `git push origin minha-nova-feature`
-6. **Crie um pull request**.
 
 ## Como Executar o Projeto
 
-Para executar o projeto, siga estes passos:
+### Utilizando Docker
 
-1. **Instale as dependências**: `npm install`
-2. **Configure o banco de dados**: Ajuste as configurações no arquivo `ormconfig.json` em `infraestructure/typeorm/config`.
-3. **Execute as migrations** (se houver): `npm run typeorm migration:run`
-4. **Inicie o servidor**: `npm run start:dev`
+Para executar o projeto utilizando Docker, siga os passos abaixo:
+
+1. **Certifique-se de que o Docker e o Docker Compose estão instalados**:
+   
+   - [Docker](https://www.docker.com/get-started)
+   - [Docker Compose](https://docs.docker.com/compose/install/)
+
+2. **Clone o repositório** (se ainda não o fez):
+
+```bash
+git clone https://github.com/diname/tech-challenge-fiap
+cd seu-repositorio
+```
+
+3. **Construa a Imagem Docker**:
+
+Construa a imagem Docker da aplicação usando o Dockerfile fornecido:
+
+```bash
+docker build -t my-app .
+```
+
+Substitua my-app pelo nome desejado para a imagem.
+
+4. **Inicie os Contêineres com Docker Compose**:
+
+Utilize o docker-compose.yml para iniciar a aplicação e os serviços dependentes (como o banco de dados):
+
+```bash
+docker-compose up
+```
+
+Isso iniciará todos os serviços definidos no **docker-compose.yml**. Você verá os logs da aplicação no terminal.
+
+1. **Acessar o Swagger**:
+
+Após iniciar os contêineres, o Swagger estará acessível em [http://localhost:3000/docs](http://localhost:3000/docs) (ou a porta definida no docker-compose.yml).
 
 ## Contato
 
