@@ -1,10 +1,13 @@
 FROM node:18-alpine
 WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
+COPY package*.json ./
 
-RUN npm ci
+RUN npm cache clean --force
+
+RUN rm -rf node_modules
+
+RUN npm install
 
 EXPOSE 3000
 
