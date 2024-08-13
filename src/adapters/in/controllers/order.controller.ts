@@ -13,7 +13,6 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { GetCurrentUserId } from '@Shared/decorators/get-user-id.decorator';
 import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
@@ -43,15 +42,12 @@ export class OrderController {
     description: 'Pedido criado com sucesso',
     type: OrderResponseDto,
   })
-  @UseGuards(RoleGuard)
-  @ApiBearerAuth()
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   async createOrder(
-    @GetCurrentUserId() userId: number,
     @Body() dto: CreateOrderRequestDto,
   ): Promise<OrderResponseDto> {
-    return this.createOrderUseCase.execute(userId, dto);
+    return this.createOrderUseCase.execute(dto);
   }
 
   @Put(':id/payment/approve')

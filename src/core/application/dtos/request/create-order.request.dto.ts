@@ -1,8 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IsArray, IsInt, IsPositive, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsInt,
+  IsOptional,
+  IsPositive,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
 export class CreateOrderRequestDto {
+  @ApiProperty({
+    description: 'CPF do usuário que fez o pedido (opcional).',
+    example: 1,
+  })
+  @IsString({ message: 'O CPF do usuário deve ser uma string.' })
+  @IsOptional()
+  readonly cpf?: string;
+
   @ApiProperty({
     description: 'Lista de produtos e quantidades no pedido.',
     type: [Object],
