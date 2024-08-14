@@ -369,6 +369,10 @@ Isso iniciará todos os serviços definidos no **docker-compose.yml**. Você ver
 
 Após iniciar os contêineres, o Swagger estará acessível em [http://localhost:3000/docs](http://localhost:3000/docs) (ou a porta definida no docker-compose.yml).
 
+> ⚠️ **Atenção**
+>
+> [Instruções de fluxo](https://github.com/diname/tech-challenge-fiap/wiki/Fluxo-de-teste)
+
 ## Contato (Grupo)
 
 Para dúvidas ou suporte, entre em contato com:
