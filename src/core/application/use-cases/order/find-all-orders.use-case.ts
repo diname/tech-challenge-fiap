@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ITokenPayload } from '@Shared/interfaces/token-payload.interface';
 import {
   IOrderService,
   IOrderServiceSymbol,
@@ -13,8 +14,8 @@ export class FindAllOrdersUseCase {
     private readonly service: IOrderService,
   ) {}
 
-  async execute(): Promise<OrderResponseDto[]> {
-    const orderEntities = await this.service.findAllOrders();
+  async execute(userToken: ITokenPayload): Promise<OrderResponseDto[]> {
+    const orderEntities = await this.service.findAllOrders(userToken);
     return orderEntities.map(OrderMapper.toResponseDto);
   }
 }

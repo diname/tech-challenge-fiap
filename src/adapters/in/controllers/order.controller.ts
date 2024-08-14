@@ -13,9 +13,11 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { GetCurrentUser as GetCurrentUserToken } from '@Shared/decorators/get-user-id.decorator';
 import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
+import { ITokenPayload } from '@Shared/interfaces/token-payload.interface';
 import { CreateOrderRequestDto } from 'src/core/application/dtos/request/create-order.request.dto';
 import { UpdateOrderRequestDto } from 'src/core/application/dtos/request/update-order.request.dto';
 import { OrderResponseDto } from 'src/core/application/dtos/response/order.respose.dto';
@@ -118,8 +120,10 @@ export class OrderController {
     type: [OrderResponseDto],
   })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
-  async findAllOrders(): Promise<OrderResponseDto[]> {
-    return this.findAllOrdersUseCase.execute();
+  async findAllOrders(
+    @GetCurrentUserToken() userToken: ITokenPayload,
+  ): Promise<OrderResponseDto[]> {
+    return this.findAllOrdersUseCase.execute(userToken);
   }
 
   @Put()

@@ -1,6 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { OrderStatusType } from '@Shared/enums/order-status-type.enum';
 import { PaymentStatusType } from '@Shared/enums/payment-status-type.enum';
+import { ITokenPayload } from '@Shared/interfaces/token-payload.interface';
 import { CreateOrderEntity } from '../../entities/create-order.entity';
 import { OrderEntity } from '../../entities/order.entity';
 import { ProductOrderEntity } from '../../entities/product-order.entity';
@@ -103,7 +104,7 @@ export class OrderServiceImpl implements IOrderService {
     return this.repository.findById(id);
   }
 
-  async findAllOrders(): Promise<OrderEntity[]> {
-    return this.repository.findAll();
+  async findAllOrders(userToken: ITokenPayload): Promise<OrderEntity[]> {
+    return this.repository.findAll(userToken);
   }
 }

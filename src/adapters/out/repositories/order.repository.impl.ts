@@ -1,9 +1,13 @@
 import { OrderMapper } from '@Infrastructure/typeorm/mappers/order.mapper';
 import { OrderModel } from '@Infrastructure/typeorm/models/order.model';
 import { InjectRepository } from '@nestjs/typeorm';
+import { OrderStatusType } from '@Shared/enums/order-status-type.enum';
+import { PaymentStatusType } from '@Shared/enums/payment-status-type.enum';
+import { UserRoleEnum } from '@Shared/enums/user-role.enum';
+import { ITokenPayload } from '@Shared/interfaces/token-payload.interface';
 import { OrderEntity } from 'src/core/domain/entities/order.entity';
 import { IOrderRepository } from 'src/core/domain/repositories/order.repository';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 export class OrderRepositoryImpl implements IOrderRepository {
   constructor(
@@ -31,8 +35,24 @@ export class OrderRepositoryImpl implements IOrderRepository {
     await this.repository.softDelete(id);
   }
 
-  async findAll(): Promise<OrderEntity[]> {
-    const orders = await this.repository.find();
+  async findAll(userToken: ITokenPayload): Promise<OrderEntity[]> {
+    const whereClause = userToken.roles.includes(UserRoleEnum.PREP_LINE)
+      ? {
+          paymentStatus: PaymentStatusType.APPROVED,
+          orderStatus: In([
+            OrderStatusType.RECEIVED,
+            OrderStatusType.IN_PREPARATION,
+            OrderStatusType.READY,
+          ]),
+        }
+      : {};
+
+    const orders = await this.repository.find({
+      where: whereClause,
+      order: {
+        createdAt: 'DESC',
+      },
+    });
     return orders.map(OrderMapper.toEntity);
   }
 
