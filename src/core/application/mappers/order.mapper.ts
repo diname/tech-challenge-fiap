@@ -20,7 +20,7 @@ export class OrderMapper {
   }
 
   static toResponseDto(orderEntity: OrderEntity): OrderResponseDto {
-    const productOrders = orderEntity.productsOrder.map(
+    const productOrders = orderEntity.productsOrder?.map(
       ProductOrderMapper.toEntity,
     );
 
