@@ -52,9 +52,6 @@ export class OrderController {
 
   @Put(':id/payment/approve')
   @ApiOperation({ summary: 'Aprova um pedido' })
-  @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
-  @UseGuards(RoleGuard)
-  @ApiBearerAuth()
   @ApiResponse({
     status: 200,
     description: 'Pedido aprovado com sucesso',
@@ -71,9 +68,6 @@ export class OrderController {
 
   @Put(':id/payment/cancel')
   @ApiOperation({ summary: 'Cancela um pedido' })
-  @Roles(UserRoleEnum.ADMIN, UserRoleEnum.PREP_LINE)
-  @UseGuards(RoleGuard)
-  @ApiBearerAuth()
   @ApiResponse({
     status: 200,
     description: 'Pedido cancelado com sucesso',

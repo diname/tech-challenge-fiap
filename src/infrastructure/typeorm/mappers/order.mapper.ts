@@ -13,7 +13,7 @@ export class OrderMapper {
       orderModel.paymentStatus,
       orderModel.orderStatus,
       orderModel.createdAt,
-      orderModel.productOrders.map(ProductOrderMapper.toEntity),
+      orderModel.productOrders?.map(ProductOrderMapper.toEntity),
       UserMapper.toEntity(orderModel.user),
       orderModel.id,
       orderModel.updatedAt,
@@ -30,7 +30,7 @@ export class OrderMapper {
     model.orderStatus = orderEntity.orderStatus;
     model.createdAt = orderEntity.createdAt;
     model.updatedAt = orderEntity.updatedAt;
-    model.productOrders = orderEntity.productsOrder.map(
+    model.productOrders = orderEntity.productsOrder?.map(
       ProductOrderMapper.toModel,
     );
 

@@ -13,7 +13,7 @@ export class UserMapper {
     user.name = userModel.name;
     user.cpf = userModel.cpf;
     user.password = userModel.password;
-    user.roles = userModel.userRoles.map(
+    user.roles = userModel.userRoles?.map(
       (userRole) => userRole.role.name as UserRoleEnum,
     );
     user.createdAt = userModel.createdAt;
