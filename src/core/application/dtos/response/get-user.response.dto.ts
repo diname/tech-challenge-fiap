@@ -22,7 +22,7 @@ export class GetUserResponseDto {
 
   @ApiProperty({
     description: 'O CPF (Cadastro de Pessoas Físicas) do usuário.',
-    example: '123.456.789-00',
+    example: '12345678900',
   })
   cpf: string;
 

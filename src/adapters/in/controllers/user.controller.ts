@@ -10,6 +10,7 @@ import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
 import { CreateCustomerUserDto } from 'src/core/application/dtos/request/create-customer-user.dto';
 import { CreateUserDto } from 'src/core/application/dtos/request/create-user.dto';
+import { GetUserResponseDto } from 'src/core/application/dtos/response/get-user.response.dto';
 import { CreateUserUseCase } from 'src/core/application/use-cases/user/create-user.use-case';
 import { GetUserByRoleUseCase } from 'src/core/application/use-cases/user/get-user-by-role.use-case';
 
@@ -60,16 +61,19 @@ export class UserController {
     });
   }
 
-  @Get()
+  @Get('/customer')
+  @ApiOperation({
+    summary: 'Lista todos os usuários clientes',
+  })
   @Roles(UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
   @ApiBearerAuth()
   @ApiResponse({ status: 401, description: 'Não autorizado' })
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
-  @ApiResponse({ status: 200 })
+  @ApiResponse({ status: 200, type: [GetUserResponseDto] })
   @ApiResponse({ status: 400 })
   @ApiResponse({ status: 500 })
-  async getCustomers() {
+  async getCustomers(): Promise<GetUserResponseDto[]> {
     return this.getUserByRoleUseCase.execute(UserRoleEnum.CUSTOMER);
   }
 }
