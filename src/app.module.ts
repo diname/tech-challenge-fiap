@@ -15,11 +15,13 @@ import { UserRoleSeeder } from '@Infrastructure/typeorm/seed/user-role.seeder';
 import { UserSeeder } from '@Infrastructure/typeorm/seed/user.seeder';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { TerminusModule } from '@nestjs/terminus';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvironmentVariableModule } from '@Shared/config/environment-variable/environment-variable.module';
 import { AuthController } from './adapters/in/controllers/auth.controller';
 import { CategoryController } from './adapters/in/controllers/category.controller';
 import { CheckoutController } from './adapters/in/controllers/checkout.controller';
+import { HealthController } from './adapters/in/controllers/health.controller';
 import { OrderController } from './adapters/in/controllers/order.controller';
 import { ProductController } from './adapters/in/controllers/product.controller';
 import { UserController } from './adapters/in/controllers/user.controller';
@@ -79,6 +81,7 @@ import { UserServiceImpl } from './core/domain/services/user/user.serviceImp';
       ProductOrderModel,
     ]),
     EnvironmentVariableModule.forRoot({ isGlobal: true }),
+    TerminusModule,
   ],
   providers: [
     UserSeeder,
@@ -158,6 +161,7 @@ import { UserServiceImpl } from './core/domain/services/user/user.serviceImp';
     ProductController,
     OrderController,
     CategoryController,
+    HealthController,
   ],
 })
 export class AppModule {}
