@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  api-service
+spec:
+  selector:
+    app:  tech-challenge-fiap-api
+  type:  NodePort
+  ports:
+    - port:  3000
+      targetPort:  3000
+      nodePort: 30100
