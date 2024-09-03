@@ -18,13 +18,9 @@ spec:
         image: postgres
         ports:
         - containerPort: 5432
-        env:
-        - name: POSTGRES_DB
-          value: tech-challenge-db
-        - name: POSTGRES_USER
-          value: postgres
-        - name: POSTGRES_PASSWORD
-          value: postgres
+        envFrom:
+        - configMapRef:
+            name: database-settings
         resources:
           limits:
             memory: "500Mi" # equivalente a 524 MB
