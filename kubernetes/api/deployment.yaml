@@ -13,11 +13,13 @@ spec:
     spec:
       containers:
         - name: tech-challenge-fiap-api
-          image: tech-challenge-fiap-api
+          image: jhonideveloper/tech-challenge-api:1.0
           imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: general-settings
+            - secretRef:
+                name: api-secrets
           livenessProbe:
             httpGet:
               path: /health

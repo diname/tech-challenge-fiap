@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: database-settings
-data:
-  POSTGRES_DB: "tech-challenge-db"
-  POSTGRES_USER: "postgres"
-  POSTGRES_PASSWORD: "postgres"

@@ -19,8 +19,8 @@ spec:
         ports:
         - containerPort: 5432
         envFrom:
-        - configMapRef:
-            name: database-settings
+        - secretRef:
+            name: database-secrets
         resources:
           limits:
             memory: "500Mi" # equivalente a 524 MB
