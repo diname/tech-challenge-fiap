@@ -13,4 +13,4 @@ RUN npm run build
 
 ENV TZ 'America/Sao_Paulo'
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:prod"]

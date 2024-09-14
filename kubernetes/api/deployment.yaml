@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: tech-challenge-fiap-api
-          image: jhonideveloper/tech-challenge-api:1.0
+          image: jhonideveloper/tech-challenge-api:1.1
           imagePullPolicy: Never
           envFrom:
             - configMapRef:
@@ -29,9 +29,12 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 3
           resources:
+            requests:
+              cpu: 250m
+              memory: 100Mi
             limits:
-              memory: 500Mi # equivalente a 524 MB
-              cpu: 1000m # 1 núcleo
+              memory: 400Mi
+              cpu: 500m # 1/2 núcleo
           ports:
             - containerPort: 3000
 
