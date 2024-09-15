@@ -14,7 +14,6 @@ spec:
       containers:
         - name: tech-challenge-fiap-api
           image: jhonideveloper/tech-challenge-api:1.1
-          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: general-settings
