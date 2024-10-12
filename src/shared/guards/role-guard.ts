@@ -1,4 +1,8 @@
 import {
+  IAuthService,
+  IAuthServiceSymbol,
+} from '@Domain/services/auth/auth.service';
+import {
   CanActivate,
   ExecutionContext,
   Inject,
@@ -6,10 +10,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import {
-  IAuthService,
-  IAuthServiceSymbol,
-} from 'src/core/domain/services/auth/auth.service';
 
 @Injectable()
 export class RoleGuard implements CanActivate {

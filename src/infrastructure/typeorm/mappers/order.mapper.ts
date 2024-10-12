@@ -1,5 +1,5 @@
-import { OrderEntity } from 'src/core/domain/entities/order.entity';
-import { TotalPriceValueObject } from 'src/core/domain/value-objects/total-price.value-objects';
+import { OrderEntity } from '@Domain/entities/order.entity';
+import { TotalPriceValueObject } from '@Domain/value-objects/total-price.value-objects';
 import { OrderModel } from '../models/order.model';
 import { ProductOrderMapper } from './product-order.mapper';
 import { UserMapper } from './user.mapper';
