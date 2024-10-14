@@ -1,16 +1,30 @@
-FROM node:18-alpine
+###################
+# BUILD FOR PRODUCTION
+###################
+FROM node:18-alpine AS build
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY package*.json ./
-COPY . .
+COPY --chown=node:node package*.json ./
 
-RUN npm install && npm cache clean --force
+RUN npm ci
 
-EXPOSE 3000
+COPY --chown=node:node . .
 
 RUN npm run build
 
-ENV TZ 'America/Sao_Paulo'
+ENV NODE_ENV=production
 
-CMD ["npm", "run", "start:prod"]
+RUN npm ci --only=production && npm cache clean --force
+
+USER node
+
+###################
+# PRODUCTION
+###################
+FROM node:18-alpine AS production
+
+COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
+
+CMD [ "node", "dist/main.js" ]
