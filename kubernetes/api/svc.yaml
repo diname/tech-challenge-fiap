@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name:  api-service
+  name: api-service
 spec:
   selector:
-    app:  tech-challenge-fiap-api
-  type:  NodePort
+    app: tech-challenge-fiap-api
+  type: LoadBalancer
   ports:
-    - port:  3000
-      targetPort:  3000
-      nodePort: 30100
+  - port: 30100
+    protocol: TCP
+    targetPort: 3000
