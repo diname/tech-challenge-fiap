@@ -1,4 +1,4 @@
-import { AuthServiceImpl } from '@Infrastructure/services/auth/auth.service.impl';
+import { AuthServiceImpl } from '@Domain/services/auth/auth.service.impl';
 import { PostgresConfigService } from '@Infrastructure/typeorm/config/postgres.config.service';
 import { CategoryModel } from '@Infrastructure/typeorm/models/category.model';
 import { OrderModel } from '@Infrastructure/typeorm/models/order.model';

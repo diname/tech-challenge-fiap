@@ -3,6 +3,7 @@ import { UserEntity } from '@Domain/entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { OrderStatusType } from '@Shared/enums/order-status-type.enum';
 import { PaymentStatusType } from '@Shared/enums/payment-status-type.enum';
+import { Column } from 'typeorm';
 
 export class OrderResponseDto {
   @ApiProperty({
@@ -16,6 +17,13 @@ export class OrderResponseDto {
     example: 100.0,
   })
   totalPrice: number;
+
+  @Column({
+    type: 'integer',
+    nullable: false,
+    comment: 'Tempo estimado para a preparação do pedido em minutos.',
+  })
+  estimatedPreparationTime: number;
 
   @ApiProperty({
     description: 'Usuário que fez o pedido.',

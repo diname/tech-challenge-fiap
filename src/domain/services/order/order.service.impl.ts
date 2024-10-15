@@ -52,6 +52,7 @@ export class OrderServiceImpl implements IOrderService {
 
     const productsOrder: ProductOrderEntity[] = [];
     let totalPrice = 0;
+    let estimatedPreparationTime = 0;
 
     for (const productOrder of order.productOrders) {
       const product = await this.productService.findById(
@@ -60,6 +61,8 @@ export class OrderServiceImpl implements IOrderService {
 
       if (product) {
         totalPrice += product.price * productOrder.quantity;
+        estimatedPreparationTime +=
+          product.preparationTime * productOrder.quantity;
 
         const productOrderEntity = await this.productOrderRepository.save(
           new ProductOrderEntity(productOrder.quantity, product, new Date()),
@@ -78,6 +81,7 @@ export class OrderServiceImpl implements IOrderService {
       PaymentStatusType.PENDING,
       OrderStatusType.NONE,
       new Date(),
+      estimatedPreparationTime,
       productsOrder,
       user,
     );

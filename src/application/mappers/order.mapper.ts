@@ -27,6 +27,7 @@ export class OrderMapper {
     return {
       id: orderEntity.id,
       totalPrice: orderEntity.totalPrice.getValue(),
+      estimatedPreparationTime: orderEntity.estimatedPreparationTime,
       user: orderEntity.user,
       paymentStatus: orderEntity.paymentStatus,
       orderStatus: orderEntity.orderStatus,
