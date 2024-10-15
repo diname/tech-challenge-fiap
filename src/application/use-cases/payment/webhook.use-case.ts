@@ -13,6 +13,6 @@ export class WebhookUseCase {
   ) {}
 
   async execute(dto: PaymentRequestDto): Promise<void> {
-    this.mercadoPagoService.validate(dto);
+    this.mercadoPagoService.webhook(dto);
   }
 }
