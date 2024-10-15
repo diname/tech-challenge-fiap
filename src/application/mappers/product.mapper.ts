@@ -1,10 +1,10 @@
+import { ProductResponseDto } from '@Application/dtos/response/product.response.dto';
 import { CategoryEntity } from '@Domain/entities/category.entity';
 import { ProductEntity } from '@Domain/entities/product.entity';
 import {
   ProductRequestDto,
   ProductUpdateRequestDto,
 } from '../dtos/request/product.request.dto';
-import { ProductReponseDto } from '../dtos/response/product.reponse.dto';
 
 export class ProductMapper {
   static toEntity(dto: ProductRequestDto): ProductEntity {
@@ -14,19 +14,21 @@ export class ProductMapper {
       dto.name,
       dto.description,
       dto.price,
+      dto.preparationTime,
       dto.figureUrl,
       dto.enabled,
       category,
     );
   }
 
-  static toResponseDto(entity: ProductEntity): ProductReponseDto {
-    const productResponseDto = new ProductReponseDto();
+  static toResponseDto(entity: ProductEntity): ProductResponseDto {
+    const productResponseDto = new ProductResponseDto();
     productResponseDto.id = entity.id;
     productResponseDto.category = entity.category.name;
     productResponseDto.name = entity.name;
     productResponseDto.description = entity.description;
     productResponseDto.price = entity.price;
+    productResponseDto.preparationTime = entity.preparationTime;
     productResponseDto.enabled = entity.enabled;
     productResponseDto.figureUrl = entity.figureUrl;
 
@@ -40,6 +42,7 @@ export class ProductMapper {
       dto.name,
       dto.description,
       dto.price,
+      dto.preparationTime,
       dto.figureUrl,
       dto.enabled,
       category,

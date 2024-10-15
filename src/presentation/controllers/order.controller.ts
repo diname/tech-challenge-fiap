@@ -1,6 +1,6 @@
 import { CreateOrderRequestDto } from '@Application/dtos/request/create-order.request.dto';
 import { UpdateOrderRequestDto } from '@Application/dtos/request/update-order.request.dto';
-import { OrderResponseDto } from '@Application/dtos/response/order.respose.dto';
+import { OrderResponseDto } from '@Application/dtos/response/order.response.dto';
 import { ApproveOrderUseCase } from '@Application/use-cases/order/approve-order.use-case';
 import { CancelOrderUseCase } from '@Application/use-cases/order/cancel-order.use-case';
 import { CreateOrderUseCase } from '@Application/use-cases/order/create-order.use-case';

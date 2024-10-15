@@ -2,7 +2,7 @@ import {
   ProductRequestDto,
   ProductUpdateRequestDto,
 } from '@Application/dtos/request/product.request.dto';
-import { ProductReponseDto } from '@Application/dtos/response/product.reponse.dto';
+import { ProductResponseDto } from '@Application/dtos/response/product.response.dto';
 import { CreateProductUseCase } from '@Application/use-cases/product/create-product.use-case';
 import { DeleteProductUseCase } from '@Application/use-cases/product/delete-product.use-case';
 import { FindProductUseCase } from '@Application/use-cases/product/find-product.use-case';
@@ -45,7 +45,7 @@ export class ProductController {
   @ApiResponse({
     status: 201,
     description: 'Produto criado com sucesso',
-    type: ProductReponseDto,
+    type: ProductResponseDto,
   })
   @Roles(UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
@@ -54,7 +54,7 @@ export class ProductController {
   @ApiResponse({ status: 403, description: 'Acesso proibido' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
-  async create(@Body() dto: ProductRequestDto): Promise<ProductReponseDto> {
+  async create(@Body() dto: ProductRequestDto): Promise<ProductResponseDto> {
     return this.createProductUseCase.execute(dto);
   }
 
@@ -63,7 +63,7 @@ export class ProductController {
   @ApiResponse({
     status: 200,
     description: 'Lista de produtos',
-    type: [ProductReponseDto],
+    type: [ProductResponseDto],
   })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   @ApiQuery({ name: 'name', required: false, type: String })
@@ -71,7 +71,7 @@ export class ProductController {
   async findAll(
     @Query('name') name: string,
     @Query('categoryId') categoryId: number,
-  ): Promise<ProductReponseDto[]> {
+  ): Promise<ProductResponseDto[]> {
     return this.findProductUseCase.execute(name, categoryId);
   }
 
