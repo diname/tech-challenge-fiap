@@ -41,7 +41,7 @@ export class PaymentController {
   }
 
   @HttpCode(200)
-  @Post()
+  @Post('/webhook')
   @ApiOperation({
     summary: 'Recebe o Callback da API de pagamento',
   })
