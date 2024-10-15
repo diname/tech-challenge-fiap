@@ -1,4 +1,4 @@
-import { PaymentUseCase } from '@Application/use-cases/payment/payment.use-case';
+import { WebhookUseCase } from '@Application/use-cases/payment/webhook.use-case';
 import { AuthServiceImpl } from '@Domain/services/auth/auth.service.impl';
 import { IMercadoPagoServiceSymbol } from '@Infrastructure/services/mercadopago/mercadopago.service';
 import { MercadoPagoServiceImpl } from '@Infrastructure/services/mercadopago/mercadopago.service.impl';
@@ -26,13 +26,13 @@ import { CreateCategoryUseCase } from './application/use-cases/category/create-c
 import { DeleteCategoryUseCase } from './application/use-cases/category/delete-category.use-case';
 import { FindCategoryUseCase } from './application/use-cases/category/find-category.use-case';
 import { UpdateCategoryUseCase } from './application/use-cases/category/update-category.use-case';
-import { CreateCheckoutUseCase } from './application/use-cases/checkout/create-checkout.use-case';
 import { ApproveOrderUseCase } from './application/use-cases/order/approve-order.use-case';
 import { CancelOrderUseCase } from './application/use-cases/order/cancel-order.use-case';
 import { CreateOrderUseCase } from './application/use-cases/order/create-order.use-case';
 import { FindAllOrdersUseCase } from './application/use-cases/order/find-all-orders.use-case';
 import { FindOrderByIdUseCase } from './application/use-cases/order/find-order-by-id.use-case';
 import { UpdateOrderUseCase } from './application/use-cases/order/update-order.use-case';
+import { CheckoutUseCase } from './application/use-cases/payment/checkout.use-case';
 import { CreateProductUseCase } from './application/use-cases/product/create-product.use-case';
 import { DeleteProductUseCase } from './application/use-cases/product/delete-product.use-case';
 import { FindProductUseCase } from './application/use-cases/product/find-product.use-case';
@@ -61,12 +61,11 @@ import { ProductRepositoryImpl } from './infrastructure/repositories/product.rep
 import { UserRepositoryImpl } from './infrastructure/repositories/user.repository.impl';
 import { AuthController } from './presentation/controllers/auth.controller';
 import { CategoryController } from './presentation/controllers/category.controller';
-import { CheckoutController } from './presentation/controllers/checkout.controller';
 import { HealthController } from './presentation/controllers/health.controller';
 import { OrderController } from './presentation/controllers/order.controller';
+import { PaymentController } from './presentation/controllers/payment.controller';
 import { ProductController } from './presentation/controllers/product.controller';
 import { UserController } from './presentation/controllers/user.controller';
-import { WebhookController } from './presentation/controllers/webhook.controller';
 
 @Module({
   imports: [
@@ -95,7 +94,7 @@ import { WebhookController } from './presentation/controllers/webhook.controller
     CategorySeeder,
     ProductSeeder,
     ProductServiceImpl,
-    CreateCheckoutUseCase,
+    CheckoutUseCase,
     GetTokenUseCase,
     CreateUserUseCase,
     GetOneUserUseCase,
@@ -116,8 +115,8 @@ import { WebhookController } from './presentation/controllers/webhook.controller
     CreateCategoryUseCase,
     UpdateCategoryUseCase,
     DeleteCategoryUseCase,
-    CreateCheckoutUseCase,
-    PaymentUseCase,
+    CheckoutUseCase,
+    WebhookUseCase,
     {
       provide: IMercadoPagoServiceSymbol,
       useClass: MercadoPagoServiceImpl,
@@ -166,12 +165,11 @@ import { WebhookController } from './presentation/controllers/webhook.controller
   controllers: [
     AuthController,
     UserController,
-    CheckoutController,
+    PaymentController,
     ProductController,
     OrderController,
     CategoryController,
     HealthController,
-    WebhookController,
   ],
 })
 export class AppModule {}

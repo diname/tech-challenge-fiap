@@ -10,7 +10,7 @@ import {
 } from '../../dtos/response/create-checkout.response.dto';
 
 @Injectable()
-export class CreateCheckoutUseCase {
+export class CheckoutUseCase {
   constructor(
     @Inject(IOrderServiceSymbol)
     private readonly service: IOrderService,

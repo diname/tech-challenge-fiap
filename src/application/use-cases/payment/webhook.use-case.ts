@@ -1,17 +1,12 @@
-import {
-  IProductService,
-  IProductServiceSymbol,
-} from '@Domain/services/product/product.service';
-import { ConsoleLogger, Inject, Injectable } from '@nestjs/common';
-import { ProductRequestDto } from '../../dtos/request/product.request.dto';
+import { PaymentRequestDto } from '@Application/dtos/request/payment.request.dto';
 import {
   IMercadoPagoService,
   IMercadoPagoServiceSymbol,
 } from '@Infrastructure/services/mercadopago/mercadopago.service';
-import { PaymentRequestDto } from '@Application/dtos/request/payment.request.dto';
+import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
-export class PaymentUseCase {
+export class WebhookUseCase {
   constructor(
     @Inject(IMercadoPagoServiceSymbol)
     private readonly mercadoPagoService: IMercadoPagoService,
