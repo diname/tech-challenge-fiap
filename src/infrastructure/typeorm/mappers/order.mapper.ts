@@ -18,6 +18,7 @@ export class OrderMapper {
       UserMapper.toEntity(orderModel.user),
       orderModel.id,
       orderModel.updatedAt,
+      orderModel.preparationTime,
     );
   }
 
@@ -35,6 +36,7 @@ export class OrderMapper {
     model.productOrders = orderEntity.productsOrder?.map(
       ProductOrderMapper.toModel,
     );
+    model.preparationTime = orderEntity.preparationTime;
 
     if (orderEntity.user) {
       model.user = UserMapper.toModel(orderEntity.user);

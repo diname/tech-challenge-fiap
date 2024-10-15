@@ -38,7 +38,20 @@ export class OrderServiceImpl implements IOrderService {
   async update(id: number, orderStatus: OrderStatusType): Promise<void> {
     const order = await this.repository.findById(id);
     if (!order) throw new NotFoundException('Order not found');
+
+    const previousStatus = order.orderStatus;
     order.orderStatus = orderStatus;
+
+    if (
+      previousStatus !== orderStatus &&
+      previousStatus === OrderStatusType.IN_PREPARATION &&
+      orderStatus === OrderStatusType.READY
+    ) {
+      const now = new Date();
+      const preparationDuration = now.getTime() - order.updatedAt.getTime();
+      order.preparationTime = Math.ceil(preparationDuration / 1000 / 60);
+    }
+
     this.repository.save(order);
   }
 

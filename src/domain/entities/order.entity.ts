@@ -15,6 +15,7 @@ export class OrderEntity {
     public user?: UserEntity,
     public id?: number,
     public updatedAt?: Date,
+    public preparationTime?: number,
   ) {}
 }
 

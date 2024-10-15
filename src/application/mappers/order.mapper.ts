@@ -34,6 +34,7 @@ export class OrderMapper {
       createdAt: orderEntity.createdAt,
       updatedAt: orderEntity.updatedAt,
       productOrders: productOrders,
+      preparationTime: orderEntity.preparationTime,
     };
   }
 }

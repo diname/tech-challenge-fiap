@@ -33,6 +33,13 @@ export class OrderModel {
   })
   estimatedPreparationTime: number;
 
+  @Column({
+    type: 'integer',
+    nullable: true,
+    comment: 'Tempo de preparação do pedido em minutos.',
+  })
+  preparationTime?: number;
+
   @ManyToOne(() => UserModel, (user) => user.orders)
   user: UserModel;
 
