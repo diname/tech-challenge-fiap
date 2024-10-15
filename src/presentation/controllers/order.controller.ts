@@ -1,8 +1,6 @@
 import { CreateOrderRequestDto } from '@Application/dtos/request/create-order.request.dto';
 import { UpdateOrderRequestDto } from '@Application/dtos/request/update-order.request.dto';
 import { OrderResponseDto } from '@Application/dtos/response/order.respose.dto';
-import { ApproveOrderUseCase } from '@Application/use-cases/order/approve-order.use-case';
-import { CancelOrderUseCase } from '@Application/use-cases/order/cancel-order.use-case';
 import { CreateOrderUseCase } from '@Application/use-cases/order/create-order.use-case';
 import { FindAllOrdersUseCase } from '@Application/use-cases/order/find-all-orders.use-case';
 import { FindOrderByIdUseCase } from '@Application/use-cases/order/find-order-by-id.use-case';
@@ -33,8 +31,6 @@ import { ITokenPayload } from '@Shared/interfaces/token-payload.interface';
 export class OrderController {
   constructor(
     private readonly createOrderUseCase: CreateOrderUseCase,
-    private readonly approveOrderUseCase: ApproveOrderUseCase,
-    private readonly cancelOrderUseCase: CancelOrderUseCase,
     private readonly findOrderByIdUseCase: FindOrderByIdUseCase,
     private readonly findAllOrdersUseCase: FindAllOrdersUseCase,
     private readonly updateOrderUseCase: UpdateOrderUseCase,
@@ -53,38 +49,6 @@ export class OrderController {
     @Body() dto: CreateOrderRequestDto,
   ): Promise<OrderResponseDto> {
     return this.createOrderUseCase.execute(dto);
-  }
-
-  @Put(':id/payment/approve')
-  @ApiOperation({ summary: 'Aprova um pedido' })
-  @ApiResponse({
-    status: 200,
-    description: 'Pedido aprovado com sucesso',
-    type: OrderResponseDto,
-  })
-  @ApiResponse({ status: 400, description: 'ID inválido' })
-  @ApiResponse({ status: 404, description: 'Pedido não encontrado' })
-  @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
-  @ApiResponse({ status: 401, description: 'Não autorizado' })
-  @ApiResponse({ status: 403, description: 'Acesso proibido' })
-  async approveOrder(@Param('id') id: number): Promise<void> {
-    return this.approveOrderUseCase.execute(id);
-  }
-
-  @Put(':id/payment/cancel')
-  @ApiOperation({ summary: 'Cancela um pedido' })
-  @ApiResponse({
-    status: 200,
-    description: 'Pedido cancelado com sucesso',
-    type: OrderResponseDto,
-  })
-  @ApiResponse({ status: 400, description: 'ID inválido' })
-  @ApiResponse({ status: 404, description: 'Pedido não encontrado' })
-  @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
-  @ApiResponse({ status: 401, description: 'Não autorizado' })
-  @ApiResponse({ status: 403, description: 'Acesso proibido' })
-  async cancelOrder(@Param('id') id: number): Promise<void> {
-    return this.cancelOrderUseCase.execute(id);
   }
 
   @Get(':id')

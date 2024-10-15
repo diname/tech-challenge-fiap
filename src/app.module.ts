@@ -1,4 +1,7 @@
+import { PaymentUseCase } from '@Application/use-cases/payment/payment.use-case';
 import { AuthServiceImpl } from '@Infrastructure/services/auth/auth.service.impl';
+import { IMercadoPagoServiceSymbol } from '@Infrastructure/services/mercadopago/mercadopago.service';
+import { MercadoPagoServiceImpl } from '@Infrastructure/services/mercadopago/mercadopago.service.impl';
 import { PostgresConfigService } from '@Infrastructure/typeorm/config/postgres.config.service';
 import { CategoryModel } from '@Infrastructure/typeorm/models/category.model';
 import { OrderModel } from '@Infrastructure/typeorm/models/order.model';
@@ -18,18 +21,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { TerminusModule } from '@nestjs/terminus';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvironmentVariableModule } from '@Shared/config/environment-variable/environment-variable.module';
-import { AuthController } from './presentation/controllers/auth.controller';
-import { CategoryController } from './presentation/controllers/category.controller';
-import { CheckoutController } from './presentation/controllers/checkout.controller';
-import { HealthController } from './presentation/controllers/health.controller';
-import { OrderController } from './presentation/controllers/order.controller';
-import { ProductController } from './presentation/controllers/product.controller';
-import { UserController } from './presentation/controllers/user.controller';
-import { CategoryRepositoryImpl } from './infrastructure/repositories/category.repository.impl';
-import { OrderRepositoryImpl } from './infrastructure/repositories/order.repository.impl';
-import { ProductOrderRepositoryImpl } from './infrastructure/repositories/product-order.repository.impl';
-import { ProductRepositoryImpl } from './infrastructure/repositories/product.repository.impl';
-import { UserRepositoryImpl } from './infrastructure/repositories/user.repository.impl';
 import { GetTokenUseCase } from './application/use-cases/auth/get-token.use-case';
 import { CreateCategoryUseCase } from './application/use-cases/category/create-category.use-case';
 import { DeleteCategoryUseCase } from './application/use-cases/category/delete-category.use-case';
@@ -63,6 +54,19 @@ import { IProductServiceSymbol } from './domain/services/product/product.service
 import { ProductServiceImpl } from './domain/services/product/product.serviceImpl';
 import { IUserServiceSymbol } from './domain/services/user/user.service';
 import { UserServiceImpl } from './domain/services/user/user.serviceImp';
+import { CategoryRepositoryImpl } from './infrastructure/repositories/category.repository.impl';
+import { OrderRepositoryImpl } from './infrastructure/repositories/order.repository.impl';
+import { ProductOrderRepositoryImpl } from './infrastructure/repositories/product-order.repository.impl';
+import { ProductRepositoryImpl } from './infrastructure/repositories/product.repository.impl';
+import { UserRepositoryImpl } from './infrastructure/repositories/user.repository.impl';
+import { AuthController } from './presentation/controllers/auth.controller';
+import { CategoryController } from './presentation/controllers/category.controller';
+import { CheckoutController } from './presentation/controllers/checkout.controller';
+import { HealthController } from './presentation/controllers/health.controller';
+import { OrderController } from './presentation/controllers/order.controller';
+import { ProductController } from './presentation/controllers/product.controller';
+import { UserController } from './presentation/controllers/user.controller';
+import { WebhookController } from './presentation/controllers/webhook.controller';
 
 @Module({
   imports: [
@@ -113,6 +117,11 @@ import { UserServiceImpl } from './domain/services/user/user.serviceImp';
     UpdateCategoryUseCase,
     DeleteCategoryUseCase,
     CreateCheckoutUseCase,
+    PaymentUseCase,
+    {
+      provide: IMercadoPagoServiceSymbol,
+      useClass: MercadoPagoServiceImpl,
+    },
     {
       provide: IAuthServiceSymbol,
       useClass: AuthServiceImpl,
@@ -162,6 +171,7 @@ import { UserServiceImpl } from './domain/services/user/user.serviceImp';
     OrderController,
     CategoryController,
     HealthController,
+    WebhookController,
   ],
 })
 export class AppModule {}
