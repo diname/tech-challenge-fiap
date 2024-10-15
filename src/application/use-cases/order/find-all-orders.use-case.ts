@@ -1,10 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ITokenPayload } from '@Shared/interfaces/token-payload.interface';
 import {
   IOrderService,
   IOrderServiceSymbol,
 } from '@Domain/services/order/order.service';
-import { OrderResponseDto } from '../../dtos/response/order.respose.dto';
+import { Inject, Injectable } from '@nestjs/common';
+import { ITokenPayload } from '@Shared/interfaces/token-payload.interface';
+import { OrderResponseDto } from '../../dtos/response/order.response.dto';
 import { OrderMapper } from '../../mappers/order.mapper';
 
 @Injectable()

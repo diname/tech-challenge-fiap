@@ -10,10 +10,12 @@ export class OrderEntity {
     public paymentStatus: PaymentStatusType,
     public orderStatus: OrderStatusType,
     public createdAt: Date,
+    public estimatedPreparationTime: number,
     public productsOrder: ProductOrderEntity[],
     public user?: UserEntity,
     public id?: number,
     public updatedAt?: Date,
+    public preparationTime?: number,
   ) {}
 }
 

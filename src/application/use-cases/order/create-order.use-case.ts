@@ -4,7 +4,7 @@ import {
 } from '@Domain/services/order/order.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateOrderRequestDto } from '../../dtos/request/create-order.request.dto';
-import { OrderResponseDto } from '../../dtos/response/order.respose.dto';
+import { OrderResponseDto } from '../../dtos/response/order.response.dto';
 import { OrderMapper } from '../../mappers/order.mapper';
 
 @Injectable()

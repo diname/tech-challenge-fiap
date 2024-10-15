@@ -1,5 +1,5 @@
 import { PaymentUseCase } from '@Application/use-cases/payment/payment.use-case';
-import { AuthServiceImpl } from '@Infrastructure/services/auth/auth.service.impl';
+import { AuthServiceImpl } from '@Domain/services/auth/auth.service.impl';
 import { IMercadoPagoServiceSymbol } from '@Infrastructure/services/mercadopago/mercadopago.service';
 import { MercadoPagoServiceImpl } from '@Infrastructure/services/mercadopago/mercadopago.service.impl';
 import { PostgresConfigService } from '@Infrastructure/typeorm/config/postgres.config.service';

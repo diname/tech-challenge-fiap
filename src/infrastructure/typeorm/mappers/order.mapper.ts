@@ -13,10 +13,12 @@ export class OrderMapper {
       orderModel.paymentStatus,
       orderModel.orderStatus,
       orderModel.createdAt,
+      orderModel.estimatedPreparationTime,
       orderModel.productOrders?.map(ProductOrderMapper.toEntity),
       UserMapper.toEntity(orderModel.user),
       orderModel.id,
       orderModel.updatedAt,
+      orderModel.preparationTime,
     );
   }
 
@@ -28,11 +30,13 @@ export class OrderMapper {
     model.totalPrice = orderEntity.totalPrice.getValue();
     model.paymentStatus = orderEntity.paymentStatus;
     model.orderStatus = orderEntity.orderStatus;
+    model.estimatedPreparationTime = orderEntity.estimatedPreparationTime;
     model.createdAt = orderEntity.createdAt;
     model.updatedAt = orderEntity.updatedAt;
     model.productOrders = orderEntity.productsOrder?.map(
       ProductOrderMapper.toModel,
     );
+    model.preparationTime = orderEntity.preparationTime;
 
     if (orderEntity.user) {
       model.user = UserMapper.toModel(orderEntity.user);

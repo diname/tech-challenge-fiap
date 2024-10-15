@@ -10,6 +10,7 @@ export class ProductMapper {
       productModel.name,
       productModel.description,
       productModel.price,
+      productModel.preparationTime,
       productModel.figureUrl,
       productModel.enabled,
       CategoryMapper.toEntity(productModel.category),

@@ -38,7 +38,20 @@ export class OrderServiceImpl implements IOrderService {
   async update(id: number, orderStatus: OrderStatusType): Promise<void> {
     const order = await this.repository.findById(id);
     if (!order) throw new NotFoundException('Order not found');
+
+    const previousStatus = order.orderStatus;
     order.orderStatus = orderStatus;
+
+    if (
+      previousStatus !== orderStatus &&
+      previousStatus === OrderStatusType.IN_PREPARATION &&
+      orderStatus === OrderStatusType.READY
+    ) {
+      const now = new Date();
+      const preparationDuration = now.getTime() - order.updatedAt.getTime();
+      order.preparationTime = Math.ceil(preparationDuration / 1000 / 60);
+    }
+
     this.repository.save(order);
   }
 
@@ -52,6 +65,7 @@ export class OrderServiceImpl implements IOrderService {
 
     const productsOrder: ProductOrderEntity[] = [];
     let totalPrice = 0;
+    let estimatedPreparationTime = 0;
 
     for (const productOrder of order.productOrders) {
       const product = await this.productService.findById(
@@ -60,6 +74,8 @@ export class OrderServiceImpl implements IOrderService {
 
       if (product) {
         totalPrice += product.price * productOrder.quantity;
+        estimatedPreparationTime +=
+          product.preparationTime * productOrder.quantity;
 
         const productOrderEntity = await this.productOrderRepository.save(
           new ProductOrderEntity(productOrder.quantity, product, new Date()),
@@ -78,6 +94,7 @@ export class OrderServiceImpl implements IOrderService {
       PaymentStatusType.PENDING,
       OrderStatusType.NONE,
       new Date(),
+      estimatedPreparationTime,
       productsOrder,
       user,
     );
