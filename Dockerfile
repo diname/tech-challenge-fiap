@@ -24,7 +24,15 @@ USER node
 ###################
 FROM node:18-alpine AS production
 
+WORKDIR /usr/src/app
+
+# Copiar o node_modules e dist da etapa de build
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
+
+# Copiar o arquivo .env para o container de produção
+COPY --chown=node:node .env .env
+
+USER node
 
 CMD [ "node", "dist/main.js" ]

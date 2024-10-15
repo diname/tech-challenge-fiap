@@ -115,7 +115,6 @@ import { UserController } from './presentation/controllers/user.controller';
     CreateCategoryUseCase,
     UpdateCategoryUseCase,
     DeleteCategoryUseCase,
-    CheckoutUseCase,
     WebhookUseCase,
     {
       provide: IMercadoPagoServiceSymbol,
