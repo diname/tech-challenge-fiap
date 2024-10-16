@@ -58,32 +58,36 @@ Para obter uma visão detalhada do Event Storm aplicado a este projeto, incluind
     <img src="https://img.shields.io/badge/Miro-05192D?style=for-the-badge&logo=miro&logoColor=FFD02F"/>
 </a>
 
+## Arquitetura
+
+[Clique aqui para ver no draw.io](https://drive.google.com/file/d/125nhmEe8Vd6zaZj_OnBLJ8eRhIvvUyDZ/view?usp=sharing)↗️
+
 ## Estrutura de Pastas
 
 Este documento descreve a estrutura de pastas da aplicação baseada na Clean Architecture. Essa organização visa garantir uma separação clara de responsabilidades entre as diferentes camadas do sistema, facilitando a manutenção e evolução da aplicação.
 
 ```
 src/
-├── domain/                         
-│   ├── entities/                   
-│   ├── value-objects/              
-│   ├── services/                   
-│   └── repositories/               
+├── domain/
+│   ├── entities/
+│   ├── value-objects/
+│   ├── services/
+│   └── repositories/
 │
-├── application/                   
-│   ├── use-cases/                 
-│   ├── dtos/                       
-│   └── mappers/                   
+├── application/
+│   ├── use-cases/
+│   ├── dtos/
+│   └── mappers/
 │
-├── infrastructure/                 
-│   ├── orm/                        
-│   ├── repositories/               
-│   └── config/                     
+├── infrastructure/
+│   ├── orm/
+│   ├── repositories/
+│   └── config/
 │
-├── presentation/                  
-│   └── controllers/                
+├── presentation/
+│   └── controllers/
 │
-└── main.ts                         
+└── main.ts
 ```
 
 ## Descrição das Pastas e Arquivos
@@ -119,7 +123,6 @@ src/
 ### `src/main.ts`
 
 - **`main.ts`**: Ponto de entrada da aplicação. Configura e inicializa o módulo principal do NestJS e inicia o servidor.
-
 
 ### `src/core/domain/`
 
@@ -160,7 +163,7 @@ O diagrama abaixo ilustra a interação entre as diferentes camadas e componente
 ```mermaid
 graph TD
     subgraph Presentation
-        A[Controllers] 
+        A[Controllers]
     end
 
     subgraph Application
