@@ -62,6 +62,9 @@ Para obter uma visão detalhada do Event Storm aplicado a este projeto, incluind
 
 [Clique aqui para ver no draw.io](https://drive.google.com/file/d/125nhmEe8Vd6zaZj_OnBLJ8eRhIvvUyDZ/view?usp=sharing)↗️
 
+![Diagrama de Arquitetura](./docs/diagrama-infra.drawio.png)
+_Clique na imagem para ampliar._
+
 ## Estrutura de Pastas
 
 Este documento descreve a estrutura de pastas da aplicação baseada na Clean Architecture. Essa organização visa garantir uma separação clara de responsabilidades entre as diferentes camadas do sistema, facilitando a manutenção e evolução da aplicação.
