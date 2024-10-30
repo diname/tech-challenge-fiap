@@ -1,10 +1,12 @@
-import { CreateCheckoutRequestDto } from '@Application/dtos/request/create-checkout.dto';
 import { PaymentRequestDto } from '@Application/dtos/request/payment.request.dto';
-import { CheckoutResponseDto } from '@Application/dtos/response/create-checkout.response.dto';
+import { MerchantOrderResponseDto } from '@Application/dtos/response/merchant-order.response.dto';
+import { PaymentResponseDto } from '@Application/dtos/response/payment.response';
 
+/*Poderiamos criar uma interface generica IPaymentService desta forma ficaria flexivel para utilizar qualquer "gateway" de pagamentos
+ */
 export interface IMercadoPagoService {
-  checkout(dto: CreateCheckoutRequestDto): Promise<CheckoutResponseDto>;
-  webhook(payment: PaymentRequestDto): Promise<void>;
+  createPayment(payment: PaymentRequestDto): Promise<PaymentResponseDto>;
+  getMerchantOrder(resourceUrl: string): Promise<MerchantOrderResponseDto>;
 }
 
 export const IMercadoPagoServiceSymbol = Symbol('MercadoPagoServiceImpl');

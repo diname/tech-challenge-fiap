@@ -1,70 +1,47 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator';
 
 export class PaymentRequestDto {
-  @ApiProperty({
-    example: 'payment.approved',
-    description: `payment status`,
-  })
+  @IsNumber()
+  external_reference: number;
+
   @IsString()
-  @IsNotEmpty()
-  action: string;
+  notification_url: string;
 
-  @ApiProperty({
-    example: 'v1',
-    description: `API version`,
-  })
+  @IsNumber()
+  total_amount: number;
+
   @IsString()
-  @IsNotEmpty()
-  api_version: string;
+  title: string;
 
-  @ApiProperty({
-    example: 'orderId : 3',
-    description: `order number`,
-  })
-  @IsNumber()
-  @IsNotEmpty()
-  data: {
-    orderId: number;
-  };
-
-  @ApiProperty({
-    example: '2024-10-15T16:08:56Z',
-    description: `date created`,
-  })
   @IsString()
-  @IsNotEmpty()
-  date_created: string;
+  description: string;
 
-  @ApiProperty({
-    example: '116407150649',
-    description: `payment id`,
-  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ProductItem)
+  items: ProductItem[];
+}
+
+export class ProductItem {
+  @IsString()
+  category: string;
+
+  @IsString()
+  title: string;
+
+  @IsString()
+  description: string;
+
   @IsNumber()
-  @IsNotEmpty()
-  id: number;
+  unit_price: number;
 
-  @ApiProperty({
-    example: 'false',
-    description: `live mode`,
-  })
-  @IsBoolean()
-  @IsNotEmpty()
-  live_mode: boolean;
-
-  @ApiProperty({
-    example: 'payment',
-    description: `type`,
-  })
   @IsNumber()
-  @IsNotEmpty()
-  type: string;
+  quantity: number;
 
-  @ApiProperty({
-    example: '350769682',
-    description: `user id`,
-  })
+  @IsString()
+  unit_measure: string;
+
   @IsNumber()
-  @IsNotEmpty()
-  user_id: string;
+  total_amount: number;
 }

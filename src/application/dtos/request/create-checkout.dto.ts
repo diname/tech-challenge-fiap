@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsCPF } from '@Shared/decorators/is-cpf.decorator';
 
-import { IsInt, IsNumber, IsPositive } from 'class-validator';
+import { IsInt, IsNumber, IsOptional, IsPositive } from 'class-validator';
 
 export class CreateCheckoutRequestDto {
   constructor(partial: Partial<CreateCheckoutRequestDto>) {
@@ -29,5 +29,6 @@ export class CreateCheckoutRequestDto {
     example: '52998224725',
   })
   @IsCPF({ message: 'O CPF fornecido é inválido.' })
+  @IsOptional()
   readonly orderOwnerCPF: string;
 }

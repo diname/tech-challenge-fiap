@@ -35,6 +35,26 @@ export class EnvironmentVariableService {
     };
   }
 
+  get mercadoPagoConfig(): {
+    paymentUrl: string;
+    token: string;
+    notificationUrl: string;
+    userId: string;
+    externalPosId: string;
+  } {
+    return {
+      paymentUrl: this.configService.get<string>('MERCADO_PAGO_PAYMENT_URL'),
+      token: this.configService.get<string>('MERCADO_PAGO_TOKEN'),
+      notificationUrl: this.configService.get<string>(
+        'MERCADO_PAGO_NOTIFICATION_URL',
+      ),
+      userId: this.configService.get<string>('MERCADO_PAGO_USER_ID'),
+      externalPosId: this.configService.get<string>(
+        'MERCADO_PAGO_EXTERNAL_POS_ID',
+      ),
+    };
+  }
+
   get postgresConfig(): {
     port: number;
     host: string;

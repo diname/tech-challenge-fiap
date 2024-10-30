@@ -16,6 +16,7 @@ import { RoleSeeder } from '@Infrastructure/typeorm/seed/role.seeder';
 import { SeederProvider } from '@Infrastructure/typeorm/seed/seeder.provider';
 import { UserRoleSeeder } from '@Infrastructure/typeorm/seed/user-role.seeder';
 import { UserSeeder } from '@Infrastructure/typeorm/seed/user.seeder';
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TerminusModule } from '@nestjs/terminus';
@@ -69,6 +70,7 @@ import { UserController } from './presentation/controllers/user.controller';
 
 @Module({
   imports: [
+    HttpModule,
     JwtModule.register({}),
     TypeOrmModule.forRootAsync({
       useClass: PostgresConfigService,
