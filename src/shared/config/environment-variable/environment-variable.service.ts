@@ -43,14 +43,23 @@ export class EnvironmentVariableService {
     externalPosId: string;
   } {
     return {
-      paymentUrl: this.configService.get<string>('MERCADO_PAGO_PAYMENT_URL'),
+      paymentUrl: this.configService
+        .get<string>('MERCADO_PAGO_PAYMENT_URL')
+        .replace(
+          '$USERID',
+          this.configService.get<string>('MERCADO_PAGO_USER_ID'),
+        )
+        .replace(
+          '$EXTERNALPOS',
+          this.configService.get<string>('MERCADO_PAGO_EXTERNAL_POS_ID'),
+        ),
       token: this.configService.get<string>('MERCADO_PAGO_TOKEN'),
-      notificationUrl: this.configService.get<string>(
-        'MERCADO_PAGO_NOTIFICATION_URL',
-      ),
       userId: this.configService.get<string>('MERCADO_PAGO_USER_ID'),
       externalPosId: this.configService.get<string>(
         'MERCADO_PAGO_EXTERNAL_POS_ID',
+      ),
+      notificationUrl: this.configService.get<string>(
+        'MERCADO_PAGO_NOTIFICATION_URL',
       ),
     };
   }

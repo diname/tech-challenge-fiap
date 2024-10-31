@@ -3,7 +3,7 @@ import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator';
 
 export class PaymentRequestDto {
   @IsNumber()
-  external_reference: number;
+  external_reference: string;
 
   @IsString()
   notification_url: string;

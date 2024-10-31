@@ -1,9 +1,6 @@
 import { CreateCheckoutRequestDto } from '@Application/dtos/request/create-checkout.dto';
-import {
-  PaymentRequestDto,
-  ProductItem,
-} from '@Application/dtos/request/payment.request.dto';
 import { PaymentResponseDto } from '@Application/dtos/response/payment.response';
+import { PaymentMapper } from '@Application/mappers/payment.mapper';
 import {
   IOrderService,
   IOrderServiceSymbol,
@@ -12,7 +9,7 @@ import {
   IMercadoPagoService,
   IMercadoPagoServiceSymbol,
 } from '@Infrastructure/services/mercadopago/mercadopago.service';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { EnvironmentVariableService } from '@Shared/config/environment-variable/environment-variable.service';
 
 @Injectable()
@@ -30,28 +27,14 @@ export class CheckoutUseCase {
   async execute(dto: CreateCheckoutRequestDto): Promise<PaymentResponseDto> {
     const order = await this.orderService.findOrderById(dto.orderId);
 
-    if (order) {
-      throw Error('Ordem invalida');
+    if (!order) {
+      throw new NotFoundException('Order not found');
     }
 
-    const payment = new PaymentRequestDto();
-    payment.external_reference = order.id;
-    payment.title = 'teste';
-    payment.description = 'teste';
-    payment.notification_url =
-      this.environmentVariableService.mercadoPagoConfig.notificationUrl;
-    payment.total_amount = order.totalPrice.getValue();
-
-    payment.items = order.productsOrder.map((productOrder) => {
-      const item = new ProductItem();
-      item.description = productOrder.product.description;
-      item.quantity = 1;
-      item.category = 'marketplace';
-      item.unit_measure = 'unit';
-      item.total_amount = productOrder.product.price;
-
-      return item;
-    });
+    const payment = PaymentMapper.ToPaymentRequestDto(
+      order,
+      this.environmentVariableService.mercadoPagoConfig.notificationUrl,
+    );
 
     return await this.mercadoPagoService.createPayment(payment);
   }
