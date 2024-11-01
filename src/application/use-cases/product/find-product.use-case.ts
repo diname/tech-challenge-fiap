@@ -1,4 +1,4 @@
-import { ProductResponseDto } from '@Application/dtos/response/product.response.dto';
+import { ProductResponseDto } from '@Application/dtos/response/product/product.response.dto';
 import {
   IProductService,
   IProductServiceSymbol,

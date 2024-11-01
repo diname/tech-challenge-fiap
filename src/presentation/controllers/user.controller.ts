@@ -1,6 +1,6 @@
-import { CreateCustomerUserDto } from '@Application/dtos/request/create-customer-user.dto';
-import { CreateUserDto } from '@Application/dtos/request/create-user.dto';
-import { GetUserResponseDto } from '@Application/dtos/response/get-user.response.dto';
+import { CreateCustomerUserDto } from '@Application/dtos/request/customer/create-customer-user.dto';
+import { CreateUserDto } from '@Application/dtos/request/user/create-user.dto';
+import { GetUserResponseDto } from '@Application/dtos/response/user/get-user.response.dto';
 import { CreateUserUseCase } from '@Application/use-cases/user/create-user.use-case';
 import { GetUserByRoleUseCase } from '@Application/use-cases/user/get-user-by-role.use-case';
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';

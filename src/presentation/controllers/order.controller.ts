@@ -1,6 +1,6 @@
-import { CreateOrderRequestDto } from '@Application/dtos/request/create-order.request.dto';
-import { UpdateOrderRequestDto } from '@Application/dtos/request/update-order.request.dto';
-import { OrderResponseDto } from '@Application/dtos/response/order.response.dto';
+import { CreateOrderRequestDto } from '@Application/dtos/request/order/create-order.request.dto';
+import { UpdateOrderRequestDto } from '@Application/dtos/request/order/update-order.request.dto';
+import { OrderResponseDto } from '@Application/dtos/response/order/order.response.dto';
 import { CreateOrderUseCase } from '@Application/use-cases/order/create-order.use-case';
 import { FindAllOrdersUseCase } from '@Application/use-cases/order/find-all-orders.use-case';
 import { FindOrderByIdUseCase } from '@Application/use-cases/order/find-order-by-id.use-case';

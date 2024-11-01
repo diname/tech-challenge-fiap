@@ -3,7 +3,7 @@ import {
   ICategoryServiceSymbol,
 } from '@Domain/services/category/category.service';
 import { Inject, Injectable } from '@nestjs/common';
-import { CategoryResponseDto } from '../../dtos/response/category.response.dto';
+import { CategoryResponseDto } from '../../dtos/response/category/category.response.dto';
 import { CategoryMapper } from '../../mappers/category.mapper';
 
 @Injectable()

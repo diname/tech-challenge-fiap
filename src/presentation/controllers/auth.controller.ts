@@ -1,6 +1,6 @@
-import { IdentifyCustomerUserDto } from '@Application/dtos/request/identify-customer-user.dto';
-import { LoginUserDto } from '@Application/dtos/request/login-user.dto';
-import { TokenUserDto } from '@Application/dtos/response/token-user.dto';
+import { IdentifyCustomerUserDto } from '@Application/dtos/request/customer/identify-customer-user.dto';
+import { LoginUserDto } from '@Application/dtos/request/user/login-user.dto';
+import { TokenUserDto } from '@Application/dtos/response/user/token-user.dto';
 import { GetTokenUseCase } from '@Application/use-cases/auth/get-token.use-case';
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';

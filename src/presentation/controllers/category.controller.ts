@@ -19,8 +19,8 @@ import {
 import {
   CategoryRequestDto,
   UpdateCategoryRequestDto,
-} from '@Application/dtos/request/category.request.dto';
-import { CategoryResponseDto } from '@Application/dtos/response/category.response.dto';
+} from '@Application/dtos/request/category/category.request.dto';
+import { CategoryResponseDto } from '@Application/dtos/response/category/category.response.dto';
 import { CreateCategoryUseCase } from '@Application/use-cases/category/create-category.use-case';
 import { DeleteCategoryUseCase } from '@Application/use-cases/category/delete-category.use-case';
 import { FindCategoryUseCase } from '@Application/use-cases/category/find-category.use-case';

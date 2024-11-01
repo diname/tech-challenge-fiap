@@ -9,7 +9,7 @@ import {
 } from '@Domain/services/user/user.service';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { verifyUserCredentials } from '@Shared/utils/auth.util';
-import { TokenUserDto } from '../../dtos/response/token-user.dto';
+import { TokenUserDto } from '../../dtos/response/user/token-user.dto';
 
 @Injectable()
 export class GetTokenUseCase {

@@ -1,9 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
 import {
   IProductService,
   IProductServiceSymbol,
 } from '@Domain/services/product/product.service';
-import { ProductUpdateRequestDto } from '../../dtos/request/product.request.dto';
+import { Inject, Injectable } from '@nestjs/common';
+import { ProductUpdateRequestDto } from '../../dtos/request/product/product.request.dto';
 import { ProductMapper } from '../../mappers/product.mapper';
 
 @Injectable()

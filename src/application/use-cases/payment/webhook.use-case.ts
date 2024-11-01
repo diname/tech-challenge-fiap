@@ -1,39 +1,31 @@
-import { PaymentNotificationDto } from '@Application/dtos/request/payment-notification.request.dto';
+import { PaymentNotificationDto } from '@Application/dtos/request/payment/payment-notification.request.dto';
 import {
   IOrderService,
   IOrderServiceSymbol,
 } from '@Domain/services/order/order.service';
-import {
-  IMercadoPagoService,
-  IMercadoPagoServiceSymbol,
-} from '@Infrastructure/services/mercadopago/mercadopago.service';
+import { IPaymentService } from '@Infrastructure/services/mercadopago/payment.service';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class WebhookUseCase {
   constructor(
-    @Inject(IMercadoPagoServiceSymbol)
-    private readonly mercadoPagoService: IMercadoPagoService,
+    @Inject(IPaymentService)
+    private readonly paymentService: IPaymentService,
     @Inject(IOrderServiceSymbol) private readonly orderService: IOrderService,
   ) {}
 
   async execute(payment: PaymentNotificationDto): Promise<void> {
     try {
-      const { resource } = payment;
-
-      if (resource) {
-        this.validatePayment(resource);
-      }
+      this.validatePayment(payment);
     } catch (error) {
       this.handleError(error);
     }
   }
-
-  /* refatorar */
-
-  private async validatePayment(resourceUrl: string): Promise<void> {
+  private async validatePayment(
+    payment: PaymentNotificationDto,
+  ): Promise<void> {
     const { status, order_status, cancelled, external_reference } =
-      await this.mercadoPagoService.getMerchantOrder(resourceUrl);
+      await this.paymentService.getMerchantOrder(payment);
 
     const orderId = Number(external_reference);
 

@@ -1,48 +1,54 @@
-import { PaymentRequestDto } from '@Application/dtos/request/payment.request.dto';
-import { MerchantOrderResponseDto } from '@Application/dtos/response/merchant-order.response.dto';
-import { PaymentResponseDto } from '@Application/dtos/response/payment.response';
+import { PaymentNotificationDto } from '@Application/dtos/request/payment/payment-notification.request.dto';
+import { PaymentRequestDto } from '@Application/dtos/request/payment/payment.request.dto';
+import { CheckoutResponseDto } from '@Application/dtos/response/payment/checkout.response';
+import { MerchantOrderResponseDto } from '@Application/dtos/response/payment/merchant-order.response.dto';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { EnvironmentVariableService } from '@Shared/config/environment-variable/environment-variable.service';
 import { lastValueFrom } from 'rxjs';
-import { IMercadoPagoService } from './mercadopago.service';
+import { IPaymentService } from './payment.service';
 
 @Injectable()
-export class MercadoPagoServiceImpl implements IMercadoPagoService {
+export class MercadoPagoServiceImpl implements IPaymentService {
   constructor(
     private readonly httpService: HttpService,
     private readonly environmentVariableService: EnvironmentVariableService,
   ) {}
 
-  /*refatorar*/
-
-  async createPayment(payment: PaymentRequestDto): Promise<PaymentResponseDto> {
+  async createPayment(
+    payment: PaymentRequestDto,
+  ): Promise<CheckoutResponseDto> {
     try {
       const { data } = await lastValueFrom(
-        this.httpService.post<PaymentResponseDto>(
+        this.httpService.post<CheckoutResponseDto>(
           this.environmentVariableService.mercadoPagoConfig.paymentUrl,
           payment,
           this.getHeaders(),
         ),
       );
-
       return data;
     } catch (error) {
-      console.log(error);
+      this.handleError(error);
     }
   }
 
   async getMerchantOrder(
-    resourceUrl: string,
+    payment: PaymentNotificationDto,
   ): Promise<MerchantOrderResponseDto> {
-    const { data } = await lastValueFrom(
-      this.httpService.get<MerchantOrderResponseDto>(
-        resourceUrl,
-        this.getHeaders(),
-      ),
-    );
+    let response = new MerchantOrderResponseDto();
 
-    return data;
+    if (payment.resource && payment.topic === 'merchant_order') {
+      const { data } = await lastValueFrom(
+        this.httpService.get<MerchantOrderResponseDto>(
+          payment.resource,
+          this.getHeaders(),
+        ),
+      );
+
+      response = data;
+    }
+
+    return response;
   }
 
   private getHeaders() {
@@ -52,5 +58,13 @@ export class MercadoPagoServiceImpl implements IMercadoPagoService {
         ContentType: 'application/json',
       },
     };
+  }
+
+  public getNotificationUrl(): string {
+    return this.environmentVariableService.mercadoPagoConfig.notificationUrl;
+  }
+
+  private handleError(error: any): void {
+    console.error('An error occurred while processing the order:', error);
   }
 }

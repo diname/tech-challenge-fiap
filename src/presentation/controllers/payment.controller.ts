@@ -1,11 +1,10 @@
-import { CreateCheckoutRequestDto } from '@Application/dtos/request/create-checkout.dto';
-import { PaymentNotificationDto } from '@Application/dtos/request/payment-notification.request.dto';
-import { CheckoutResponseDto } from '@Application/dtos/response/create-checkout.response.dto';
-import { PaymentResponseDto } from '@Application/dtos/response/payment.response';
+import { CreateCheckoutRequestDto } from '@Application/dtos/request/payment/create-checkout.dto';
+import { PaymentNotificationDto } from '@Application/dtos/request/payment/payment-notification.request.dto';
+import { CheckoutResponseDto } from '@Application/dtos/response/payment/checkout.response';
 import { CheckoutUseCase } from '@Application/use-cases/payment/checkout.use-case';
 import { WebhookUseCase } from '@Application/use-cases/payment/webhook.use-case';
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Payment')
 @Controller('payment')
@@ -16,7 +15,7 @@ export class PaymentController {
   ) {}
 
   @Post()
-  @ApiOperation({ summary: 'Inicia um checkout e retorna um pix fake' })
+  @ApiOperation({ summary: 'Inicia um checkout e retorna a chave pix' })
   @ApiResponse({
     status: 201,
     description: 'Checkout feito com sucesso',
@@ -24,22 +23,14 @@ export class PaymentController {
   })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
-  @ApiBody({
-    description: `
-    Dados:
-    - O pedido será aprovado ou não baseado no CPF.
-    - Caso o pedido não exista, um fake EMVCo será retornado independentemente.
-    - CPF: 52998224725 Aprova o pedido.
-    - CPF: 11144477735 Nega o pedido.
-    - CPF: Qualquer outro CPF (válido) aprova o pedido.
-    `,
-    type: CreateCheckoutRequestDto,
-  })
   async checkout(
     @Body() dto: CreateCheckoutRequestDto,
-  ): Promise<PaymentResponseDto> {
+  ): Promise<CheckoutResponseDto> {
     return this.checkoutUseCase.execute(dto);
   }
+
+  /*TODO: VERIFICAR UMA FORMA DE PROTEGER O WEBHOOK*/
+  /*VERIFICAR A POSSIBILIDADE DE FILTRAR AS REQUISIÇÕES DO WEBHOOK*/
 
   @HttpCode(200)
   @Post('/webhook')

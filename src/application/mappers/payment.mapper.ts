@@ -1,7 +1,7 @@
 import {
   PaymentRequestDto,
   ProductItem,
-} from '@Application/dtos/request/payment.request.dto';
+} from '@Application/dtos/request/payment/payment.request.dto';
 import { OrderEntity } from '@Domain/entities/order.entity';
 
 export class PaymentMapper {

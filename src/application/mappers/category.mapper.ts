@@ -2,8 +2,8 @@ import { CategoryEntity } from '@Domain/entities/category.entity';
 import {
   CategoryRequestDto,
   UpdateCategoryRequestDto,
-} from '../dtos/request/category.request.dto';
-import { CategoryResponseDto } from '../dtos/response/category.response.dto';
+} from '../dtos/request/category/category.request.dto';
+import { CategoryResponseDto } from '../dtos/response/category/category.response.dto';
 
 export class CategoryMapper {
   static toEntity(dto: CategoryRequestDto): CategoryEntity {

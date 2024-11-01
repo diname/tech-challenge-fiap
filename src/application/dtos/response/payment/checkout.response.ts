@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class PaymentResponseDto {
+export class CheckoutResponseDto {
   @IsString()
   in_store_order_id: string;
 
