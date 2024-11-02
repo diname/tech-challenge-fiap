@@ -35,20 +35,19 @@ export class MercadoPagoServiceImpl implements IPaymentService {
   async getMerchantOrder(
     payment: PaymentNotificationDto,
   ): Promise<MerchantOrderResponseDto> {
-    let response = new MerchantOrderResponseDto();
-
-    if (payment.resource && payment.topic === 'merchant_order') {
-      const { data } = await lastValueFrom(
-        this.httpService.get<MerchantOrderResponseDto>(
-          payment.resource,
-          this.getHeaders(),
-        ),
-      );
-
-      response = data;
+    try {
+      if (payment.topic === 'merchant_order') {
+        const { data } = await lastValueFrom(
+          this.httpService.get<MerchantOrderResponseDto>(
+            payment.resource,
+            this.getHeaders(),
+          ),
+        );
+        return data;
+      }
+    } catch (error) {
+      this.handleError(error);
     }
-
-    return response;
   }
 
   private getHeaders() {

@@ -5,6 +5,7 @@ import {
 } from '@Domain/services/order/order.service';
 import { IPaymentService } from '@Infrastructure/services/mercadopago/payment.service';
 import { Inject, Injectable } from '@nestjs/common';
+import { PaymentStatusType } from '@Shared/enums/payment-status-type.enum';
 
 @Injectable()
 export class WebhookUseCase {
@@ -24,16 +25,26 @@ export class WebhookUseCase {
   private async validatePayment(
     payment: PaymentNotificationDto,
   ): Promise<void> {
-    const { status, order_status, cancelled, external_reference } =
-      await this.paymentService.getMerchantOrder(payment);
+    const merchantOrder = await this.paymentService.getMerchantOrder(payment);
+    if (merchantOrder) {
+      const { status, order_status, external_reference } = merchantOrder;
+      const paymentReceived = status === 'closed' && order_status === 'paid';
 
-    const orderId = Number(external_reference);
+      const orderId = Number(external_reference);
+      const isOrderWithPendingPayment =
+        await this.isOrderWithPendingPayment(orderId);
 
-    if (status === 'closed' && order_status === 'paid') {
-      await this.orderService.approveOrder(orderId);
-    } else if (cancelled) {
-      await this.orderService.cancelOrder(orderId);
+      if (paymentReceived && isOrderWithPendingPayment) {
+        await this.orderService.approveOrder(orderId);
+      } else if (merchantOrder.cancelled) {
+        await this.orderService.cancelOrder(orderId);
+      }
     }
+  }
+
+  private async isOrderWithPendingPayment(orderId: number) {
+    const { paymentStatus } = await this.orderService.findOrderById(orderId);
+    return paymentStatus == PaymentStatusType.PENDING;
   }
 
   private handleError(error: any): void {

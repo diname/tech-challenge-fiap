@@ -29,9 +29,6 @@ export class PaymentController {
     return this.checkoutUseCase.execute(dto);
   }
 
-  /*TODO: VERIFICAR UMA FORMA DE PROTEGER O WEBHOOK*/
-  /*VERIFICAR A POSSIBILIDADE DE FILTRAR AS REQUISIÇÕES DO WEBHOOK*/
-
   @HttpCode(200)
   @Post('/webhook')
   @ApiOperation({
