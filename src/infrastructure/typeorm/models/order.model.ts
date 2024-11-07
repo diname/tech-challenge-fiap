@@ -75,6 +75,8 @@ export class OrderModel {
   })
   updatedAt?: Date;
 
-  @OneToMany(() => ProductOrderModel, (productOrder) => productOrder.order)
+  @OneToMany(() => ProductOrderModel, (productOrder) => productOrder.order, {
+    eager: true,
+  })
   productOrders: ProductOrderModel[];
 }

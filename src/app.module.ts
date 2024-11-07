@@ -1,7 +1,7 @@
 import { WebhookUseCase } from '@Application/use-cases/payment/webhook.use-case';
 import { AuthServiceImpl } from '@Domain/services/auth/auth.service.impl';
-import { IMercadoPagoServiceSymbol } from '@Infrastructure/services/mercadopago/mercadopago.service';
 import { MercadoPagoServiceImpl } from '@Infrastructure/services/mercadopago/mercadopago.service.impl';
+import { IPaymentService } from '@Infrastructure/services/mercadopago/payment.service';
 import { PostgresConfigService } from '@Infrastructure/typeorm/config/postgres.config.service';
 import { CategoryModel } from '@Infrastructure/typeorm/models/category.model';
 import { OrderModel } from '@Infrastructure/typeorm/models/order.model';
@@ -16,6 +16,7 @@ import { RoleSeeder } from '@Infrastructure/typeorm/seed/role.seeder';
 import { SeederProvider } from '@Infrastructure/typeorm/seed/seeder.provider';
 import { UserRoleSeeder } from '@Infrastructure/typeorm/seed/user-role.seeder';
 import { UserSeeder } from '@Infrastructure/typeorm/seed/user.seeder';
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TerminusModule } from '@nestjs/terminus';
@@ -69,6 +70,7 @@ import { UserController } from './presentation/controllers/user.controller';
 
 @Module({
   imports: [
+    HttpModule,
     JwtModule.register({}),
     TypeOrmModule.forRootAsync({
       useClass: PostgresConfigService,
@@ -117,7 +119,7 @@ import { UserController } from './presentation/controllers/user.controller';
     DeleteCategoryUseCase,
     WebhookUseCase,
     {
-      provide: IMercadoPagoServiceSymbol,
+      provide: IPaymentService,
       useClass: MercadoPagoServiceImpl,
     },
     {

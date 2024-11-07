@@ -1,8 +1,8 @@
 import {
   ProductRequestDto,
   ProductUpdateRequestDto,
-} from '@Application/dtos/request/product.request.dto';
-import { ProductResponseDto } from '@Application/dtos/response/product.response.dto';
+} from '@Application/dtos/request/product/product.request.dto';
+import { ProductResponseDto } from '@Application/dtos/response/product/product.response.dto';
 import { CreateProductUseCase } from '@Application/use-cases/product/create-product.use-case';
 import { DeleteProductUseCase } from '@Application/use-cases/product/delete-product.use-case';
 import { FindProductUseCase } from '@Application/use-cases/product/find-product.use-case';

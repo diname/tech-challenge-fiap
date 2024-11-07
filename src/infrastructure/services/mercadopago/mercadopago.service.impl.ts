@@ -1,83 +1,69 @@
-import { CreateCheckoutRequestDto } from '@Application/dtos/request/create-checkout.dto';
-import { PaymentRequestDto } from '@Application/dtos/request/payment.request.dto';
-import {
-  CheckoutResponseDto,
-  PixDataDto,
-} from '@Application/dtos/response/create-checkout.response.dto';
-import {
-  IOrderService,
-  IOrderServiceSymbol,
-} from '@Domain/services/order/order.service';
-import { Inject, Injectable } from '@nestjs/common';
-import { IMercadoPagoService } from './mercadopago.service';
+import { PaymentNotificationDto } from '@Application/dtos/request/payment/payment-notification.request.dto';
+import { PaymentRequestDto } from '@Application/dtos/request/payment/payment.request.dto';
+import { CheckoutResponseDto } from '@Application/dtos/response/payment/checkout.response';
+import { MerchantOrderResponseDto } from '@Application/dtos/response/payment/merchant-order.response.dto';
+import { HttpService } from '@nestjs/axios';
+import { Injectable } from '@nestjs/common';
+import { EnvironmentVariableService } from '@Shared/config/environment-variable/environment-variable.service';
+import { lastValueFrom } from 'rxjs';
+import { IPaymentService } from './payment.service';
 
 @Injectable()
-export class MercadoPagoServiceImpl implements IMercadoPagoService {
+export class MercadoPagoServiceImpl implements IPaymentService {
   constructor(
-    @Inject(IOrderServiceSymbol)
-    private readonly orderService: IOrderService,
+    private readonly httpService: HttpService,
+    private readonly environmentVariableService: EnvironmentVariableService,
   ) {}
 
-  async checkout(dto: CreateCheckoutRequestDto): Promise<CheckoutResponseDto> {
-    const fakeResponse = new CheckoutResponseDto();
-    const fakePixData: PixDataDto = this.createFakePixData(dto);
-
-    fakeResponse.pixData = fakePixData;
-
+  async createPayment(
+    payment: PaymentRequestDto,
+  ): Promise<CheckoutResponseDto> {
     try {
-      await this.handleOrder(dto.orderOwnerCPF, dto.orderId);
+      const { data } = await lastValueFrom(
+        this.httpService.post<CheckoutResponseDto>(
+          this.environmentVariableService.mercadoPagoConfig.paymentUrl,
+          payment,
+          this.getHeaders(),
+        ),
+      );
+      return data;
     } catch (error) {
       this.handleError(error);
     }
-
-    return fakeResponse;
   }
 
-  private createFakePixData(dto: CreateCheckoutRequestDto): PixDataDto {
-    return {
-      merchantAccount:
-        '00020126360014BR.GOV.BCB.PIX0114+55819999999970206ABCD5802BR5925FIAP6009SAOPAULO62070503***6304ABCD',
-      userCPF: dto.orderOwnerCPF,
-      transactionAmount: dto.orderPrice,
-      currency: 'BRL',
-      transactionId: '1234567890',
-      qrCode:
-        '00020126360014BR.GOV.BCB.PIX0114+55819999999970206ABCD5802BR5925FIAP6009SAOPAULO62070503***6304ABCD',
-      expirationDate: '2024-12-31T23:59:59Z',
-    };
-  }
-
-  private async handleOrder(
-    orderOwnerCPF: string,
-    orderId: number,
-  ): Promise<void> {
-    switch (orderOwnerCPF) {
-      case '52998224725':
-        await this.orderService.approveOrder(orderId);
-        break;
-      case '11144477735':
-        await this.orderService.cancelOrder(orderId);
-        break;
-      default:
-        await this.orderService.approveOrder(orderId);
-    }
-  }
-
-  private handleError(error: any): void {
-    console.error('An error occurred while processing the order:', error);
-  }
-
-  async webhook(payment: PaymentRequestDto): Promise<void> {
+  async getMerchantOrder(
+    payment: PaymentNotificationDto,
+  ): Promise<MerchantOrderResponseDto> {
     try {
-      const { action, data } = payment;
-
-      if (action === 'payment.approved') {
-        await this.orderService.approveOrder(data.orderId);
-      } else if (action === 'payment.canceled') {
-        await this.orderService.cancelOrder(data.orderId);
+      if (payment.topic === 'merchant_order') {
+        const { data } = await lastValueFrom(
+          this.httpService.get<MerchantOrderResponseDto>(
+            payment.resource,
+            this.getHeaders(),
+          ),
+        );
+        return data;
       }
     } catch (error) {
       this.handleError(error);
     }
+  }
+
+  private getHeaders() {
+    return {
+      headers: {
+        Authorization: `Bearer ${this.environmentVariableService.mercadoPagoConfig.token}`,
+        ContentType: 'application/json',
+      },
+    };
+  }
+
+  public getNotificationUrl(): string {
+    return this.environmentVariableService.mercadoPagoConfig.notificationUrl;
+  }
+
+  private handleError(error: any): void {
+    console.error('An error occurred while processing the order:', error);
   }
 }

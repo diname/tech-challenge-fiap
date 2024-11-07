@@ -4,8 +4,8 @@ import {
 } from '@Domain/entities/create-order.entity';
 import { OrderEntity } from '@Domain/entities/order.entity';
 import { ProductOrderMapper } from '@Infrastructure/typeorm/mappers/product-order.mapper';
-import { CreateOrderRequestDto } from '../dtos/request/create-order.request.dto';
-import { OrderResponseDto } from '../dtos/response/order.response.dto';
+import { CreateOrderRequestDto } from '../dtos/request/order/create-order.request.dto';
+import { OrderResponseDto } from '../dtos/response/order/order.response.dto';
 
 export class OrderMapper {
   static toCreateOrderEntity(dto: CreateOrderRequestDto): CreateOrderEntity {

@@ -49,7 +49,9 @@ export class ProductModel {
   })
   enabled: boolean;
 
-  @ManyToOne(() => CategoryModel, (category) => category.products)
+  @ManyToOne(() => CategoryModel, (category) => category.products, {
+    eager: true,
+  })
   category: CategoryModel;
 
   @CreateDateColumn({

@@ -1,10 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import {
   IUserService,
   IUserServiceSymbol,
 } from '@Domain/services/user/user.service';
-import { GetUserResponseDto } from '../../dtos/response/get-user.response.dto';
+import { Inject, Injectable } from '@nestjs/common';
+import { UserRoleEnum } from '@Shared/enums/user-role.enum';
+import { GetUserResponseDto } from '../../dtos/response/user/get-user.response.dto';
 import { UserMapper } from '../../mappers/user.mapper';
 
 @Injectable()

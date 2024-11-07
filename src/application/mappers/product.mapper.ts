@@ -1,10 +1,10 @@
-import { ProductResponseDto } from '@Application/dtos/response/product.response.dto';
+import { ProductResponseDto } from '@Application/dtos/response/product/product.response.dto';
 import { CategoryEntity } from '@Domain/entities/category.entity';
 import { ProductEntity } from '@Domain/entities/product.entity';
 import {
   ProductRequestDto,
   ProductUpdateRequestDto,
-} from '../dtos/request/product.request.dto';
+} from '../dtos/request/product/product.request.dto';
 
 export class ProductMapper {
   static toEntity(dto: ProductRequestDto): ProductEntity {

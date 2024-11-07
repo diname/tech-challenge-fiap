@@ -11,4 +11,9 @@ export interface EnvironmentVariableInterface {
   POSTGRES_PASSWORD: string;
   USER_TOKEN_SECRET: string;
   USER_TOKEN_EXPIRES_IN: number;
+  MERCADO_PAGO_PAYMENT_URL: string;
+  MERCADO_PAGO_TOKEN: string;
+  MERCADO_PAGO_NOTIFICATION_URL: string;
+  MERCADO_PAGO_USER_ID: string;
+  MERCADO_PAGO_EXTERNAL_POS_ID: string;
 }

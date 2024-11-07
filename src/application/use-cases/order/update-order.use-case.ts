@@ -1,9 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
 import {
   IOrderService,
   IOrderServiceSymbol,
 } from '@Domain/services/order/order.service';
-import { UpdateOrderRequestDto } from '../../dtos/request/update-order.request.dto';
+import { Inject, Injectable } from '@nestjs/common';
+import { UpdateOrderRequestDto } from '../../dtos/request/order/update-order.request.dto';
 
 @Injectable()
 export class UpdateOrderUseCase {
