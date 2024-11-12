@@ -28,7 +28,7 @@ jobs:
           SHA=$(ECHO $GITHUB_SHA | head -c7)
           echo "sha=$SHA" >> $GITHUB_OUTPUT
 
-      - name: Set up Docker Buildx
+      - name: Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Login into the container registry
