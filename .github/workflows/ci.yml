@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: lts/hydrogen
           cache: 'npm'
-      - run: npm
+      - run: npm i
       - run: npm run test
 
       - name: Generate tag
