@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: lts/hydrogen
           cache: 'npm'
-      - run: npm i
+      - run: npm ci
       # - run: npm run test
 
       - name: Generate tag
@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: diname7/tech-challenge-api:${{ steps.generate_tag.outputs.sha }},diname7/tech-challenge-api:latest
+          tags: diname7/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }},diname7/tech-challenge-fiap-api:latest
 
       # - name: Build docker image
       # run: docker build -t diname7/tech-challenge-api:${{ steps.generate_tag.outputs.sha }} .
