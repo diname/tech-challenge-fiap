@@ -7,24 +7,22 @@ import { EnvironmentVariableService } from './environment-variable.service';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: '.env',
       validationSchema: Joi.object({
-        NODE_ENV: Joi.string().valid(
-          'test',
-          'development',
-          'staging',
-          'production',
-        ),
-        APP_NAME: Joi.string(),
+        NODE_ENV: Joi.string()
+          .valid('test', 'development', 'staging', 'production')
+          .required(),
+        APP_NAME: Joi.string().required(),
         APP_PORT: Joi.number().default(3000),
-        APP_VERSION: Joi.string(),
-        APP_DOCUMENTATION_ENDPOINT: Joi.string(),
+        APP_VERSION: Joi.string().required(),
+        APP_DOCUMENTATION_ENDPOINT: Joi.string().required(),
         POSTGRES_PORT: Joi.number().default(5432),
-        POSTGRES_HOST: Joi.string(),
-        POSTGRES_DB: Joi.string(),
-        POSTGRES_USER: Joi.string(),
-        POSTGRES_PASSWORD: Joi.string(),
-        USER_TOKEN_SECRET: Joi.string(),
-        USER_TOKEN_EXPIRES_IN: Joi.number(),
+        POSTGRES_HOST: Joi.string().required(),
+        POSTGRES_DB: Joi.string().required(),
+        POSTGRES_USER: Joi.string().required(),
+        POSTGRES_PASSWORD: Joi.string().required(),
+        USER_TOKEN_SECRET: Joi.string().required(),
+        USER_TOKEN_EXPIRES_IN: Joi.number().required(),
       }),
       validationOptions: {
         presence: 'required',

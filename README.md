@@ -58,34 +58,74 @@ Para obter uma visão detalhada do Event Storm aplicado a este projeto, incluind
     <img src="https://img.shields.io/badge/Miro-05192D?style=for-the-badge&logo=miro&logoColor=FFD02F"/>
 </a>
 
+## Arquitetura
+
+[Clique aqui para ver no draw.io](https://drive.google.com/file/d/125nhmEe8Vd6zaZj_OnBLJ8eRhIvvUyDZ/view?usp=sharing)↗️
+
+![Diagrama de Arquitetura](./docs/diagrama-infra.drawio.png)
+_Clique na imagem para ampliar._
+
 ## Estrutura de Pastas
 
-Esta API foi desenvolvida utilizando NestJS e TypeORM, seguindo a arquitetura hexagonal. Abaixo está a descrição detalhada da estrutura do projeto e suas responsabilidades.
+Este documento descreve a estrutura de pastas da aplicação baseada na Clean Architecture. Essa organização visa garantir uma separação clara de responsabilidades entre as diferentes camadas do sistema, facilitando a manutenção e evolução da aplicação.
 
 ```
 src/
-├── core/
-│ ├── domain/
-│ │ ├── entities/
-│ │ ├── value-objects/
-│ │ ├── services/
-│ │ ├── repositories/
-│ └── application/
+├── domain/
+│   ├── entities/
+│   ├── value-objects/
+│   ├── services/
+│   └── repositories/
+│
+├── application/
 │   ├── use-cases/
 │   ├── dtos/
 │   └── mappers/
-├── adapters/
-│ ├── in/
-│ └── out/
+│
 ├── infrastructure/
-│ ├── orm/
-│ ├── services/
-│ └── config/
-├── shared/
+│   ├── orm/
+│   ├── repositories/
+│   └── config/
+│
+├── presentation/
+│   └── controllers/
+│
 └── main.ts
 ```
 
 ## Descrição das Pastas e Arquivos
+
+### `src/domain/`
+
+- **`entities/`**: Contém as entidades do domínio, que representam os modelos principais do sistema.
+- **`value-objects/`**: Contém os Objetos de Valor do domínio, que são objetos imutáveis utilizados em conjunto com as entidades.
+- **`services/`**: Contém serviços que implementam as regras de negócio puras do domínio, sem depender de detalhes de infraestrutura.
+- **`repositories/`**: Contém interfaces para repositórios, que são portas de saída para a persistência de dados.
+
+### `src/application/`
+
+- **`use-cases/`**: Contém casos de uso da aplicação, que definem as operações específicas que a aplicação pode realizar e coordenam as interações entre entidades e serviços.
+- **`dtos/`**: Contém Data Transfer Objects, que são utilizados para transferir dados entre diferentes camadas da aplicação.
+- **`mappers/`**: Contém mapeamentos entre entidades e DTOs para facilitar a conversão de dados entre o formato de persistência e o formato de apresentação.
+
+### `src/presentation/`
+
+- **`controllers/`**: Contém adaptadores de entrada, como controladores HTTP, que recebem as requisições dos clientes e invocam os casos de uso apropriados.
+
+### `src/infrastructure/`
+
+- **`typeorm/`**: Contém configurações e implementações específicas do ORM (TypeORM), como conexões com o banco de dados e definições de entidades.
+- **`repositories/`**: Contém a implementação concreta dos repositórios definidos no domínio.
+- **`services/`**: Contém serviços de infraestrutura que oferecem funcionalidades auxiliares para a aplicação, como serviços de cache ou de mensageria.
+- **`config/`**: Contém configurações da aplicação, como variáveis de ambiente e configurações específicas do sistema.
+
+### `src/shared/`
+
+- **`shared/`**: Contém código e configurações compartilhadas que são usadas em várias partes da aplicação, como utilitários comuns e configurações globais.
+
+### `src/main.ts`
+
+- **`main.ts`**: Ponto de entrada da aplicação. Configura e inicializa o módulo principal do NestJS e inicia o servidor.
 
 ### `src/core/domain/`
 
@@ -119,48 +159,48 @@ src/
 
 - **`main.ts`**: Ponto de entrada da aplicação. Configura e inicializa o módulo principal do NestJS e inicia o servidor.
 
-## Diagrama de Arquitetura Hexagonal
+## Diagrama de Arquitetura Limpa
 
-O diagrama abaixo ilustra a interação entre as diferentes camadas e componentes da arquitetura hexagonal do projeto. Esta arquitetura é projetada para promover uma separação clara entre as diferentes responsabilidades do sistema, facilitando a manutenção e evolução da aplicação.
+O diagrama abaixo ilustra a interação entre as diferentes camadas e componentes da arquitetura limpa do projeto. Esta arquitetura é projetada para promover uma separação clara entre as diferentes responsabilidades do sistema, facilitando a manutenção e evolução da aplicação.
 
 ```mermaid
 graph TD
-    subgraph Adapters_In
+    subgraph Presentation
+        A[Controllers]
+    end
+
+    subgraph Application
         A[Controllers] -->|Calls| B[Use Cases]
+        B[Use Cases] -->|Maps to/from| D[DTOs]
         B -->|Interacts with| C[Application Services]
-        B -->|Maps to/from| D[DTOs]
-        C -->|Maps to/from| D
-        E[External APIs] -->|Uses| C
     end
 
-    subgraph Adapters_Out
-        F[Repositories] -->|Implements| I[Repositories Interface]
-    end
-
-    subgraph Core
-        C -->|Uses| G[Entities]
-        C -->|Uses| H[Domain Services]
-        G -->|Persisted by| I[Repositories Interface]
+    subgraph Domain
+        C -->|Uses| E[Entities]
+        C -->|Uses| F[Domain Services]
+        E -->|Persisted by| G[Repositories Interface]
     end
 
     subgraph Infrastructure
-        I -->|Implements| J[Infrastructure Repositories]
-        J -->|Configured in| K[ORM Config]
-        K -->|Uses| L[ORM Models]
-        K -->|Provides| M[ORM Repositories]
-        J -->|Seeded by| N[Seed Scripts]
+        G -->|Implements| H[Infrastructure Repositories]
+        H -->|Configured in| I[ORM Config]
+        I -->|Uses| J[ORM Models]
+        I -->|Provides| K[ORM Repositories]
+        H -->|Seeded by| L[Seed Scripts]
+        M[External APIs] -->|Uses| C
     end
 
     %%% Optional styling to make the diagram clearer
-    classDef adapters_in fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef adapters_out fill:#f99,stroke:#333,stroke-width:2px;
-    classDef core fill:#ccf,stroke:#333,stroke-width:2px;
+    classDef presentation fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef application fill:#f99,stroke:#333,stroke-width:2px;
+    classDef domain fill:#ccf,stroke:#333,stroke-width:2px;
     classDef infra fill:#cfc,stroke:#333,stroke-width:2px;
 
-    class Adapters_In adapters_in;
-    class Adapters_Out adapters_out;
-    class Core core;
+    class Presentation presentation;
+    class Application application;
+    class Domain domain;
     class Infrastructure infra;
+
 ```
 
 ## Documentação do Banco de Dados

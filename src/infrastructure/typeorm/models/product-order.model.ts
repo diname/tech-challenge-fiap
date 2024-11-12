@@ -17,7 +17,9 @@ export class ProductOrderModel {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => ProductModel, (product) => product.productOrders)
+  @ManyToOne(() => ProductModel, (product) => product.productOrders, {
+    eager: true,
+  })
   product: ProductModel;
 
   @Column({

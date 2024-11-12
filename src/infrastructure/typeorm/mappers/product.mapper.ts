@@ -1,6 +1,6 @@
 import { ProductModel } from '@Infrastructure/typeorm/models/product.model';
 
-import { ProductEntity } from 'src/core/domain/entities/product.entity';
+import { ProductEntity } from '@Domain/entities/product.entity';
 import { CategoryModel } from '../models/category.model';
 import { CategoryMapper } from './category.mapper';
 
@@ -10,6 +10,7 @@ export class ProductMapper {
       productModel.name,
       productModel.description,
       productModel.price,
+      productModel.preparationTime,
       productModel.figureUrl,
       productModel.enabled,
       CategoryMapper.toEntity(productModel.category),

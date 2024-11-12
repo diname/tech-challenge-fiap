@@ -26,6 +26,20 @@ export class OrderModel {
   })
   totalPrice: number;
 
+  @Column({
+    type: 'integer',
+    nullable: false,
+    comment: 'Tempo estimado para a preparação do pedido em minutos.',
+  })
+  estimatedPreparationTime: number;
+
+  @Column({
+    type: 'integer',
+    nullable: true,
+    comment: 'Tempo de preparação do pedido em minutos.',
+  })
+  preparationTime?: number;
+
   @ManyToOne(() => UserModel, (user) => user.orders)
   user: UserModel;
 
@@ -61,6 +75,8 @@ export class OrderModel {
   })
   updatedAt?: Date;
 
-  @OneToMany(() => ProductOrderModel, (productOrder) => productOrder.order)
+  @OneToMany(() => ProductOrderModel, (productOrder) => productOrder.order, {
+    eager: true,
+  })
   productOrders: ProductOrderModel[];
 }

@@ -29,6 +29,13 @@ export class ProductModel {
   price: number;
 
   @Column({
+    type: 'numeric',
+    nullable: false,
+    comment: 'Tempo de preparação do produto em minutos',
+  })
+  preparationTime: number;
+
+  @Column({
     type: 'text',
     nullable: false,
     comment: 'URL da imagem do produto',
@@ -42,7 +49,9 @@ export class ProductModel {
   })
   enabled: boolean;
 
-  @ManyToOne(() => CategoryModel, (category) => category.products)
+  @ManyToOne(() => CategoryModel, (category) => category.products, {
+    eager: true,
+  })
   category: CategoryModel;
 
   @CreateDateColumn({
