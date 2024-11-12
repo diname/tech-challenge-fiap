@@ -35,7 +35,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build docker image
-        run: docker build -t diname7/tech-challenge-api:${{ steps.generate_tag.outputs.sha }}.
+        run: docker build -t diname7/tech-challenge-api:${{ steps.generate_tag.outputs.sha }} .
 
       - name: Push image
-        run: docker push diname7/tech-challenge-api:${{ steps.generate_tag.outputs.sha }}.
+        run: docker push diname7/tech-challenge-api:${{ steps.generate_tag.outputs.sha }}
