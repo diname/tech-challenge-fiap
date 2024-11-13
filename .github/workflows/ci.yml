@@ -1,4 +1,4 @@
-name: CI
+name: Continuos Integration
 
 on:
   push:
@@ -18,10 +18,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/hydrogen
-          cache: 'npm'
-      - run: npm ci
+          # cache: 'npm'
+      - run: |
+          npm install
+          npm run build
       # - run: npm run test
-
       - name: Generate tag
         id: generate_tag
         run: |
@@ -42,8 +43,8 @@ jobs:
         with:
           push: true
           tags: |
-            --tag diname/tech-challenge-fiap-api:latest
-            --tag diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
+            diname/tech-challenge-fiap-api:latest
+            diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
 
       # - name: Build docker image
       # run: docker build -t diname7/tech-challenge-api:${{ steps.generate_tag.outputs.sha }} .
