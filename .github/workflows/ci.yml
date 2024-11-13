@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/hydrogen
@@ -35,11 +35,23 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push Image
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: |
-            diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
-            diname/tech-challenge-fiap-api:latest
+            ${{ secrets.DOCKER_USERNAME }}/tech-challenge-fiap-api:latest
+            ${{ secrets.DOCKER_USERNAME }}/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
+
+      # - name: Build and push Image
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: |
+      #       diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
+      #       diname/tech-challenge-fiap-api:latest
