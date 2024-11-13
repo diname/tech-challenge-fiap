@@ -24,7 +24,7 @@ jobs:
           npm run build
       # - run: npm run test
       - name: Generate tag
-        id: generate_tag
+        id: generate_sha
         run: |
           SHA=$(ECHO $GITHUB_SHA | head -c7)
           echo "sha=$SHA" >> $GITHUB_OUTPUT
@@ -38,18 +38,19 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push Image
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: |
-            docker buildx build \
-            --tag docker.io/diname/tech-challenge-fiap-api:latest
-            --tag docker.io/diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
+      # - name: Build and push Image
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     push: true
+      #     tags: |
+      #       diname/tech-challenge-fiap-api:latest
+      #       diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
 
-      # - name: Build docker image
-      # run: docker build -t diname7/tech-challenge-api:${{ steps.generate_tag.outputs.sha }} .
+      - name: Build docker image
+        run: docker build -t diname/tech-challenge-fiap-api:${{ steps.generate_sha.outputs.sha }} .
 
-      # - name: Push image
-      #   run: |
-      #     docker push diname7/tech-challenge-api:${{ steps.generate_tag.outputs.sha }}
+      - name: Push image
+        run: |
+          docker push diname/tech-challenge-fiap-api:${{ steps.generate_sha.outputs.sha }}
+          docker tag diname/tech-challenge-fiap-api:${{ steps.generate_sha.outputs.sha }} diname/tech-challenge-fiap-api:latest
+          docker push diname/tech-challenge-fiap-api:latest
