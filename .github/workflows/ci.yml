@@ -37,13 +37,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push Image
         uses: docker/build-push-action@v6
         with:
           push: true
           tags: |
-            docker.io/diname/tech-challenge-fiap-api:latest
-            docker.io/diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
+            diname/tech-challenge-fiap-api:latest
+            diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
 
       # - name: Build docker image
       # run: docker build -t diname7/tech-challenge-api:${{ steps.generate_tag.outputs.sha }} .
