@@ -46,6 +46,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: |
-            diname/tech-challenge-fiap-api:latest
-            diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
+          tags: diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
