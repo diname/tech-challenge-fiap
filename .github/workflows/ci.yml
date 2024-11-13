@@ -29,8 +29,8 @@ jobs:
           SHA=$(ECHO $GITHUB_SHA | head -c7)
           echo "sha=$SHA" >> $GITHUB_OUTPUT
 
-      - name: Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      # - name: Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
 
       - name: Login into the container registry
         uses: docker/login-action@v3
@@ -43,8 +43,9 @@ jobs:
         with:
           push: true
           tags: |
-            diname/tech-challenge-fiap-api:latest
-            diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
+            docker buildx build \
+            --tag docker.io/diname/tech-challenge-fiap-api:latest
+            --tag docker.io/diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
 
       # - name: Build docker image
       # run: docker build -t diname7/tech-challenge-api:${{ steps.generate_tag.outputs.sha }} .
