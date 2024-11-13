@@ -47,7 +47,7 @@ jobs:
       #       diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
 
       - name: Build docker image
-        run: docker build -t diname/tech-challenge-fiap-api:${{ steps.generate_sha.outputs.sha }} .
+        run: docker build . -t diname/tech-challenge-fiap-api:${{ steps.generate_sha.outputs.sha }}
 
       - name: Push image
         run: |
