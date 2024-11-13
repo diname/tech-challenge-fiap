@@ -39,7 +39,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: .
           push: true
           tags: |
             diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
