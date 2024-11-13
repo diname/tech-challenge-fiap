@@ -18,9 +18,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/hydrogen
-          # cache: 'npm'
+          cache: 'npm'
       - run: |
-          npm install
+          npm ci
           npm run build
       # - run: npm run test
       - name: Generate tag
@@ -35,23 +35,5 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v3
-
-      # - name: Build and push
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: |
-      #       ${{ secrets.DOCKER_USERNAME }}/tech-challenge-fiap-api:latest
-      #       ${{ secrets.DOCKER_USERNAME }}/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
-
-      # - name: Build and push Image
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: |
-      #       diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
-      #       diname/tech-challenge-fiap-api:latest
+      - name: Build Docker Image
+        run: docker build -t diname/tech-challenge-fiap-api:latest .
