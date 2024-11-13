@@ -40,7 +40,7 @@ jobs:
 
       - name: Push image
         run: |
-          docker push diname/tech-challenge-api:latest
+          docker push diname/tech-challenge-fiap-api:latest
 
       # - name: Build and Push Docker Image
       #   uses: docker/build-push-action@v6
