@@ -26,7 +26,7 @@ jobs:
       - name: Generate tag
         id: generate_tag
         run: |
-          SHA=$(ECHO $GITHUB_SHA | head -c7)
+          SHA=$(echo $GITHUB_SHA | head -c7)
           echo "sha=$SHA" >> $GITHUB_OUTPUT
 
       - name: Login into the container registry
@@ -36,11 +36,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker Image
-        run: docker build -t diname/tech-challenge-fiap-api:latest .
+        run: docker build -t diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }} .
 
       - name: Push image
         run: |
-          docker push diname/tech-challenge-fiap-api:latest
+          docker push diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
 
       # - name: Build and Push Docker Image
       #   uses: docker/build-push-action@v6
