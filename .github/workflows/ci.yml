@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -34,13 +37,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # - name: Build Docker Image
-      #   run: docker build -t diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }} .
-
-      # - name: Push image
-      #   run: |
-      #     docker push diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
