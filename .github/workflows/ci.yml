@@ -36,4 +36,16 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker Image
-        run: docker build -t diname/tech-challenge-fiap-api:latest .
+        run: docker build -t diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }} .
+
+      - name: Push image
+        run: |
+          docker push diname/tech-challenge-api:${{ steps.generate_tag.outputs.sha }}
+
+      # - name: Build and Push Docker Image
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     push: true
+      #     tags: |
+      #       diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
+      #       diname/tech-challenge-fiap-api:latest
