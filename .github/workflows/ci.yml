@@ -3,7 +3,7 @@ name: Hml - CI/CD
 on:
   pull_request:
     branches:
-      - develop
+      - hml
 
 jobs:
   build:
