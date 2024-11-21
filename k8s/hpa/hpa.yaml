@@ -1,0 +1,31 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: tech-challenge-fiap-api
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 60
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0 # faz o scale imediatamente
+      policies:
+      - type: Pods
+        value: 2  # Adiciona no máximo 2 pods de uma vez
+        periodSeconds: 10  # a cada 10 segundos
+    scaleDown:
+      stabilizationWindowSeconds: 30  # espera 30 segundos para começar a derrubar os pods
+      policies:
+      - type: Pods
+        value: 2  # Reduz no máximo 2 pods a cada 30 segundos
+        periodSeconds: 30
