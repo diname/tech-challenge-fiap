@@ -5,6 +5,10 @@ on:
     types:
       - closed
 
+env:
+  REGION_DEFAULT: 'us-east-1'
+  CLUSTER_NAME: 'EKS-FIAP'
+
 jobs:
   Deploy:
     if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' }}
@@ -34,3 +38,19 @@ jobs:
           tags: |
             diname/tech-challenge-fiap-api:${{ steps.generate_tag.outputs.sha }}
             diname/tech-challenge-fiap-api:latest
+
+      # - name: AWS Configure
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ID }}
+      #     aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+      #     aws-region: ${{ env.REGION_DEFAULT }}
+
+      # - name: Update Kube Config
+      #   run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.REGION_DEFAULT }}
+
+      # - name: Kube Apply
+      #   run: |
+      #     kubectl apply -f k8s/eks-deployment.yaml
+      #     kubectl apply -f k8s/eks-svc.yaml
