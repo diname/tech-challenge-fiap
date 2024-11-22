@@ -1,0 +1,25 @@
+name: Continuos Integration
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: 'Build and Push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/hydrogen
+          cache: 'npm'
+      - run: |
+          npm ci
+          npm run build
+      # - run: npm run test

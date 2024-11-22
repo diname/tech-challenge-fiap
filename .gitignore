@@ -131,4 +131,3 @@ dist
 
 src/.DS_Store
 .env
-.env.example
