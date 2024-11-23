@@ -17,11 +17,14 @@ import { SeederProvider } from '@Infrastructure/typeorm/seed/seeder.provider';
 import { UserRoleSeeder } from '@Infrastructure/typeorm/seed/user-role.seeder';
 import { UserSeeder } from '@Infrastructure/typeorm/seed/user.seeder';
 import { HttpModule } from '@nestjs/axios';
+import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TerminusModule } from '@nestjs/terminus';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvironmentVariableModule } from '@Shared/config/environment-variable/environment-variable.module';
+import { redisStore } from 'cache-manager-redis-yet';
 import { GetTokenUseCase } from './application/use-cases/auth/get-token.use-case';
 import { CreateCategoryUseCase } from './application/use-cases/category/create-category.use-case';
 import { DeleteCategoryUseCase } from './application/use-cases/category/delete-category.use-case';
@@ -85,6 +88,24 @@ import { UserController } from './presentation/controllers/user.controller';
       UserRoleModel,
       ProductOrderModel,
     ]),
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        const store = await redisStore({
+          socket: {
+            host: configService.get<string>('CACHE_SERVICE_HOST'),
+            port: configService.get<number>('CACHE_SERVICE_PORT'),
+          },
+        });
+
+        return {
+          store: store as unknown as CacheStore,
+          ttl: 3 * 60000,
+        };
+      },
+    }),
+
     EnvironmentVariableModule.forRoot({ isGlobal: true }),
     TerminusModule,
   ],

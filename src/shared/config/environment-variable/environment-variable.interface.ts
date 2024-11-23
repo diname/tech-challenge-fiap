@@ -16,4 +16,6 @@ export interface EnvironmentVariableInterface {
   MERCADO_PAGO_NOTIFICATION_URL: string;
   MERCADO_PAGO_USER_ID: string;
   MERCADO_PAGO_EXTERNAL_POS_ID: string;
+  CACHE_SERVICE_HOST: string;
+  CACHE_SERVICE_PORT: number;
 }
