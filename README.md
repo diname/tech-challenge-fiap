@@ -127,38 +127,6 @@ src/
 
 - **`main.ts`**: Ponto de entrada da aplicação. Configura e inicializa o módulo principal do NestJS e inicia o servidor.
 
-### `src/core/domain/`
-
-- **`entities/`**: Contém as entidades do domínio, que representam os modelos principais do sistema e estão mapeados para o banco de dados.
-- **`value-objects/`**: Contém os Objetos de Valor do domínio, que são objetos imutáveis que possuem um valor específico e são utilizados em conjunto com as entidades.
-- **`services/`**: Contém serviços que implementam as regras de negócio puras do domínio, sem depender de detalhes de infraestrutura ou aplicação.
-- **`repositories/`**: Contém interfaces para repositórios, que são portas de saída para a persistência de dados.
-
-### `src/core/application/`
-
-- **`use-cases/`**: Contém casos de uso da aplicação, que definem as operações específicas que a aplicação pode realizar e coordenam as interações entre entidades e serviços.
-- **`dtos/`**: Contém Data Transfer Objects, que são utilizados para transferir dados entre diferentes camadas da aplicação.
-- **`mappers/`**: Contém mapeamentos entre entidades e DTOs para facilitar a conversão de dados entre o formato de persistência e o formato de apresentação.
-
-### `src/adapters/`
-
-- **`in/`**: Contém adaptadores de entrada, como controladores HTTP, que recebem as requisições dos clientes e invocam os casos de uso apropriados.
-- **`out/`**: Contém adaptadores de saída, como repositórios e integrações com APIs externas, que implementam a persistência de dados e outras interações externas.
-
-### `src/infrastructure/`
-
-- **`orm/`**: Contém configurações e implementações específicas do ORM (TypeORM), como conexões com o banco de dados e definições de entidades.
-- **`services/`**: Contém serviços de infraestrutura que oferecem funcionalidades auxiliares para a aplicação, como serviços de cache ou de mensageria.
-- **`config/`**: Contém configurações da aplicação, como variáveis de ambiente e configurações específicas do sistema.
-
-### `src/shared/`
-
-- **`shared/`**: Contém código e configurações compartilhadas que são usadas em várias partes da aplicação, como utilitários comuns e configurações globais.
-
-### `src/main.ts`
-
-- **`main.ts`**: Ponto de entrada da aplicação. Configura e inicializa o módulo principal do NestJS e inicia o servidor.
-
 ## Diagrama de Arquitetura Limpa
 
 O diagrama abaixo ilustra a interação entre as diferentes camadas e componentes da arquitetura limpa do projeto. Esta arquitetura é projetada para promover uma separação clara entre as diferentes responsabilidades do sistema, facilitando a manutenção e evolução da aplicação.
