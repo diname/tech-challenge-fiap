@@ -14,12 +14,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: lts/hydrogen
-      #     cache: 'npm'
-      # - run: |
-      #     npm ci
-      #     npm run build
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/hydrogen
+          cache: 'npm'
+      - run: |
+          npm ci
+          npm run build
       # - run: npm run test
