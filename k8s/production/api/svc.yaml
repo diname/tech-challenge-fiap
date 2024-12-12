@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-service
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+spec:
+  selector:
+    app: tech-challenge-fiap-api
+  type: LoadBalancer
+  ports:
+  - port: 30100
+    protocol: TCP
+    targetPort: 3000
