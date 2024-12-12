@@ -78,6 +78,7 @@ import { UserController } from './presentation/controllers/user.controller';
     TypeOrmModule.forRootAsync({
       useClass: PostgresConfigService,
       inject: [PostgresConfigService],
+      
     }),
     TypeOrmModule.forFeature([
       UserModel,
