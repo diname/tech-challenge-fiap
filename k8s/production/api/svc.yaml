@@ -9,6 +9,6 @@ spec:
     app: tech-challenge-fiap-api
   type: LoadBalancer
   ports:
-  - port: 30100
-    protocol: TCP
+  - protocol: TCP
+    port: 80
     targetPort: 3000
