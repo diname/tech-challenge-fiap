@@ -26,7 +26,7 @@ import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
 import { ITokenPayload } from '@Shared/interfaces/token-payload.interface';
 
-@ApiTags('Orders')
+@ApiTags('/api/Orders')
 @Controller('orders')
 export class OrderController {
   constructor(

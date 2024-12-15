@@ -10,7 +10,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 export class AuthController {
   constructor(private readonly getTokenUseCase: GetTokenUseCase) {}
 
-  @Post('/identify/customer')
+  @Post('/api/identify/customer')
   @ApiOperation({ summary: 'Gera o token para identificação do cliente' })
   @ApiResponse({ status: 200, type: [TokenUserDto] })
   @ApiResponse({ status: 401, description: 'Não autorizado' })
