@@ -30,7 +30,7 @@ import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
 
-@Controller('products')
+@Controller('/api/products')
 @ApiTags('Products')
 export class ProductController {
   constructor(

@@ -29,7 +29,7 @@ import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
 
-@Controller('categories')
+@Controller('/api/categories')
 @ApiTags('Categories')
 export class CategoryController {
   constructor(

@@ -27,7 +27,7 @@ import { RoleGuard } from '@Shared/guards/role-guard';
 import { ITokenPayload } from '@Shared/interfaces/token-payload.interface';
 
 @ApiTags('Orders')
-@Controller('orders')
+@Controller('/api/orders')
 export class OrderController {
   constructor(
     private readonly createOrderUseCase: CreateOrderUseCase,

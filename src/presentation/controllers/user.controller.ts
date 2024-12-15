@@ -14,7 +14,7 @@ import { Roles } from '@Shared/decorators/roles.decorator';
 import { UserRoleEnum } from '@Shared/enums/user-role.enum';
 import { RoleGuard } from '@Shared/guards/role-guard';
 
-@Controller('users')
+@Controller('/api/users')
 @ApiTags('User')
 export class UserController {
   constructor(
