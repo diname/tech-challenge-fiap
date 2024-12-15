@@ -6,8 +6,8 @@ import { WebhookUseCase } from '@Application/use-cases/payment/webhook.use-case'
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('/api/Payment')
-@Controller('payment')
+@ApiTags('Payment')
+@Controller('/api/payment')
 export class PaymentController {
   constructor(
     private readonly checkoutUseCase: CheckoutUseCase,
