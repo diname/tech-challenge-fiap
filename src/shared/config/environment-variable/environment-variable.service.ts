@@ -79,4 +79,11 @@ export class EnvironmentVariableService {
       database: this.configService.get<string>('POSTGRES_DB'),
     };
   }
+
+  get cognitoConfig() {
+    return {
+      ClientId: this.configService.get<string>('COGNITO_CLIENT_ID'),
+      UserPoolId: this.configService.get<string>('COGNITO_USER_POOL_ID'),
+    };
+  }
 }

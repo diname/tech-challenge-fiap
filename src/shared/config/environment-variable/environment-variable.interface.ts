@@ -18,4 +18,6 @@ export interface EnvironmentVariableInterface {
   MERCADO_PAGO_EXTERNAL_POS_ID: string;
   CACHE_SERVICE_HOST: string;
   CACHE_SERVICE_PORT: number;
+  COGNITO_CLIENT_ID: string;
+  COGNITO_USER_POOL_ID: string;
 }

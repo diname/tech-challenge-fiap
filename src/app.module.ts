@@ -63,7 +63,6 @@ import { OrderRepositoryImpl } from './infrastructure/repositories/order.reposit
 import { ProductOrderRepositoryImpl } from './infrastructure/repositories/product-order.repository.impl';
 import { ProductRepositoryImpl } from './infrastructure/repositories/product.repository.impl';
 import { UserRepositoryImpl } from './infrastructure/repositories/user.repository.impl';
-import { AuthController } from './presentation/controllers/auth.controller';
 import { CategoryController } from './presentation/controllers/category.controller';
 import { HealthController } from './presentation/controllers/health.controller';
 import { OrderController } from './presentation/controllers/order.controller';
@@ -78,7 +77,6 @@ import { UserController } from './presentation/controllers/user.controller';
     TypeOrmModule.forRootAsync({
       useClass: PostgresConfigService,
       inject: [PostgresConfigService],
-      
     }),
     TypeOrmModule.forFeature([
       UserModel,
@@ -186,7 +184,7 @@ import { UserController } from './presentation/controllers/user.controller';
     },
   ],
   controllers: [
-    AuthController,
+    //AuthController,
     UserController,
     PaymentController,
     ProductController,
