@@ -29,7 +29,11 @@ export class FindProductUseCase {
     const products = await this.productService.findProducts(name, categoryId);
     const productResponseDto = products.map(ProductMapper.toResponseDto);
 
-    await this.cacheService.set('products', JSON.stringify(productResponseDto));
+    await this.cacheService.set(
+      'products',
+      JSON.stringify(productResponseDto),
+      5000,
+    );
 
     return productResponseDto;
   }
