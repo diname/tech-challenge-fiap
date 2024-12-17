@@ -20,9 +20,9 @@ export class PostgresConfigService implements TypeOrmOptionsFactory {
       database: postgresEnvs.database,
       synchronize: true,
       autoLoadEntities: true,
-      // ssl: {
-      //   rejectUnauthorized: false,
-      // },
+      ssl: {
+        rejectUnauthorized: false,
+      },
     };
   }
 }
