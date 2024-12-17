@@ -100,7 +100,6 @@ import { UserController } from './presentation/controllers/user.controller';
 
         return {
           store: store as unknown as CacheStore,
-          ttl: 3 * 60000,
         };
       },
     }),

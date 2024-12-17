@@ -28,6 +28,7 @@ export class ProductMapper {
     product.price = productEntity.price;
     product.figureUrl = productEntity.figureUrl;
     product.enabled = productEntity.enabled;
+    product.preparationTime = productEntity.preparationTime;
     product.category = { id: productEntity.category.id } as CategoryModel;
 
     return product;

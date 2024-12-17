@@ -29,6 +29,7 @@ export class FindCategoryUseCase {
     await this.cacheService.set(
       'categories',
       JSON.stringify(categoryResponseDto),
+      5000,
     );
 
     return categoryResponseDto;
