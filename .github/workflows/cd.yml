@@ -6,8 +6,8 @@ on:
       - closed
 
 env:
-  REGION_DEFAULT: 'us-east-1'
-  CLUSTER_NAME: 'tech-challenge-eks'
+  REGION_DEFAULT: us-east-1
+  CLUSTER_NAME: tech-challenge-eks
 
 jobs:
   Deploy:
