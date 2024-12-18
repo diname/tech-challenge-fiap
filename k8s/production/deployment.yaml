@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tech-challenge-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tech-challenge-deployment
+  template:
+    metadata:
+      labels:
+        app: tech-challenge-deployment
+    spec:
+      containers:
+      - name: tech-challenge-api
+        image: diname/tech-challenge-fiap-api:latest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: general-settings
+        - secretRef:
+            name: api-secrets
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 180
+          periodSeconds: 60
+          timeoutSeconds: 5
+          failureThreshold: 3
+        resources:
+          requests:
+            cpu: 250m
+            memory: 100Mi
+          limits:
+            memory: 400Mi
+            cpu: 500m # 1/2 núcleo
+        ports:
+        - containerPort: 3000

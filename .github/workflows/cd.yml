@@ -48,4 +48,8 @@ jobs:
           aws-region: ${{ env.REGION_DEFAULT }}
 
       - name: Update Kube Config
-        run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.REGION_DEFAULT }}
+        run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.REGION_DEFAULT }}.
+
+      - name: Kube Apply
+        run: |
+          kubectl apply -f k8s/production .
