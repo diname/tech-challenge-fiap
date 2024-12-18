@@ -52,4 +52,4 @@ jobs:
 
       - name: Kube Apply
         run: |
-          kubectl apply -f k8s/production .
+          kubectl apply -f k8s/production/ .
